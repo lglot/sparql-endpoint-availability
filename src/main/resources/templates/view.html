@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Status Sparql Endpoint</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            width: 300px;
+        }
+
+        thead {
+            color: black;
+        }
+
+        tbody {
+            color: blue;
+        }
+
+        tfoot {
+            color: black;
+        }
+    </style>
+
+    <script>
+        function onLoadHandler() {
+            var status = document.getElementsByClassName("statusLabel");
+            for (var i = 0; i < status.length; i++) {
+                if (status[i].textContent === "active")
+                    status[i].style.color = "green";
+                else status[i].style.color = "red";
+            }
+
+        }
+        window.addEventListener("load", onLoadHandler)
+    </script>
+
+</head>
+
+<body>
+
+<table>
+
+    <thead>
+    <tr>
+        <th>Service</th>
+        <th>STATUS</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr th:each="service : ${sparqlHashMap.keySet()}">
+        <td th:text="${service}"></td>
+        <td class="statusLabel" th:text="${sparqlHashMap.get(service)?'active':'inactive'}"></td>
+    </tr>
+    </tbody>
+
+    <tfoot>
+    <tr>
+        <td>No. of active</td>
+        <td th:text="${numberActive}"></td>
+    </tr>
+    </tfoot>
+</table>
+
+<!-- <p th:text="${service} +' '+${active}"></p> -->
+
+</body>
+
+</html>
