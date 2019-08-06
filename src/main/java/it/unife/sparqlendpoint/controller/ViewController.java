@@ -1,15 +1,20 @@
 package it.unife.sparqlendpoint.controller;
 
 import it.unife.sparqlendpoint.service.config.Config;
-import org.apache.jena.query.*;
+import it.unife.sparqlendpoint.service.thread.SparqlEndpointsQueryThread;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.annotation.Resource;
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class ViewController {
@@ -17,30 +22,31 @@ public class ViewController {
     @GetMapping("/view")
     public String view(Model model) {
 
-        String sparqlQueryString = "SELECT * WHERE {?s ?p ?o} LIMIT 1";
-
         List<String> sparqlList = readFromFile();
-
         HashMap<String,Boolean> sparqlHashMap = new HashMap<>();
-
         int numberActive = 0;
+        final int queryNumberByThread = 5;
 
-        for (String service: sparqlList) {
+        /*MultiThread Query*/
+        ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
 
-            try (QueryExecution qexec = QueryExecutionFactory.sparqlService(service, sparqlQueryString)) {
-         // qexec.setTimeout(60, TimeUnit.SECONDS);
-                ResultSet rs = qexec.execSelect();
-                if (rs.hasNext()) {
-                    sparqlHashMap.put(service,true);
-                    numberActive++;
-                    //model.addAttribute("active",true);
-                    //model.addAttribute("subject",rs.nextSolution().get("s").toString());
-                }
-            } catch(Exception e) {
-                //model.addAttribute("active",false);
-                sparqlHashMap.put(service,false);
-            }
+        List<SparqlEndpointsQueryThread> threads = new ArrayList<>();
+
+        for(int i=0;i<sparqlList.size();i=i+queryNumberByThread){
+            SparqlEndpointsQueryThread thread = (SparqlEndpointsQueryThread)context.getBean("sparqlEndpointsQueryThread");
+            threads.add(thread);
+            thread.setPartialSparqlEndpointsList(sparqlList.subList(i, Math.min(i + queryNumberByThread, sparqlList.size())));
+            thread.start();
         }
+
+        try{
+            for(SparqlEndpointsQueryThread thread : threads) {
+                thread.join();
+                sparqlHashMap.putAll(thread.getSparqlHashMap());
+                numberActive=numberActive+thread.getNumberActive();
+            }
+        }catch (InterruptedException ignored){ }
+
 
         model.addAttribute("sparqlHashMap",sparqlHashMap);
         model.addAttribute("numberActive",numberActive);
@@ -53,6 +59,9 @@ public class ViewController {
 
         try {
 
+            /*ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+            URL resource = classLoader.getResource(Config.SPARQL_ENDPOINTS_LIST_FILENAME);
+            File file = new File(Objects.requireNonNull(resource).getFile());*/
             File file = new File(Config.SPARQL_ENDPOINTS_LIST_PATH);
             FileReader fileReader = new FileReader(file);
             //InputStream inputStream = new FileInputStream(file);
@@ -61,7 +70,7 @@ public class ViewController {
             while ((line = br.readLine())!= null){
                 sparqlList.add(line.toLowerCase());
             }
-        }catch(IOException e){
+        }catch(IOException e) {
             throw new RuntimeException(e);
         }
         return sparqlList;
