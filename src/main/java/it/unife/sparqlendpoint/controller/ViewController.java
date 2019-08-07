@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import static org.apache.commons.io.FileUtils.getFile;
+
 @Controller
 public class ViewController {
 
@@ -59,12 +61,9 @@ public class ViewController {
 
         try {
 
-            /*ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-            URL resource = classLoader.getResource(Config.SPARQL_ENDPOINTS_LIST_FILENAME);
-            File file = new File(Objects.requireNonNull(resource).getFile());*/
-            File file = new File(Config.SPARQL_ENDPOINTS_LIST_PATH);
+            String filePath = Objects.requireNonNull(ViewController.class.getClassLoader().getResource(Config.SPARQL_ENDPOINTS_LIST_FILENAME)).getFile();
+            File file = new File(filePath);
             FileReader fileReader = new FileReader(file);
-            //InputStream inputStream = new FileInputStream(file);
             BufferedReader br = new BufferedReader(fileReader);
             String line;
             while ((line = br.readLine())!= null){
