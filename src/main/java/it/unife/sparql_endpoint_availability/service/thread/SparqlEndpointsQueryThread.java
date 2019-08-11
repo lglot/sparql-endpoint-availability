@@ -1,4 +1,4 @@
-package it.unife.sparqlendpoint.service.thread;
+package it.unife.sparql_endpoint_availability.service.thread;
 
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -18,38 +18,39 @@ prototype to the @Scope annotation in the bean definition:*/
 public class SparqlEndpointsQueryThread extends Thread {
 
     private List<String> partialSparqlEndpointsList;
-    private HashMap<String,Boolean> sparqlHashMap;
+    private HashMap<String, Boolean> sparqlHashMap;
     private int numberActive;
 
-    public void setPartialSparqlEndpointsList(List<String> partialSparqlEndpointsList){
-        this.partialSparqlEndpointsList=partialSparqlEndpointsList;
+    public void setPartialSparqlEndpointsList(List<String> partialSparqlEndpointsList) {
+        this.partialSparqlEndpointsList = partialSparqlEndpointsList;
     }
 
-    public HashMap<String, Boolean> getSparqlHashMap(){
+    public HashMap<String, Boolean> getSparqlHashMap() {
         return sparqlHashMap;
     }
-    public int getNumberActive(){
+
+    public int getNumberActive() {
         return numberActive;
     }
 
     @Override
-    public void run(){
+    public void run() {
 
         sparqlHashMap = new HashMap<>();
         numberActive = 0;
 
-        for (String service: partialSparqlEndpointsList) {
+        for (String service : partialSparqlEndpointsList) {
 
             String sparqlQueryString = "SELECT * WHERE {?s ?p ?o} LIMIT 1";
             try (QueryExecution qexec = QueryExecutionFactory.sparqlService(service, sparqlQueryString)) {
                 // qexec.setTimeout(60, TimeUnit.SECONDS);
                 ResultSet rs = qexec.execSelect();
                 if (rs.hasNext()) {
-                    sparqlHashMap.put(service,true);
+                    sparqlHashMap.put(service, true);
                     numberActive++;
                 }
-            } catch(Exception e) {
-                sparqlHashMap.put(service,false);
+            } catch (Exception e) {
+                sparqlHashMap.put(service, false);
             }
         }
     }
