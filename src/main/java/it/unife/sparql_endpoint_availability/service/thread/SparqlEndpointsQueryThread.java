@@ -1,11 +1,17 @@
 package it.unife.sparql_endpoint_availability.service.thread;
 
+import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
+import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
+import it.unife.sparql_endpoint_availability.model.repository.SparqlEndpointStatusRepository;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.ResultSet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,41 +23,48 @@ prototype to the @Scope annotation in the bean definition:*/
 
 public class SparqlEndpointsQueryThread extends Thread {
 
-    private List<String> partialSparqlEndpointsList;
-    private HashMap<String, Boolean> sparqlHashMap;
-    private int numberActive;
+    private List<SparqlEndpoint> partialSparqlEndpointsList;
+    private List<SparqlEndpointStatus> sparqlEndpointStatusList;
 
-    public void setPartialSparqlEndpointsList(List<String> partialSparqlEndpointsList) {
+    public void setPartialSparqlEndpointsList(List<SparqlEndpoint> partialSparqlEndpointsList) {
         this.partialSparqlEndpointsList = partialSparqlEndpointsList;
     }
 
-    public HashMap<String, Boolean> getSparqlHashMap() {
-        return sparqlHashMap;
+    public List<SparqlEndpointStatus> getSparqlEndpointStatusList(){
+        return sparqlEndpointStatusList;
     }
 
-    public int getNumberActive() {
-        return numberActive;
+    public SparqlEndpointsQueryThread(){
+        super();
+        sparqlEndpointStatusList = new ArrayList<>();
     }
 
     @Override
     public void run() {
 
-        sparqlHashMap = new HashMap<>();
-        numberActive = 0;
+        //sparqlHashMap = new HashMap<>();
+        //numberActive = 0;
 
-        for (String service : partialSparqlEndpointsList) {
+        for (SparqlEndpoint sparqlEndpoint : partialSparqlEndpointsList) {
+
+            SparqlEndpointStatus status = new SparqlEndpointStatus();
+            status.setSparqlEndpoint(sparqlEndpoint);
 
             String sparqlQueryString = "SELECT * WHERE {?s ?p ?o} LIMIT 1";
-            try (QueryExecution qexec = QueryExecutionFactory.sparqlService(service, sparqlQueryString)) {
+            try (QueryExecution qexec = QueryExecutionFactory.sparqlService(sparqlEndpoint.getServiceURL(), sparqlQueryString)) {
                 // qexec.setTimeout(60, TimeUnit.SECONDS);
                 ResultSet rs = qexec.execSelect();
                 if (rs.hasNext()) {
-                    sparqlHashMap.put(service, true);
-                    numberActive++;
+                    status.setActive(true);
+                    //sparqlHashMap.put(sparqlEndpoint, true);
+                    //numberActive++;
                 }
             } catch (Exception e) {
-                sparqlHashMap.put(service, false);
+                status.setActive(false);
+                //sparqlHashMap.put(sparqlEndpoint, false);
             }
+            status.setQueryDate(new Timestamp(System.currentTimeMillis()));
+            sparqlEndpointStatusList.add(status);
         }
     }
 }

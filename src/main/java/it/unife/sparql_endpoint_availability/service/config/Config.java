@@ -9,4 +9,5 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = "it.unife.sparql_endpoint_availability.service.thread")
 public class Config {
     public static final String SPARQL_ENDPOINTS_LIST_FILENAME = "sparqlEndpoints_list.txt";
+    public static final int QUERY_NUMBER_BY_THREAD = 5;
 }
