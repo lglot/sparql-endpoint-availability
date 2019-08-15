@@ -1,6 +1,5 @@
 package it.unife.sparql_endpoint_availability.model.entity;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;

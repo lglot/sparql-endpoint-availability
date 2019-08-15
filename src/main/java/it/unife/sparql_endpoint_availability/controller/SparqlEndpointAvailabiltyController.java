@@ -27,14 +27,11 @@ import static org.apache.commons.io.FileUtils.getFile;
 @RequestMapping(path = "/sparql-endpoint-availability")
 public class SparqlEndpointAvailabiltyController {
 
-    private final SparqlEndpointRepository sparqlEndpointRepository;
+    @Autowired
+    private SparqlEndpointRepository sparqlEndpointRepository;
 
-    private final SparqlEndpointStatusRepository sparqlEndpointStatusRepository;
-
-    public SparqlEndpointAvailabiltyController(SparqlEndpointRepository sparqlEndpointRepository, SparqlEndpointStatusRepository sparqlEndpointStatusRepository) {
-        this.sparqlEndpointRepository = sparqlEndpointRepository;
-        this.sparqlEndpointStatusRepository = sparqlEndpointStatusRepository;
-    }
+    @Autowired
+    private SparqlEndpointStatusRepository sparqlEndpointStatusRepository;
 
     @GetMapping(path = "/update")
     public @ResponseBody
@@ -85,11 +82,24 @@ public class SparqlEndpointAvailabiltyController {
         HashMap<String, Boolean> sparqlHashMap = new HashMap<>();
         int numberActive = 0;
 
+        List<SparqlEndpoint> sparqlEndpointList = (List<SparqlEndpoint>) sparqlEndpointRepository.findAll();
+
+        for(SparqlEndpoint sparqlEndpoint : sparqlEndpointList){
+            boolean status = sparqlEndpoint.getSparqlEndpointStatuses().get(sparqlEndpoint.getSparqlEndpointStatuses().size()-1).isActive();
+            sparqlHashMap.put(sparqlEndpoint.getServiceURL(),status);
+            if(status) numberActive++;
+        }
+
         model.addAttribute("sparqlHashMap", sparqlHashMap);
         model.addAttribute("numberActive", numberActive);
 
         return "view";
     }
+
+    @GetMapping("/view.json")
+    public @ResponseBody Iterable<SparqlEndpoint> getAllSparqlStatus(){
+        return sparqlEndpointRepository.findAll();
+     }
 
 
     private List<String> readFromFile() {

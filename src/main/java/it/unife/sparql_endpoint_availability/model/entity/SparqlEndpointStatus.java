@@ -1,5 +1,7 @@
 package it.unife.sparql_endpoint_availability.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,8 +12,9 @@ public class SparqlEndpointStatus {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long statusId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="sparql_endpoint_id")
+    @JsonIgnore
     private SparqlEndpoint sparqlEndpoint;
 
     @Basic(optional = false)
