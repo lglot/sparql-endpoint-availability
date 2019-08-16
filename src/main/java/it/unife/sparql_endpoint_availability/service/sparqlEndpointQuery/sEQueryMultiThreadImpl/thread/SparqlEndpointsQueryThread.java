@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 /*A bean with prototype scope will return a different instance every time
@@ -39,26 +40,23 @@ public class SparqlEndpointsQueryThread extends Thread {
     @Override
     public void run() {
 
-        //sparqlHashMap = new HashMap<>();
-        //numberActive = 0;
-
         for (SparqlEndpoint sparqlEndpoint : partialSparqlEndpointsList) {
 
             SparqlEndpointStatus status = new SparqlEndpointStatus();
             status.setSparqlEndpoint(sparqlEndpoint);
 
             String sparqlQueryString = "SELECT * WHERE {?s ?p ?o} LIMIT 1";
+
             try (QueryExecution qexec = QueryExecutionFactory.sparqlService(sparqlEndpoint.getServiceURL(), sparqlQueryString)) {
-                // qexec.setTimeout(60, TimeUnit.SECONDS);
-                ResultSet rs = qexec.execSelect();
-                if (rs.hasNext()) {
-                    status.setActive(true);
-                    //sparqlHashMap.put(sparqlEndpoint, true);
-                    //numberActive++;
-                }
-            } catch (Exception e) {
-                status.setActive(false);
-                //sparqlHashMap.put(sparqlEndpoint, false);
+                    qexec.setTimeout(60, TimeUnit.SECONDS);
+                    ResultSet rs = qexec.execSelect();
+                    if (rs.hasNext()) {
+                        status.setActive(true);
+                    }
+                    else status.setActive(true);
+                } catch (Exception e) {
+                    status.setActive(false);
+
             }
             status.setQueryDate(new Timestamp(System.currentTimeMillis()));
             sparqlEndpointStatusList.add(status);

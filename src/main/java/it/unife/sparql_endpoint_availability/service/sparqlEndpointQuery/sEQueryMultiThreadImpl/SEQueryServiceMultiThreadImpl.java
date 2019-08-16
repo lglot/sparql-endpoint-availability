@@ -12,8 +12,13 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public class SEQueryServiceMultiThreadImpl implements SparqlEndpointQueryService {
+
+    private final int queryNumberByThread;
+
+    public SEQueryServiceMultiThreadImpl(int queryNumberByThread){
+        this.queryNumberByThread=queryNumberByThread;
+    }
 
     @Override
     public List<SparqlEndpointStatus> executeQuery(List<SparqlEndpoint> sparqlEndpoints) {
@@ -22,7 +27,7 @@ public class SEQueryServiceMultiThreadImpl implements SparqlEndpointQueryService
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
         List<SparqlEndpointsQueryThread> threads = new ArrayList<>();
-        final int queryNumberByThread = AppConfig.QUERY_NUMBER_BY_THREAD;
+
 
         for (int i = 0; i < sparqlEndpoints.size(); i = i + queryNumberByThread) {
             SparqlEndpointsQueryThread thread = (SparqlEndpointsQueryThread) context.getBean("sparqlEndpointsQueryThread");

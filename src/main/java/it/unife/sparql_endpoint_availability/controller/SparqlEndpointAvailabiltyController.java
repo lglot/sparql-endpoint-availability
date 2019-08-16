@@ -3,7 +3,10 @@ package it.unife.sparql_endpoint_availability.controller;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
 import it.unife.sparql_endpoint_availability.service.config.AppConfig;
+import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlListResource;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointQueryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -14,19 +17,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
-
-import static org.apache.commons.io.FileUtils.getFile;
 
 @Controller
 @RequestMapping(path = "/sparql-endpoint-availability")
 public class SparqlEndpointAvailabiltyController {
 
     private final SparqlEndpointManagement sparqlEndpointManagement;
+
+    private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointAvailabiltyController.class);
 
     @Autowired
     public SparqlEndpointAvailabiltyController(SparqlEndpointManagement sparqlEndpointManagement) {
@@ -38,17 +39,25 @@ public class SparqlEndpointAvailabiltyController {
     public @ResponseBody
     String update() {
 
-        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.saveAndGet(readFromFile());
-
+        /*Get Application Context*/
         ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
-        SparqlEndpointQueryService sparqlEndpointQueryService = ctx.getBean(SparqlEndpointQueryService.class);
 
+        /*Get istance of class that provide access to sparql Endpoint file*/
+        SparqlListResource sparqlListResource = ctx.getBean(SparqlListResource.class);
+
+        /*Read spaql endpoint URL from resource and save them to DATA*/
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.saveAndGet(sparqlListResource.read());
+
+
+        SparqlEndpointQueryService sparqlEndpointQueryService = ctx.getBean(SparqlEndpointQueryService.class);
         sparqlEndpointManagement.saveStatuses(sparqlEndpointQueryService.executeQuery(sparqlEndpointList));
 
+        logger.info("Executed manually check in date "+ new Timestamp(System.currentTimeMillis()).toString());
         return "updated";
     }
 
     @GetMapping("/view")
+    @Transactional
     public String view(Model model) {
 
         HashMap<String, Boolean> sparqlHashMap = new HashMap<>();
@@ -69,30 +78,10 @@ public class SparqlEndpointAvailabiltyController {
     }
 
     @GetMapping("/view.json")
+    @Transactional
     public @ResponseBody
     Iterable<SparqlEndpoint> getAllSparqlStatus() {
         return sparqlEndpointManagement.getAllSparqlStatues();
-    }
-
-
-    private List<String> readFromFile() {
-
-        List<String> sparqlList = new ArrayList<>();
-
-        try {
-
-            String filePath = Objects.requireNonNull(SparqlEndpointAvailabiltyController.class.getClassLoader().getResource(AppConfig.SPARQL_ENDPOINTS_LIST_FILENAME)).getFile();
-            File file = new File(filePath);
-            FileReader fileReader = new FileReader(file);
-            BufferedReader br = new BufferedReader(fileReader);
-            String line;
-            while ((line = br.readLine()) != null) {
-                sparqlList.add(line.toLowerCase());
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return sparqlList;
     }
 }
 
