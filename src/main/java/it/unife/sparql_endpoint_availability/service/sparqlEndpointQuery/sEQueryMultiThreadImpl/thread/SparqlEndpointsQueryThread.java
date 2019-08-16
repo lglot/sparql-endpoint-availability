@@ -1,21 +1,18 @@
-package it.unife.sparql_endpoint_availability.service.thread;
+package it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueryMultiThreadImpl.thread;
 
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
-import it.unife.sparql_endpoint_availability.model.repository.SparqlEndpointStatusRepository;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.ResultSet;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-@Component
+@Service
 /*A bean with prototype scope will return a different instance every time
 it is requested from the container. It is defined by setting the value
 prototype to the @Scope annotation in the bean definition:*/

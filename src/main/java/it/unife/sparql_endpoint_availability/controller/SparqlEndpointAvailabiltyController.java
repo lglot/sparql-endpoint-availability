@@ -1,15 +1,14 @@
 package it.unife.sparql_endpoint_availability.controller;
 
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
-import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
-import it.unife.sparql_endpoint_availability.model.repository.SparqlEndpointRepository;
-import it.unife.sparql_endpoint_availability.model.repository.SparqlEndpointStatusRepository;
-import it.unife.sparql_endpoint_availability.service.config.Config;
-import it.unife.sparql_endpoint_availability.service.thread.SparqlEndpointsQueryThread;
+import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
+import it.unife.sparql_endpoint_availability.service.config.AppConfig;
+import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,51 +26,24 @@ import static org.apache.commons.io.FileUtils.getFile;
 @RequestMapping(path = "/sparql-endpoint-availability")
 public class SparqlEndpointAvailabiltyController {
 
-    @Autowired
-    private SparqlEndpointRepository sparqlEndpointRepository;
+    private final SparqlEndpointManagement sparqlEndpointManagement;
 
     @Autowired
-    private SparqlEndpointStatusRepository sparqlEndpointStatusRepository;
+    public SparqlEndpointAvailabiltyController(SparqlEndpointManagement sparqlEndpointManagement) {
+        this.sparqlEndpointManagement = sparqlEndpointManagement;
+    }
 
     @GetMapping(path = "/update")
+    @Transactional
     public @ResponseBody
     String update() {
 
-        List<SparqlEndpoint> sparqlEndpointList = addSparqlListToData(readFromFile());
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.saveAndGet(readFromFile());
 
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+        SparqlEndpointQueryService sparqlEndpointQueryService = ctx.getBean(SparqlEndpointQueryService.class);
 
-        final int queryNumberByThread = Config.QUERY_NUMBER_BY_THREAD;
-
-        /*MultiThread Query*/
-        ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-
-        List<SparqlEndpointsQueryThread> threads = new ArrayList<>();
-
-        for (int i = 0; i < sparqlEndpointList.size(); i = i + queryNumberByThread) {
-            SparqlEndpointsQueryThread thread = (SparqlEndpointsQueryThread) context.getBean("sparqlEndpointsQueryThread");
-            threads.add(thread);
-            thread.setPartialSparqlEndpointsList(sparqlEndpointList.subList(i, Math.min(i + queryNumberByThread, sparqlEndpointList.size())));
-            thread.start();
-        }
-
-        try {
-
-            List<SparqlEndpointStatus> statusList = new ArrayList<>();
-
-            for (SparqlEndpointsQueryThread thread : threads) {
-                thread.join();
-                statusList.addAll(thread.getSparqlEndpointStatusList());
-                /*List<SparqlEndpointStatus> statusList = new ArrayList<>();
-                SparqlEndpointStatus status = new SparqlEndpointStatus();
-                sparqlHashMap.putAll(thread.getSparqlHashMap());
-                numberActive = numberActive + thread.getNumberActive();*/
-            }
-
-            sparqlEndpointStatusRepository.saveAll(statusList);
-
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        sparqlEndpointManagement.saveStatuses(sparqlEndpointQueryService.executeQuery(sparqlEndpointList));
 
         return "updated";
     }
@@ -82,12 +54,12 @@ public class SparqlEndpointAvailabiltyController {
         HashMap<String, Boolean> sparqlHashMap = new HashMap<>();
         int numberActive = 0;
 
-        List<SparqlEndpoint> sparqlEndpointList = (List<SparqlEndpoint>) sparqlEndpointRepository.findAll();
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.getAllSparqlStatues();
 
-        for(SparqlEndpoint sparqlEndpoint : sparqlEndpointList){
-            boolean status = sparqlEndpoint.getSparqlEndpointStatuses().get(sparqlEndpoint.getSparqlEndpointStatuses().size()-1).isActive();
-            sparqlHashMap.put(sparqlEndpoint.getServiceURL(),status);
-            if(status) numberActive++;
+        for (SparqlEndpoint sparqlEndpoint : sparqlEndpointList) {
+            boolean status = sparqlEndpoint.getSparqlEndpointStatuses().get(sparqlEndpoint.getSparqlEndpointStatuses().size() - 1).isActive();
+            sparqlHashMap.put(sparqlEndpoint.getServiceURL(), status);
+            if (status) numberActive++;
         }
 
         model.addAttribute("sparqlHashMap", sparqlHashMap);
@@ -97,9 +69,10 @@ public class SparqlEndpointAvailabiltyController {
     }
 
     @GetMapping("/view.json")
-    public @ResponseBody Iterable<SparqlEndpoint> getAllSparqlStatus(){
-        return sparqlEndpointRepository.findAll();
-     }
+    public @ResponseBody
+    Iterable<SparqlEndpoint> getAllSparqlStatus() {
+        return sparqlEndpointManagement.getAllSparqlStatues();
+    }
 
 
     private List<String> readFromFile() {
@@ -108,7 +81,7 @@ public class SparqlEndpointAvailabiltyController {
 
         try {
 
-            String filePath = Objects.requireNonNull(SparqlEndpointAvailabiltyController.class.getClassLoader().getResource(Config.SPARQL_ENDPOINTS_LIST_FILENAME)).getFile();
+            String filePath = Objects.requireNonNull(SparqlEndpointAvailabiltyController.class.getClassLoader().getResource(AppConfig.SPARQL_ENDPOINTS_LIST_FILENAME)).getFile();
             File file = new File(filePath);
             FileReader fileReader = new FileReader(file);
             BufferedReader br = new BufferedReader(fileReader);
@@ -120,23 +93,6 @@ public class SparqlEndpointAvailabiltyController {
             throw new RuntimeException(e);
         }
         return sparqlList;
-    }
-
-    private List<SparqlEndpoint> addSparqlListToData(List<String> sparqlStringList) {
-
-        List<SparqlEndpoint> sparqlEndpointList = new ArrayList<>();
-
-        for (String serviceURL : sparqlStringList) {
-            if (!sparqlEndpointRepository.existsSparqlEndpointByServiceURL(serviceURL)) {
-                SparqlEndpoint sparqlEndpoint = new SparqlEndpoint();
-                sparqlEndpoint.setServiceURL(serviceURL);
-                sparqlEndpointList.add(sparqlEndpoint);
-            }
-        }
-        if (sparqlEndpointList.size() > 0)
-            sparqlEndpointRepository.saveAll(sparqlEndpointList);
-
-        return (List<SparqlEndpoint>) sparqlEndpointRepository.findAll();
     }
 }
 
