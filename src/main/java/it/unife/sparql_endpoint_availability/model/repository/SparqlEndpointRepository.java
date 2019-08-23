@@ -13,13 +13,6 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
     // This will be AUTO IMPLEMENTED by Spring into a Bean called sparqlEndpointRepository
     // CRUD refers Create, Read, Update, Delete
 
-
-    /*@Query("SELECT new SparqlEndpoint(sparql, MAX(status.query_date))" +
-            " from sparql_endpoint as sparql" +
-            " join sparql_endpoint_status as status" +
-            " on sparql.id=status.sparql_endpoint_id" +
-            " group by sparql")
-    List<SparqlEndpoint> getAllwithLastUpdate();*/
-
     boolean existsSparqlEndpointByServiceURL(String serviceURL);
+
 }

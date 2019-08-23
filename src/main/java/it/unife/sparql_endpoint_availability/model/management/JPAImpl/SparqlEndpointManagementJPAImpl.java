@@ -61,6 +61,6 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
     @Override
     //@Transactional
     public List<SparqlEndpointStatus> getCurrentSparqlStatuses() {
-        return null;
+        return sparqlEndpointStatusRepository.findLastSparqlEnpointStatus();
     }
 }

@@ -1,6 +1,7 @@
 package it.unife.sparql_endpoint_availability.controller;
 
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
+import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
 import it.unife.sparql_endpoint_availability.service.config.AppConfig;
 import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlListResource;
@@ -75,6 +76,12 @@ public class SparqlEndpointAvailabiltyController {
         model.addAttribute("numberActive", numberActive);
 
         return "view";
+    }
+
+    @GetMapping("/viewLastUpdate")
+    @Transactional
+    public @ResponseBody Iterable<SparqlEndpointStatus> getLastUpdate(){
+        return sparqlEndpointManagement.getCurrentSparqlStatuses();
     }
 
     @GetMapping("/view.json")

@@ -13,7 +13,6 @@ public class SparqlEndpointStatus {
     private Long statusId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="sparql_endpoint_id")
     @JsonIgnore
     private SparqlEndpoint sparqlEndpoint;
 
