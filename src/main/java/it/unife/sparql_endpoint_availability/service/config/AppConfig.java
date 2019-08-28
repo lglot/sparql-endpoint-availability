@@ -17,6 +17,7 @@ public class AppConfig {
 
     private static final String SPARQL_ENDPOINTS_LIST_FILENAME = "sparqlEndpoints_list.txt";
     private static final int QUERY_NUMBER_BY_THREAD = 5;
+    public static final String LOCAL_TIMEZONE = "Europe/Rome";
 
     @Bean
     public SparqlEndpointQueryService getSparqlEndpointQueryService(){
@@ -27,6 +28,7 @@ public class AppConfig {
     public SparqlListResource getSparqlListResource(){
         return new SparqlListResourceFileImpl(SPARQL_ENDPOINTS_LIST_FILENAME);
     }
+
 
 
 }

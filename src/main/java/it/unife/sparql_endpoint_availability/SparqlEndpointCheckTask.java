@@ -8,19 +8,13 @@ import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlE
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Scope;
-import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.sql.Timestamp;
 import java.util.List;
-
-import static java.lang.Thread.sleep;
 
 @Service
 @Scope("singleton")
@@ -66,7 +60,6 @@ class SparqlEndpointCheckTask {
 
         logger.info("Executed Scheduled Check "+ iterator +" in date "+ new Timestamp(System.currentTimeMillis()).toString());
         iterator++;
-
     }
 }
 

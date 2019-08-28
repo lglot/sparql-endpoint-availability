@@ -12,13 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,7 +36,6 @@ public class SparqlEndpointAvailabiltyController {
     }
 
     @GetMapping(path = "/update")
-    @Transactional
     public @ResponseBody
     String update() {
 
@@ -57,17 +56,16 @@ public class SparqlEndpointAvailabiltyController {
         return "updated";
     }
 
-    @GetMapping("/view")
-    @Transactional
+    @GetMapping(path = "/view")
     public String view(Model model) {
 
         HashMap<String, Boolean> sparqlHashMap = new HashMap<>();
         int numberActive = 0;
 
-        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.getAllSparqlStatues();
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.getSparqlWithCurrentStatus();
 
         for (SparqlEndpoint sparqlEndpoint : sparqlEndpointList) {
-            boolean status = sparqlEndpoint.getSparqlEndpointStatuses().get(sparqlEndpoint.getSparqlEndpointStatuses().size() - 1).isActive();
+            boolean status = sparqlEndpoint.getSparqlEndpointStatuses().get(0).isActive();
             sparqlHashMap.put(sparqlEndpoint.getServiceURL(), status);
             if (status) numberActive++;
         }
@@ -76,19 +74,33 @@ public class SparqlEndpointAvailabiltyController {
         model.addAttribute("numberActive", numberActive);
 
         return "view";
+
     }
 
-    @GetMapping("/viewLastUpdate")
-    @Transactional
-    public @ResponseBody Iterable<SparqlEndpointStatus> getLastUpdate(){
-        return sparqlEndpointManagement.getCurrentSparqlStatuses();
+    @GetMapping(path = "/all")
+    public @ResponseBody Iterable<SparqlEndpoint.OnlyURL> getSparqlEndpointURL(){
+        return sparqlEndpointManagement.getAllSparqlEndopoint();
     }
 
-    @GetMapping("/view.json")
-    @Transactional
+    @GetMapping(path = "/status/current")
+    public @ResponseBody Iterable<SparqlEndpoint> getLastUpdate(){
+       // return sparqlEndpointManagement.getCurrentSparqlStatus();
+        return sparqlEndpointManagement.getSparqlWithCurrentStatus();
+    }
+
+    @GetMapping(path = "/status/week")
+    public @ResponseBody Iterable<SparqlEndpoint> getAfterQueryDate(){
+
+        Calendar previousWeek = Calendar.getInstance();
+        previousWeek.add(Calendar.WEEK_OF_YEAR,-1);
+        logger.info("Requested sparql endopoint availabilty from previuos week " + previousWeek.getTime().toString());
+        return sparqlEndpointManagement.getSparqlWithStatusAfterQueryDate(previousWeek.getTime());
+    }
+
+    @GetMapping(path = "/status/all")
     public @ResponseBody
-    Iterable<SparqlEndpoint> getAllSparqlStatus() {
-        return sparqlEndpointManagement.getAllSparqlStatues();
+    Iterable<SparqlEndpointStatus> getAllSparqlStatus() {
+        return sparqlEndpointManagement.getAllSparqlStatus();
     }
 }
 

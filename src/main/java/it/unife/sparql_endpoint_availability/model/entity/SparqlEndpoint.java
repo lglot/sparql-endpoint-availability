@@ -1,10 +1,14 @@
 package it.unife.sparql_endpoint_availability.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
+@NamedEntityGraph(name = "SparqlEndpoint.detail",
+        attributeNodes = @NamedAttributeNode("sparqlEndpointStatuses"))
 public class SparqlEndpoint {
 
     @Id
@@ -15,8 +19,14 @@ public class SparqlEndpoint {
     @NotNull
     private String serviceURL;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "sparqlEndpoint")
+    @JsonManagedReference //Inclued in serialization
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "sparqlEndpoint",cascade = CascadeType.ALL)
     private List<SparqlEndpointStatus> sparqlEndpointStatuses;
+
+    public interface OnlyURL {
+        Long getId();
+        String getServiceURL();
+    }
 
     public Long getId() {
         return id;

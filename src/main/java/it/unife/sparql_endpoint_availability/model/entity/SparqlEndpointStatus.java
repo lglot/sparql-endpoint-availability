@@ -1,6 +1,8 @@
 package it.unife.sparql_endpoint_availability.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import it.unife.sparql_endpoint_availability.service.config.AppConfig;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,13 +14,14 @@ public class SparqlEndpointStatus {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long statusId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JsonBackReference //Omitted from serialization
     private SparqlEndpoint sparqlEndpoint;
 
     @Basic(optional = false)
     @Temporal(TemporalType.TIMESTAMP)
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @JsonFormat(timezone = AppConfig.LOCAL_TIMEZONE)
     private Date queryDate;
 
     private boolean active;
