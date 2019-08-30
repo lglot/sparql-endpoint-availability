@@ -3,27 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Status Sparql Endpoint</title>
-
-    <style>
-        table, th, td {
-            border: 1px solid black;
-            width: 300px;
-        }
-
-        thead {
-            color: black;
-        }
-
-        tbody {
-            color: blue;
-        }
-
-        tfoot {
-            color: black;
-        }
-    </style>
-
+    <link rel="stylesheet" href="../static/css/bootstrap.css" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" href="../static/css/style.css" type="text/css" th:href="@{/css/style.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
     <script>
         function onLoadHandler() {
             var status = document.getElementsByClassName("statusLabel");
@@ -42,31 +27,53 @@
 
 <body>
 
-<table>
 
-    <thead>
-    <tr>
-        <th>Service</th>
-        <th>STATUS</th>
-    </tr>
-    </thead>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">SPARQL ENDPOINT AVAILABILITY</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <tbody>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-    <tr th:each="service : ${sparqlHashMap.keySet()}">
-        <td th:text="${service}"></td>
-        <td class="statusLabel" th:text="${sparqlHashMap.get(service)?'active':'inactive'}"></td>
-    </tr>
-    </tbody>
+        <ul class="navbar-nav mr-auto ">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
 
-    <tfoot>
-    <tr>
-        <td>No. of active</td>
-        <td th:text="${numberActive}"></td>
-    </tr>
-    </tfoot>
-</table>
 
+    </div>
+</nav>
+<!-- end navbar -->
+<div class="container">
+    <table class="table">
+
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Service</th>
+            <th scope="col">STATUS</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:scope="row" th:each="service : ${sparqlHashMap.keySet()}">
+            <td th:text="${service}"></td>
+            <td class="statusLabel" th:text="${sparqlHashMap.get(service)?'active':'inactive'}"></td>
+        </tr>
+        </tbody>
+
+        <tfoot>
+        <tr>
+            <td>No. of active</td>
+            <td th:text="${numberActive}"></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
 <!-- <p th:text="${service} +' '+${active}"></p> -->
 
 </body>
