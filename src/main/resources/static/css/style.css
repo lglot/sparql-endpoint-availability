@@ -23,3 +23,11 @@ nav{
     min-width: 540px;
 }
 
+.statusLabel{
+    text-transform: uppercase;
+}
+
+#nav-title{
+    padding-left: 10px;
+    line-height: 46px;
+}

@@ -28,7 +28,4 @@ public class AppConfig {
     public SparqlListResource getSparqlListResource(){
         return new SparqlListResourceFileImpl(SPARQL_ENDPOINTS_LIST_FILENAME);
     }
-
-
-
 }

@@ -22,7 +22,7 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
     List<SparqlEndpoint> findAllWithLastStatus();
 
     @EntityGraph(value = "SparqlEndpoint.detail", type = EntityGraph.EntityGraphType.FETCH)
-    @Query(" SELECT sparql FROM SparqlEndpoint sparql LEFT JOIN FETCH sparql.sparqlEndpointStatuses as status where status.queryDate > ?1 order by sparql.id,status.queryDate")
+    @Query(" SELECT sparql FROM SparqlEndpoint sparql LEFT JOIN FETCH sparql.sparqlEndpointStatuses as status where status.queryDate > ?1 order by sparql.id asc,status.queryDate desc")
     List<SparqlEndpoint> findAllAfterQueryDateStatus(Date queryDate);
 
     @Query("SELECT s from SparqlEndpoint s order by s.id")

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${lang}">
 
 <head>
     <meta charset="UTF-8">
@@ -9,19 +9,6 @@
     <link rel="stylesheet" href="../static/css/style.css" type="text/css" th:href="@{/css/style.css}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
-    <script>
-        function onLoadHandler() {
-            var status = document.getElementsByClassName("statusLabel");
-            for (var i = 0; i < status.length; i++) {
-                if (status[i].textContent === "active")
-                    status[i].style.color = "green";
-                else status[i].style.color = "red";
-            }
-
-        }
-
-        window.addEventListener("load", onLoadHandler)
-    </script>
 
 </head>
 
@@ -29,8 +16,13 @@
 
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">SPARQL ENDPOINT AVAILABILITY</a>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+        <img th:src="@{/image/sparql-icon.png}" src="../static/image/sparql-icon.png"
+             class="d-inline-block align-top rounded-circle"
+             height="48" width="55" alt=""/>
+        <span id="nav-title">SPARQL ENDPOINT AVAILABILITY</span>
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -44,37 +36,67 @@
             </li>
         </ul>
 
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    th:text="#{language.name}">
+                Dropdown button
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a th:class="'dropdown-item ' + ${lang.equals('en')? 'active' : ''}"
+                   href="/sparql-endpoint-availability/view?lang=en">English</a>
+                <a th:class="'dropdown-item ' + ${lang.equals('it')? 'active' : ''}"
+                   href="/sparql-endpoint-availability/view?lang=it">Italiano</a>
+            </div>
+        </div>
 
     </div>
 </nav>
 <!-- end navbar -->
+
+<!--jumbotron-->
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4" th:text="#{service.title}"></h1>
+        <p class="lead" th:utext="#{service.description} + '<br><code>SELECT * WHERE {?s ?p ?o} LIMIT 1</code>'">
+        <p class="lead" th:text="#{last.update(${lastUpdate})}"></p>
+    </div>
+</div>
+
+
+<!--table-->
 <div class="container">
     <table class="table">
-
+        <caption th:text="#{title.list}">List of Spraql Endpoint</caption>
         <thead class="thead-dark">
         <tr>
-            <th scope="col">Service</th>
-            <th scope="col">STATUS</th>
+            <th scope="col" th:text="#{col.name1}">Service</th>
+            <th scope="col" th:text="#{col.name2}">STATUS</th>
         </tr>
         </thead>
 
         <tbody>
-
         <tr th:scope="row" th:each="service : ${sparqlHashMap.keySet()}">
             <td th:text="${service}"></td>
-            <td class="statusLabel" th:text="${sparqlHashMap.get(service)?'active':'inactive'}"></td>
+            <td class="statusLabel" th:switch="${sparqlHashMap.get(service)}">
+                <p th:case="${@environment.getProperty('sparql.endpoint.status.active')}" th:text="#{status.active}" style="color: green"></p>
+                <p th:case="${@environment.getProperty('sparql.endpoint.status.inactive_lessweek')}" th:text="#{status.inactive.lessweek}"
+                   style="color: #ff9a0d"></p>
+                <p th:case="${@environment.getProperty('sparql.endpoint.status.inactive_moreweek')}" th:text="#{status.inactive.moreweek}"
+                   style="color: red"></p>
+                <p th:case="*">CIAO</p>
+            </td>
         </tr>
         </tbody>
 
         <tfoot>
         <tr>
-            <td>No. of active</td>
+            <td th:text="#{last.row.name(${numberActive})}">No. of active</td>
             <td th:text="${numberActive}"></td>
         </tr>
         </tfoot>
     </table>
 </div>
-<!-- <p th:text="${service} +' '+${active}"></p> -->
 
 </body>
 
