@@ -48,7 +48,7 @@ class SparqlEndpointCheckTask {
         /*Read spaql endpoint URL from resource and save them to DATA*/
 
         if(sparqlListResource.isModified() || iterator==1) {
-            logger.info("Sparql URL list Resource has been modified\nUpdating Sparql Endpoint List from Resource");
+            logger.info((iterator!=1)? "Sparql URL list Resource has been modified - " : "" + "Updating Sparql Endpoint List from Resource");
             List<String> sparqlEndpointURLlist = sparqlListResource.read();
             sparqlEndpointList = sparqlEndpointManagement.saveAndGet(sparqlEndpointURLlist);
         }

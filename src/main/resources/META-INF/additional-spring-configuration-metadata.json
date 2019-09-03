@@ -14,5 +14,10 @@
       "name": "sparql.endpoint.status.inactive_moreweek",
       "type": "java.lang.String",
       "description": "Description for status.inactive_more_than_a_week."
+    },
+    {
+      "name": "sparql.endpoint.status.general_inactive",
+      "type": "java.lang.String",
+      "description": "Description for sparql.endpoint.status.general_inactive."
     }
   ] }
