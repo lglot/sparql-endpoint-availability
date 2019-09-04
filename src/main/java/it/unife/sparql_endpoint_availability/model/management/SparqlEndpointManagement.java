@@ -26,4 +26,6 @@ public interface SparqlEndpointManagement {
 
     List<SparqlEndpointStatus> getSparqlStatusAfterQueryDate(Date queryDate);
 
+    Date findFirstQueryDate();
+
 }

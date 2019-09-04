@@ -99,4 +99,12 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
     public List<SparqlEndpointStatus> getSparqlStatusAfterQueryDate(Date queryDate) {
         return sparqlEndpointStatusRepository.findSparqlEndpointStatusByQueryDateAfter(queryDate);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Date findFirstQueryDate() {
+
+        SparqlEndpointStatus s = sparqlEndpointStatusRepository.findTopByOrderByQueryDate();
+        return s.getQueryDate();
+    }
 }

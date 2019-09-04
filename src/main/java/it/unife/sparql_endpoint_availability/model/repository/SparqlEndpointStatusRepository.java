@@ -21,4 +21,6 @@ public interface SparqlEndpointStatusRepository extends CrudRepository<SparqlEnd
 
     List<SparqlEndpointStatus> findSparqlEndpointStatusByQueryDateAfter(Date queryDate);
 
+    SparqlEndpointStatus findTopByOrderByQueryDate();
+
 }
