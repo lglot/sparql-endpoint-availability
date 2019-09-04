@@ -18,6 +18,8 @@ public interface SparqlEndpointManagement {
 
     List<SparqlEndpoint> getSparqlWithStatusAfterQueryDate(Date queryDate);
 
+    List<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints();
+
     /*STATUS*/
 
     List<SparqlEndpointStatus> getAllSparqlStatus();

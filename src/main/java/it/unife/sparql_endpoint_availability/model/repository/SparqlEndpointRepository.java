@@ -28,4 +28,8 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
     @Query("SELECT s from SparqlEndpoint s order by s.id")
     List<SparqlEndpoint.OnlyURL> findAllURL();
 
+    @Query("SELECT s from SparqlEndpoint s JOIN FETCH s.sparqlEndpointStatuses as st where st.queryDate in (" +
+            " SELECT max(s.queryDate) FROM SparqlEndpointStatus s group by s.sparqlEndpoint) AND st.active=true order by s.id")
+    List<SparqlEndpoint> findOnlyCurrentlyActive();
+
 }

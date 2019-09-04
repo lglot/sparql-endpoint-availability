@@ -86,7 +86,7 @@ public class SparqlEndpointAvailabiltyController {
             List<SparqlEndpointStatus> statusTemp = sparqlEndpointList.get(0).getSparqlEndpointStatuses();
             lastUpdate = sparqlEndpointManagement.findFirstQueryDate();
             firstUpdate = statusTemp.get(statusTemp.size()-1).getQueryDate();
-            weeksPassed = ChronoUnit.DAYS.between(firstUpdate.toInstant(), lastUpdate.toInstant())/7;
+            weeksPassed = ChronoUnit.DAYS.between(lastUpdate.toInstant(), firstUpdate.toInstant())/7;
         }
 
         /*for (SparqlEndpoint sparqlEndpoint : sparqlEndpointList) {
@@ -186,10 +186,15 @@ public class SparqlEndpointAvailabiltyController {
         return sparqlEndpointManagement.getSparqlWithStatusAfterQueryDate(previousWeek.getTime());
     }
 
-    @GetMapping(path = "/status/all")
+    @GetMapping(path = "/active")
+    public @ResponseBody Iterable<SparqlEndpoint> getCurrentlyActive(){
+        return sparqlEndpointManagement.getCurrentlyActiveSparqlEndpoints();
+    }
+
+    /*@GetMapping(path = "/status/all")
     public @ResponseBody
     Iterable<SparqlEndpointStatus> getAllSparqlStatus() {
         return sparqlEndpointManagement.getAllSparqlStatus();
-    }
+    }*/
 }
 

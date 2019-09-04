@@ -76,6 +76,11 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
         return sparqlEndpointRepository.findAllAfterQueryDateStatus(queryDate);
     }
 
+    @Override
+    public List<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints() {
+        return sparqlEndpointRepository.findOnlyCurrentlyActive();
+    }
+
 
 
 
