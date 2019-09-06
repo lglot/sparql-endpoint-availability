@@ -27,20 +27,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 
 @Controller
 @RequestMapping(path = "/sparql-endpoint-availability")
-public class SparqlEndpointAvailabiltyController {
+public class SparqlEndpointAvailabilityController {
 
     private final SparqlEndpointManagement sparqlEndpointManagement;
     private final SparqlEndpointStatusConfig statusConfig;
 
-    private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointAvailabiltyController.class);
+    private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointAvailabilityController.class);
 
     @Autowired
-    public SparqlEndpointAvailabiltyController(SparqlEndpointManagement sparqlEndpointManagement, SparqlEndpointStatusConfig statusConfig) {
+    public SparqlEndpointAvailabilityController(SparqlEndpointManagement sparqlEndpointManagement, SparqlEndpointStatusConfig statusConfig) {
         this.sparqlEndpointManagement = sparqlEndpointManagement;
         this.statusConfig = statusConfig;
     }
@@ -79,7 +79,7 @@ public class SparqlEndpointAvailabiltyController {
         Calendar previousWeek = Calendar.getInstance();
         previousWeek.add(Calendar.WEEK_OF_YEAR, -1);
 
-        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.getSparqlWithStatusAfterQueryDate(previousWeek.getTime());
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.getSEWithStatusAfterQueryDate(previousWeek.getTime());
 
         if (sparqlEndpointList.size() > 0) {
 
@@ -88,36 +88,6 @@ public class SparqlEndpointAvailabiltyController {
             firstUpdate = statusTemp.get(statusTemp.size()-1).getQueryDate();
             weeksPassed = ChronoUnit.DAYS.between(lastUpdate.toInstant(), firstUpdate.toInstant())/7;
         }
-
-        /*for (SparqlEndpoint sparqlEndpoint : sparqlEndpointList) {
-
-            SparqlEndpointStatusSummary statusSummary = new SparqlEndpointStatusSummary();
-
-            if (sparqlEndpoint.getSparqlEndpointStatuses().get(0).isActive()) {
-               // sparqlStatusMap.put(sparqlEndpoint.getServiceURL(), statusConfig.getActive());
-                statusSummary.setStatusString(statusConfig.getActive());
-                numberActive++;
-
-            } else if(weeksPassed<1){
-                //sparqlStatusMap.put(sparqlEndpoint.getServiceURL(),statusConfig.getGeneralInactive());
-                statusSummary.setStatusString(statusConfig.getGeneralInactive());
-            }
-            if (sparqlEndpoint.getSparqlEndpointStatuses().size() > 1) {
-
-                boolean found = false;
-                int i = 1;
-                while (!found && i < sparqlEndpoint.getSparqlEndpointStatuses().size()) {
-                    SparqlEndpointStatus status = sparqlEndpoint.getSparqlEndpointStatuses().get(i);
-                    if (status.isActive()) {
-                        sparqlStatusMap.put(sparqlEndpoint.getServiceURL(), statusConfig.getInactiveLessweek());
-                        found = true;
-                    }
-                    i++;
-                }
-                if (!found) sparqlStatusMap.put(sparqlEndpoint.getServiceURL(), statusConfig.getInactiveMoreweek());
-            }
-        }*/
-
 
         for(SparqlEndpoint sparqlEndpoint : sparqlEndpointList){
 
@@ -163,38 +133,5 @@ public class SparqlEndpointAvailabiltyController {
 
     }
 
-    @GetMapping(path = "/all")
-    public @ResponseBody
-    Iterable<SparqlEndpoint.OnlyURL> getSparqlEndpointURL() {
-        return sparqlEndpointManagement.getAllSparqlEndopoint();
-    }
-
-    @GetMapping(path = "/status/current")
-    public @ResponseBody
-    Iterable<SparqlEndpoint> getLastUpdate() {
-        // return sparqlEndpointManagement.getCurrentSparqlStatus();
-        return sparqlEndpointManagement.getSparqlWithCurrentStatus();
-    }
-
-    @GetMapping(path = "/status/week")
-    public @ResponseBody
-    Iterable<SparqlEndpoint> getAfterQueryDate() {
-
-        Calendar previousWeek = Calendar.getInstance();
-        previousWeek.add(Calendar.WEEK_OF_YEAR, -1);
-        logger.info("Requested sparql endopoint availabilty from previuos week " + previousWeek.getTime().toString());
-        return sparqlEndpointManagement.getSparqlWithStatusAfterQueryDate(previousWeek.getTime());
-    }
-
-    @GetMapping(path = "/active")
-    public @ResponseBody Iterable<SparqlEndpoint> getCurrentlyActive(){
-        return sparqlEndpointManagement.getCurrentlyActiveSparqlEndpoints();
-    }
-
-    /*@GetMapping(path = "/status/all")
-    public @ResponseBody
-    Iterable<SparqlEndpointStatus> getAllSparqlStatus() {
-        return sparqlEndpointManagement.getAllSparqlStatus();
-    }*/
 }
 

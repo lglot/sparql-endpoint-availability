@@ -12,13 +12,19 @@ public interface SparqlEndpointManagement {
 
     void saveStatuses(List<SparqlEndpointStatus> sparqlEndpointStatuses);
 
-    List<SparqlEndpoint.OnlyURL> getAllSparqlEndopoint();
+    List<SparqlEndpoint.OnlyURL> getAllSE();
 
-    List<SparqlEndpoint> getSparqlWithCurrentStatus();
+    SparqlEndpoint.OnlyURL getSEById(Long id);
 
-    List<SparqlEndpoint> getSparqlWithStatusAfterQueryDate(Date queryDate);
+    List<SparqlEndpoint> getAllSEWithStatus();
 
-    List<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints();
+    List<SparqlEndpoint> getSEWithCurrentStatus();
+
+    SparqlEndpoint getSEWithCurrentStatusById(Long id);
+
+    List<SparqlEndpoint> getSEWithStatusAfterQueryDate(Date queryDate);
+
+    List<SparqlEndpoint> getCurrentlyActiveSE();
 
     /*STATUS*/
 

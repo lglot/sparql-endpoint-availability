@@ -1,6 +1,6 @@
 package it.unife.sparql_endpoint_availability.service.resourceManagement.FileImpl;
 
-import it.unife.sparql_endpoint_availability.controller.SparqlEndpointAvailabiltyController;
+import it.unife.sparql_endpoint_availability.controller.SparqlEndpointAvailabilityController;
 import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlListResource;
 
 import java.io.BufferedReader;
@@ -17,7 +17,7 @@ public class SparqlListResourceFileImpl implements SparqlListResource {
     private long lastModified;
 
     public SparqlListResourceFileImpl(String fileName) {
-        String filePath = Objects.requireNonNull(SparqlEndpointAvailabiltyController.class.getClassLoader().getResource(fileName)).getFile();
+        String filePath = Objects.requireNonNull(SparqlEndpointAvailabilityController.class.getClassLoader().getResource(fileName)).getFile();
         file = new File(filePath);
         lastModified = file.lastModified();
     }

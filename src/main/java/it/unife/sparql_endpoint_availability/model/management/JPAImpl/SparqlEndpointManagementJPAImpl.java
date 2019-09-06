@@ -57,27 +57,43 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
 
     @Override
     @Transactional(readOnly = true)
-    public List<SparqlEndpoint.OnlyURL> getAllSparqlEndopoint() {
+    public List<SparqlEndpoint.OnlyURL> getAllSE() {
         return sparqlEndpointRepository.findAllURL();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SparqlEndpoint.OnlyURL getSEById(Long id) {
+        return sparqlEndpointRepository.findSparqlEndpointsById(id);
+    }
+
+    @Override
+    public List<SparqlEndpoint> getAllSEWithStatus() {
+        return (List<SparqlEndpoint>) sparqlEndpointRepository.findAll();
     }
 
     /*GET sparql URL with STATUS LIST*/
 
     @Override
     @Transactional(readOnly = true)
-    public List<SparqlEndpoint> getSparqlWithCurrentStatus() {
+    public List<SparqlEndpoint> getSEWithCurrentStatus() {
 
        return sparqlEndpointRepository.findAllWithLastStatus();
     }
 
     @Override
+    public SparqlEndpoint getSEWithCurrentStatusById(Long id) {
+        return sparqlEndpointRepository.findByIdWithLastStatus(id);
+    }
+
+    @Override
     @Transactional(readOnly = true)
-    public List<SparqlEndpoint> getSparqlWithStatusAfterQueryDate(Date queryDate) {
+    public List<SparqlEndpoint> getSEWithStatusAfterQueryDate(Date queryDate) {
         return sparqlEndpointRepository.findAllAfterQueryDateStatus(queryDate);
     }
 
     @Override
-    public List<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints() {
+    public List<SparqlEndpoint> getCurrentlyActiveSE() {
         return sparqlEndpointRepository.findOnlyCurrentlyActive();
     }
 
