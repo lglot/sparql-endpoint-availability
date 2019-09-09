@@ -7,6 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.NotNull;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -39,5 +41,7 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
     @Query("SELECT s from SparqlEndpoint s JOIN FETCH s.sparqlEndpointStatuses as st where st.queryDate in (" +
             " SELECT max(s.queryDate) FROM SparqlEndpointStatus s group by s.sparqlEndpoint) AND st.active=true order by s.id")
     List<SparqlEndpoint> findOnlyCurrentlyActive();
+
+    void deleteByServiceURLIn(Collection<@NotNull String> serviceURL);
 
 }

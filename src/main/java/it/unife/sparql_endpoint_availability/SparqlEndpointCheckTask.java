@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -38,19 +39,19 @@ class SparqlEndpointCheckTask {
         this.sparqlEndpointManagement=sparqlEndpointManagement;
         this.sparqlListResource=sparqlListResource;
         this.sparqlEndpointQueryService=sparqlEndpointQueryService;
-
+        sparqlEndpointList=(this.sparqlEndpointManagement).getAllSparqlEndpoints();
         iterator = 1;
     }
 
     @Scheduled(fixedRate=1000*60*60)
     @Transactional
     public void service(){
-        /*Read spaql endpoint URL from resource and save them to DATA*/
+        /*Read sparql endpoint URL from resource and save them to DATA*/
 
         if(sparqlListResource.isModified() || iterator==1) {
             logger.info((iterator!=1)? "Sparql URL list Resource has been modified - " : "" + "Updating Sparql Endpoint List from Resource");
             List<String> sparqlEndpointURLlist = sparqlListResource.read();
-            sparqlEndpointList = sparqlEndpointManagement.saveAndGet(sparqlEndpointURLlist);
+            sparqlEndpointList = sparqlEndpointManagement.update(sparqlEndpointList,sparqlEndpointURLlist);
         }
 
         /*Execute query and save status to DATA*/

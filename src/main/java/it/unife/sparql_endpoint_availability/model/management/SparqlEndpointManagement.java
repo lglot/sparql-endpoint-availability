@@ -8,31 +8,25 @@ import java.util.List;
 
 public interface SparqlEndpointManagement {
 
-    List<SparqlEndpoint> saveAndGet(List<String> sparqlUrlList);
+    List<SparqlEndpoint> update(List<SparqlEndpoint> sparqlEndpointList, List<String> sparqlUrlList);
 
     void saveStatuses(List<SparqlEndpointStatus> sparqlEndpointStatuses);
 
-    List<SparqlEndpoint.OnlyURL> getAllSE();
+    List<SparqlEndpoint.OnlyURL> getAllURLSparqlEndpoints();
 
-    SparqlEndpoint.OnlyURL getSEById(Long id);
+    SparqlEndpoint.OnlyURL getURLSparqlEndpointById(Long id);
 
-    List<SparqlEndpoint> getAllSEWithStatus();
+    List<SparqlEndpoint> getAllSparqlEndpoints();
 
-    List<SparqlEndpoint> getSEWithCurrentStatus();
+    List<SparqlEndpoint> getSparqlEndpointsWithCurrentStatus();
 
-    SparqlEndpoint getSEWithCurrentStatusById(Long id);
+    SparqlEndpoint getSparqlEndpointWithCurrentStatusById(Long id);
 
-    List<SparqlEndpoint> getSEWithStatusAfterQueryDate(Date queryDate);
+    List<SparqlEndpoint> getSparqlEndpointsAfterQueryDate(Date queryDate);
 
-    List<SparqlEndpoint> getCurrentlyActiveSE();
+    List<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints();
 
     /*STATUS*/
-
-    List<SparqlEndpointStatus> getAllSparqlStatus();
-
-    List<SparqlEndpointStatus> getCurrentSparqlStatus();
-
-    List<SparqlEndpointStatus> getSparqlStatusAfterQueryDate(Date queryDate);
 
     Date findFirstQueryDate();
 

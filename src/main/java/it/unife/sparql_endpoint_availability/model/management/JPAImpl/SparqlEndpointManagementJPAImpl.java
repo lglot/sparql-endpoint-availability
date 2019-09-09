@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import javax.validation.constraints.NotNull;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,28 +23,36 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
 
     @Autowired
     public SparqlEndpointManagementJPAImpl(SparqlEndpointRepository sparqlEndpointRepository,
-                                           SparqlEndpointStatusRepository sparqlEndpointStatusRepository){
-        this.sparqlEndpointRepository=sparqlEndpointRepository;
-        this.sparqlEndpointStatusRepository=sparqlEndpointStatusRepository;
+                                           SparqlEndpointStatusRepository sparqlEndpointStatusRepository) {
+        this.sparqlEndpointRepository = sparqlEndpointRepository;
+        this.sparqlEndpointStatusRepository = sparqlEndpointStatusRepository;
     }
 
 
     @Override
     @Transactional
-    public List<SparqlEndpoint> saveAndGet(List<String> sparqlUrlList) {
+    /*Metodo per aggiornare la lista degli sparql Endpoint sul DB,in input il metodo riceve la lista presente attualmente sul DB
+    * e la lista degli URL degli endpoint letti da file. Nello specifico verrannò aggiunti al DB gli endpoint trovati nella lista-file che
+    * non sono nella lista-DB, e viceversa verranno cancellati dal DB, gli endpoint della lista-DB che non sono presenti nella lista-file */
+    public List<SparqlEndpoint> update(List<SparqlEndpoint> sparqlListDB, List<String> sparqlUrlListResource) {
 
-        List<SparqlEndpoint> sparqlEndpointListToSave = new ArrayList<>();
+        List<String> sparqlUrlListDB = sparqlListDB.stream().map(SparqlEndpoint::getServiceURL).collect(Collectors.toList());
+        List<String> sparqlUrlResource1 = new ArrayList<>(sparqlUrlListResource);
 
-        for (String serviceURL : sparqlUrlList) {
-            if (!sparqlEndpointRepository.existsSparqlEndpointByServiceURL(serviceURL)) {
-                SparqlEndpoint sparqlEndpoint = new SparqlEndpoint();
-                sparqlEndpoint.setServiceURL(serviceURL);
-                sparqlEndpointListToSave.add(sparqlEndpoint);
-            }
-        }
-        if (sparqlEndpointListToSave.size() > 0)
-            sparqlEndpointRepository.saveAll(sparqlEndpointListToSave);
+        sparqlUrlListResource.removeAll(sparqlUrlListDB);
+        sparqlUrlListDB.removeAll(sparqlUrlResource1);
 
+        Set<SparqlEndpoint> sparqlEndpointSetToSave = sparqlUrlListResource.stream().map(serviceURL -> {
+            SparqlEndpoint sparqlEndpoint = new SparqlEndpoint();
+            sparqlEndpoint.setServiceURL(serviceURL);
+            return sparqlEndpoint;
+        }).collect(Collectors.toSet());
+
+        if (sparqlEndpointSetToSave.size() > 0)
+            sparqlEndpointRepository.saveAll(sparqlEndpointSetToSave);
+
+        if(sparqlUrlListDB.size()>0)
+            sparqlEndpointRepository.deleteByServiceURLIn(sparqlUrlListDB);
 
         return (List<SparqlEndpoint>) sparqlEndpointRepository.findAll();
     }
@@ -57,18 +65,18 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
 
     @Override
     @Transactional(readOnly = true)
-    public List<SparqlEndpoint.OnlyURL> getAllSE() {
+    public List<SparqlEndpoint.OnlyURL> getAllURLSparqlEndpoints() {
         return sparqlEndpointRepository.findAllURL();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public SparqlEndpoint.OnlyURL getSEById(Long id) {
+    public SparqlEndpoint.OnlyURL getURLSparqlEndpointById(Long id) {
         return sparqlEndpointRepository.findSparqlEndpointsById(id);
     }
 
     @Override
-    public List<SparqlEndpoint> getAllSEWithStatus() {
+    public List<SparqlEndpoint> getAllSparqlEndpoints() {
         return (List<SparqlEndpoint>) sparqlEndpointRepository.findAll();
     }
 
@@ -76,49 +84,25 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
 
     @Override
     @Transactional(readOnly = true)
-    public List<SparqlEndpoint> getSEWithCurrentStatus() {
+    public List<SparqlEndpoint> getSparqlEndpointsWithCurrentStatus() {
 
-       return sparqlEndpointRepository.findAllWithLastStatus();
+        return sparqlEndpointRepository.findAllWithLastStatus();
     }
 
     @Override
-    public SparqlEndpoint getSEWithCurrentStatusById(Long id) {
+    public SparqlEndpoint getSparqlEndpointWithCurrentStatusById(Long id) {
         return sparqlEndpointRepository.findByIdWithLastStatus(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<SparqlEndpoint> getSEWithStatusAfterQueryDate(Date queryDate) {
+    public List<SparqlEndpoint> getSparqlEndpointsAfterQueryDate(Date queryDate) {
         return sparqlEndpointRepository.findAllAfterQueryDateStatus(queryDate);
     }
 
     @Override
-    public List<SparqlEndpoint> getCurrentlyActiveSE() {
+    public List<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints() {
         return sparqlEndpointRepository.findOnlyCurrentlyActive();
-    }
-
-
-
-
-    /*GET only Status*/
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<SparqlEndpointStatus> getAllSparqlStatus() {
-        return (List<SparqlEndpointStatus>) sparqlEndpointStatusRepository.findAll();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<SparqlEndpointStatus> getCurrentSparqlStatus() {
-        return sparqlEndpointStatusRepository.findLastSparqlEnpointStatus();
-
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<SparqlEndpointStatus> getSparqlStatusAfterQueryDate(Date queryDate) {
-        return sparqlEndpointStatusRepository.findSparqlEndpointStatusByQueryDateAfter(queryDate);
     }
 
     @Override

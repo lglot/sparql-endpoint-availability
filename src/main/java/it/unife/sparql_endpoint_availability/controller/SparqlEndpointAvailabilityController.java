@@ -56,8 +56,7 @@ public class SparqlEndpointAvailabilityController {
         SparqlListResource sparqlListResource = ctx.getBean(SparqlListResource.class);
 
         /*Read spaql endpoint URL from resource and save them to DATA*/
-        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.saveAndGet(sparqlListResource.read());
-
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.update(sparqlEndpointManagement.getAllSparqlEndpoints(),sparqlListResource.read());
 
         SparqlEndpointQueryService sparqlEndpointQueryService = ctx.getBean(SparqlEndpointQueryService.class);
         sparqlEndpointManagement.saveStatuses(sparqlEndpointQueryService.executeQuery(sparqlEndpointList));
@@ -79,7 +78,7 @@ public class SparqlEndpointAvailabilityController {
         Calendar previousWeek = Calendar.getInstance();
         previousWeek.add(Calendar.WEEK_OF_YEAR, -1);
 
-        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.getSEWithStatusAfterQueryDate(previousWeek.getTime());
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.getSparqlEndpointsAfterQueryDate(previousWeek.getTime());
 
         if (sparqlEndpointList.size() > 0) {
 

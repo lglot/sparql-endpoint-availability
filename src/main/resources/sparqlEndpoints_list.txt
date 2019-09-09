@@ -54,3 +54,4 @@ http://api.kasabi.com/dataset/bricklink/apis/sparql
 http://collection.britishmuseum.org/Sparql
 http://bnb.data.bl.uk/sparql
 http://budapest.rkbexplorer.com/sparql/
+https://labs.mondeca.com/sparqlEndpointsStatus/details/bio2rdf-cas.html

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Calendar;
 
 @RestController
-@RequestMapping(path = "/sparql-endpoints")
+@RequestMapping(path = "/sparql-endpoint")
 public class SparqlEndpointAvailabilityRestController {
 
     private final SparqlEndpointManagement sparqlEndpointManagement;
@@ -29,12 +29,12 @@ public class SparqlEndpointAvailabilityRestController {
 
     @GetMapping(path = "")
     public Iterable<SparqlEndpoint.OnlyURL> getSparqlEndpoints() {
-        return sparqlEndpointManagement.getAllSE();
+        return sparqlEndpointManagement.getAllURLSparqlEndpoints();
     }
 
     @GetMapping(path = "/{id}")
     public SparqlEndpoint.OnlyURL getSparqlEndpoint(@PathVariable String id) {
-        return sparqlEndpointManagement.getSEById(Long.parseLong(id));
+        return sparqlEndpointManagement.getURLSparqlEndpointById(Long.parseLong(id));
     }
 
     /*@GetMapping(path = "/status")
@@ -44,12 +44,12 @@ public class SparqlEndpointAvailabilityRestController {
 
     @GetMapping(path = "/status/current")
     public Iterable<SparqlEndpoint> getMostRecentStatusSparqlEndpoints() {
-        return sparqlEndpointManagement.getSEWithCurrentStatus();
+        return sparqlEndpointManagement.getSparqlEndpointsWithCurrentStatus();
     }
 
     @GetMapping(path = "/status/current/{id}")
     public SparqlEndpoint getMostRecentStatusSparqlEndpointsById(@PathVariable Long id) {
-        return sparqlEndpointManagement.getSEWithCurrentStatusById(id);
+        return sparqlEndpointManagement.getSparqlEndpointWithCurrentStatusById(id);
     }
 
     @GetMapping(path = "/status/weekly-history")
@@ -58,12 +58,12 @@ public class SparqlEndpointAvailabilityRestController {
         Calendar previousWeek = Calendar.getInstance();
         previousWeek.add(Calendar.WEEK_OF_YEAR, -1);
         logger.info("Requested sparql endopoint availabilty from previuos week " + previousWeek.getTime().toString());
-        return sparqlEndpointManagement.getSEWithStatusAfterQueryDate(previousWeek.getTime());
+        return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDate(previousWeek.getTime());
     }
 
     @GetMapping(path = "/status/current/active")
     public Iterable<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints(){
-        return sparqlEndpointManagement.getCurrentlyActiveSE();
+        return sparqlEndpointManagement.getCurrentlyActiveSparqlEndpoints();
     }
 
 }
