@@ -37,10 +37,10 @@ public class SparqlEndpointAvailabilityRestController {
         return sparqlEndpointManagement.getSEById(Long.parseLong(id));
     }
 
-    @GetMapping(path = "/status")
+    /*@GetMapping(path = "/status")
     public Iterable<SparqlEndpoint> getAllStatusSparqlEndpoints(){
         return sparqlEndpointManagement.getAllSEWithStatus();
-    }
+    }*/
 
     @GetMapping(path = "/status/current")
     public Iterable<SparqlEndpoint> getMostRecentStatusSparqlEndpoints() {
