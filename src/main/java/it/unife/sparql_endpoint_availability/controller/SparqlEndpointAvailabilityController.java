@@ -84,9 +84,9 @@ public class SparqlEndpointAvailabilityController {
         if (sparqlEndpointList.size() > 0) {
 
             List<SparqlEndpointStatus> statusTemp = sparqlEndpointList.get(0).getSparqlEndpointStatuses();
-            lastUpdate = sparqlEndpointManagement.findFirstQueryDate();
-            firstUpdate = statusTemp.get(statusTemp.size()-1).getQueryDate();
-            weeksPassed = ChronoUnit.DAYS.between(lastUpdate.toInstant(), firstUpdate.toInstant())/7;
+            firstUpdate = sparqlEndpointManagement.findFirstQueryDate();
+            lastUpdate  = statusTemp.get(0).getQueryDate();
+            weeksPassed = ChronoUnit.DAYS.between(firstUpdate.toInstant(), lastUpdate.toInstant())/7;
         }
 
         for(SparqlEndpoint sparqlEndpoint : sparqlEndpointList){

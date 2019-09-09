@@ -1,22 +1,10 @@
 table, th, td {
     border: 1px solid black;
-    width: 300px;
+    /*width: 300px;*/
 }
 
 table{
     margin-top: 20px;
-}
-
-thead {
-    color: black;
-}
-
-tbody {
-    color: blue;
-}
-
-tfoot {
-    color: black;
 }
 
 nav{

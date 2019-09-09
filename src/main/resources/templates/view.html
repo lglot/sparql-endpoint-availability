@@ -52,7 +52,8 @@
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
         <h1 class="display-4" th:text="#{service.title}">Title</h1>
-        <p class="lead" th:utext="#{service.description1}+'<br><code>SELECT * WHERE {?s ?p ?o} LIMIT 1</code><br>'+#{service.description2}">
+        <p class="lead"
+           th:utext="#{service.description1}+'<br><code>SELECT * WHERE {?s ?p ?o} LIMIT 1</code><br>'+#{service.description2}">
             Description</p>
         <hr>
         <div class="lead">
@@ -63,6 +64,23 @@
     </div>
 </div>
 
+<fieldset class="border p-2 container">
+    <legend th:text="#{legend}" class="w-auto">Legend</legend>
+    <div class="row container" >
+        <div class="col-sm-2 media">
+            <img class="float-left mr-3" th:src="@{/image/green.png}" src="../static/image/green.png" alt="active">
+            <span class="media-body" th:text="#{status.active}"></span>
+        </div>
+        <div class="col-sm-5 media">
+            <img class="float-left mr-3" th:src="@{/image/orange.png}" src="../static/image/orange.png" alt="active">
+            <span class="media-body" th:text="#{status.inactive.lessweek}"></span>
+        </div>
+        <div class="col-sm-5 media">
+            <img class="float-left mr-3" th:src="@{/image/red.png}" src="../static/image/red.png" alt="active">
+            <span class="media-body" th:text="#{status.inactive.moreweek}"></span>
+        </div>
+    </div>
+</fieldset>
 
 <!--table-->
 <div class="container">
@@ -78,20 +96,29 @@
 
         <tbody>
         <tr th:scope="row" th:each="service : ${sparqlStatusMap}">
-            <td th:text="${service.key}" style="color:black;"></td>
+            <td th:text="${service.key}"></td>
             <td class="statusLabel lead" th:switch="${service.value.statusString}">
-                <p th:case="${@environment.getProperty('sparql.endpoint.status.active')}" th:text="#{status.active}"
-                   style="color: green"></p>
-                <p th:case="${@environment.getProperty('sparql.endpoint.status.inactive_lessweek')}"
+                <!--<p th:case="${@environment.getProperty('sparql.endpoint.status.active')}" th:text="#{status.active}"
+                   style="color: green"></p>-->
+                <img th:case="${@environment.getProperty('sparql.endpoint.status.active')}"
+                     th:src="@{/image/green.png}" src="../static/image/green.png" alt="active">
+
+                <!--<p th:case="${@environment.getProperty('sparql.endpoint.status.inactive_lessweek')}"
                    th:text="#{status.inactive.lessweek}"
-                   style="color: #ff9a0d"></p>
-                <p th:case="${@environment.getProperty('sparql.endpoint.status.inactive_moreweek')}"
+                   style="color: #ff9a0d"></p>-->
+                <img th:case="${@environment.getProperty('sparql.endpoint.status.inactive_lessweek')}"
+                     th:src="@{/image/orange.png}" src="../static/image/orange.png" alt="active">
+                <!--<p th:case="${@environment.getProperty('sparql.endpoint.status.inactive_moreweek')}"
                    th:text="#{status.inactive.moreweek}"
-                   style="color: red"></p>
-                <p th:case="${@environment.getProperty('sparql.endpoint.status.general_inactive')}"
-                   th:text="#{status.inactive}" style="color: red"></p>
+                   style="color: red"></p>-->
+                <img th:case="${@environment.getProperty('sparql.endpoint.status.inactive_moreweek')}"
+                     th:src="@{/image/red.png}" src="../static/image/red.png" alt="active">
+                <!--<p th:case="${@environment.getProperty('sparql.endpoint.status.general_inactive')}"
+                   th:text="#{status.inactive}" style="color: red"></p>-->
+                <img th:case="${@environment.getProperty('sparql.endpoint.status.general_inactive')}"
+                     th:src="@{/image/red.png}" src="../static/image/red.png" alt="active">
             </td>
-            <td class="lead" th:text="${#numbers.formatPercent(service.value.uptimelast7d,1,2)}" style="color: black"></td>
+            <td class="lead" th:text="${#numbers.formatPercent(service.value.uptimelast7d,1,2)}"></td>
         </tr>
         </tbody>
     </table>
