@@ -51,9 +51,4 @@ public class SparqlEndpoint {
     public void setSparqlEndpointStatuses(List<SparqlEndpointStatus> sparqlEndpointStatuses) {
         this.sparqlEndpointStatuses = sparqlEndpointStatuses;
     }
-
-    @Override
-    public String toString(){
-        return "1: " + this.getId() + " 2: " + this.getServiceURL();
-    }
 }

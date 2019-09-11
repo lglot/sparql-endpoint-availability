@@ -46,8 +46,8 @@ class SparqlEndpointCheckTask {
     @Scheduled(fixedRate=1000*60*60)
     @Transactional
     public void service(){
-        /*Read sparql endpoint URL from resource and save them to DATA*/
 
+        /*Read sparql endpoint URL from resource and save them to DATA*/
         if(sparqlListResource.isModified() || iterator==1) {
             logger.info((iterator!=1)? "Sparql URL list Resource has been modified - " : "" + "Updating Sparql Endpoint List from Resource");
             List<String> sparqlEndpointURLlist = sparqlListResource.read();
@@ -59,7 +59,7 @@ class SparqlEndpointCheckTask {
 
         sparqlEndpointManagement.saveStatuses(sparqlEndpointStatuses);
 
-        logger.info("Executed Scheduled Check "+ iterator +" in date "+ new Timestamp(System.currentTimeMillis()).toString());
+        logger.info("Executed Scheduled Check "+ iterator +" terminated in date "+ new Timestamp(System.currentTimeMillis()).toString());
         iterator++;
     }
 }

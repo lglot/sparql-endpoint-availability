@@ -58,7 +58,7 @@
         <hr>
         <div class="lead">
             <p th:text="#{last.update(${lastUpdate})}">Last Update:</p>
-            <p th:text="#{service.weeks.passed(${weeksPassed})}">Weeks Passed</p>
+            <p th:text="#{service.weeks.passed(${daysPassed})}">Days Passed</p>
             <p th:text="#{number.available(${numberActive},${sparqlStatusMap.size()})}">Endpoints Available</p>
         </div>
     </div>
@@ -88,15 +88,16 @@
         <caption th:text="#{title.list}">List of Spraql Endpoint</caption>
         <thead class="thead-dark">
         <tr>
-            <th scope="col" th:text="#{col.name1}">Service</th>
-            <th scope="col" th:text="#{col.name2}">STATUS</th>
-            <th scope="col" th:text="#{col.name3}">Uptime last 7days</th>
+            <th style="width: 65%" scope="col" th:text="#{col.name1}">Service</th>
+            <th style="width: 5%" scope="col" th:text="#{col.name2}">STATUS</th>
+            <th style="width: 15%" scope="col" th:text="#{col.name3}">Uptime last 24h</th>
+            <th style="width: 15%" scope="col" th:text="#{col.name4}">Uptime last 7days</th>
         </tr>
         </thead>
 
         <tbody>
         <tr th:scope="row" th:each="service : ${sparqlStatusMap}">
-            <td th:text="${service.key}"></td>
+            <td class="serviceLabel text-break" ><a th:text="${service.key}" th:href="${service.key}">Service</a></td>
             <td class="statusLabel lead" th:switch="${service.value.statusString}">
                 <!--<p th:case="${@environment.getProperty('sparql.endpoint.status.active')}" th:text="#{status.active}"
                    style="color: green"></p>-->
@@ -118,7 +119,8 @@
                 <img th:case="${@environment.getProperty('sparql.endpoint.status.general_inactive')}"
                      th:src="@{/image/red.png}" src="../static/image/red.png" alt="active">
             </td>
-            <td class="lead" th:text="${#numbers.formatPercent(service.value.uptimelast7d,1,2)}"></td>
+            <td class="lead" th:text="${#numbers.formatPercent(service.value.uptimeLast24h,1,2)}">Uptime last 24h</td>
+            <td class="lead" th:text="${#numbers.formatPercent(service.value.uptimelast7d,1,2)}">Uptime last 7d</td>
         </tr>
         </tbody>
     </table>

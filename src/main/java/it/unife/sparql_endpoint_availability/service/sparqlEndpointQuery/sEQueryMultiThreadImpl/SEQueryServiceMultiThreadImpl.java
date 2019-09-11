@@ -42,6 +42,7 @@ public class SEQueryServiceMultiThreadImpl implements SparqlEndpointQueryService
             for (SparqlEndpointsQueryThread thread : threads) {
                 thread.join();
                 statusList.addAll(thread.getSparqlEndpointStatusList());
+                //System.out.println(thread.getName()+" "+thread.getState().toString());
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

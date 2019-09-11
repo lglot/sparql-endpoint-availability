@@ -10,6 +10,7 @@ public class SparqlEndpointStatusConfig {
     /* STATUS OF ENDPOINTS */
 
     private String active;
+    private String inactiveLessday;
     private String inactiveLessweek;
     private String inactiveMoreweek;
     private String generalInactive;
@@ -44,5 +45,13 @@ public class SparqlEndpointStatusConfig {
 
     public void setGeneralInactive(String generalInactive) {
         this.generalInactive = generalInactive;
+    }
+
+    public String getInactiveLessday() {
+        return inactiveLessday;
+    }
+
+    public void setInactiveLessday(String inactiveLessday) {
+        this.inactiveLessday = inactiveLessday;
     }
 }

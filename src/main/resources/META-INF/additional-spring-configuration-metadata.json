@@ -19,5 +19,10 @@
       "name": "sparql.endpoint.status.general_inactive",
       "type": "java.lang.String",
       "description": "Description for sparql.endpoint.status.general_inactive."
+    },
+    {
+      "name": "sparql.endpoint.status.inactive_lessday",
+      "type": "java.lang.String",
+      "description": "Description for sparql.endpoint.status.inactive_lessday."
     }
   ] }

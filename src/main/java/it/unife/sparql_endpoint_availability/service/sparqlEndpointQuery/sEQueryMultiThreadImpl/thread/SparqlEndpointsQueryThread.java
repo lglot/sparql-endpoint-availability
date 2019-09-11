@@ -28,11 +28,11 @@ public class SparqlEndpointsQueryThread extends Thread {
         this.partialSparqlEndpointsList = partialSparqlEndpointsList;
     }
 
-    public List<SparqlEndpointStatus> getSparqlEndpointStatusList(){
+    public List<SparqlEndpointStatus> getSparqlEndpointStatusList() {
         return sparqlEndpointStatusList;
     }
 
-    public SparqlEndpointsQueryThread(){
+    public SparqlEndpointsQueryThread() {
         super();
         sparqlEndpointStatusList = new ArrayList<>();
     }
@@ -46,20 +46,20 @@ public class SparqlEndpointsQueryThread extends Thread {
             status.setSparqlEndpoint(sparqlEndpoint);
 
             String sparqlQueryString = "SELECT * WHERE {?s ?p ?o} LIMIT 1";
-
             try (QueryExecution qexec = QueryExecutionFactory.sparqlService(sparqlEndpoint.getServiceURL(), sparqlQueryString)) {
-                    qexec.setTimeout(60, TimeUnit.SECONDS);
-                    ResultSet rs = qexec.execSelect();
-                    if (rs.hasNext()) {
-                        status.setActive(true);
-                    }
-                    else status.setActive(true);
-                } catch (Exception e) {
-                    status.setActive(false);
+                qexec.setTimeout(60, TimeUnit.SECONDS);
+                ResultSet rs = qexec.execSelect();
+                if (rs.hasNext()) {
+                    status.setActive(true);
+                }
+                //else status.setActive(true);
+            } catch (Exception e) {
+                status.setActive(false);
 
             }
             status.setQueryDate(new Timestamp(System.currentTimeMillis()));
             sparqlEndpointStatusList.add(status);
         }
+
     }
 }
