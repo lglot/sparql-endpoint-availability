@@ -9,12 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.NotNull;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement {
 
 
@@ -76,8 +75,9 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<SparqlEndpoint> getAllSparqlEndpoints() {
-        return (List<SparqlEndpoint>) sparqlEndpointRepository.findAll();
+        return sparqlEndpointRepository.findAllByOrderById();
     }
 
     /*GET sparql URL with STATUS LIST*/
@@ -90,6 +90,7 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
     }
 
     @Override
+    @Transactional(readOnly = true)
     public SparqlEndpoint getSparqlEndpointWithCurrentStatusById(Long id) {
         return sparqlEndpointRepository.findByIdWithLastStatus(id);
     }
@@ -101,6 +102,13 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public SparqlEndpoint getSparqlEndpointsAfterQueryDateById(Date queryDate,Long id){
+        return sparqlEndpointRepository.findByIdAfterQueryDateStatus(queryDate,id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints() {
         return sparqlEndpointRepository.findOnlyCurrentlyActive();
     }

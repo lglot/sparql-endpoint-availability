@@ -24,6 +24,8 @@ public interface SparqlEndpointManagement {
 
     List<SparqlEndpoint> getSparqlEndpointsAfterQueryDate(Date queryDate);
 
+    SparqlEndpoint getSparqlEndpointsAfterQueryDateById(Date queryDate,Long id);
+
     List<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints();
 
     /*STATUS*/

@@ -23,11 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Timestamp;
 import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
+import java.util.*;
 
 
 @Controller
@@ -69,7 +65,7 @@ public class SparqlEndpointAvailabilityController {
     public String view(@RequestParam(name="lang",required = false,defaultValue = "en") String lang, Model model) {
 
         /*HTTP PARAMETERS*/
-        HashMap<String, SparqlEndpointStatusSummary> sparqlStatusMap = new HashMap<>();
+        SortedMap<Long, SparqlEndpointStatusSummary> sparqlStatusMap = new TreeMap<>();
         int numberActive = 0;
         Date lastUpdate = null;
         Date firstUpdate;
@@ -95,6 +91,8 @@ public class SparqlEndpointAvailabilityController {
         for(SparqlEndpoint sparqlEndpoint : sparqlEndpointList){
 
             SparqlEndpointStatusSummary statusSummary = new SparqlEndpointStatusSummary();
+            statusSummary.setURL(sparqlEndpoint.getServiceURL());
+
             List<SparqlEndpointStatus> statusList = sparqlEndpoint.getSparqlEndpointStatuses();
 
             double totalStatus = statusList.size();
@@ -117,7 +115,7 @@ public class SparqlEndpointAvailabilityController {
             int i=1;
             Date yesterday = previousDay.getTime();
 
-            while(statusList.get(i).getQueryDate().before(yesterday) && i<totalStatus) {
+            while(statusList.get(i).getQueryDate().after(yesterday) && i<totalStatus) {
 
                 SparqlEndpointStatus status=statusList.get(i);
 
@@ -147,7 +145,7 @@ public class SparqlEndpointAvailabilityController {
             if(!activeFound) statusSummary.setStatusString(statusConfig.getInactiveMoreweek());
             statusSummary.setUptimelast7d((activeCounterThisWeek/totalStatus));
             statusSummary.setUptimeLast24h(activeCounterThisDay/totalStatusThisDay);
-            sparqlStatusMap.put(sparqlEndpoint.getServiceURL(),statusSummary);
+            sparqlStatusMap.put(sparqlEndpoint.getId(),statusSummary);
         }
 
         model.addAttribute("sparqlStatusMap", sparqlStatusMap);

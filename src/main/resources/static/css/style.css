@@ -8,7 +8,7 @@ table{
 }
 
 nav{
-    min-width: 540px;
+ /*   min-width: 540px;*/
 }
 
 .statusLabel{
@@ -17,14 +17,18 @@ nav{
 }
 
 #nav-title{
-    padding-left: 10px;
     line-height: 46px;
+    font-size: 25px;
+}
+
+@media screen and (max-width: 600px) {
+    #nav-title {
+        font-size: 19px;
+        line-height: 25px;
+    }
 }
 
 .jumbotron{
     padding: 20px;
 }
 
-.serviceLabel{
-    max-width: 50%;
-}

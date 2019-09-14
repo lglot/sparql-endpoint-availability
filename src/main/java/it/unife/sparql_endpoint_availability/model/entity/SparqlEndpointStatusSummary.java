@@ -2,6 +2,8 @@ package it.unife.sparql_endpoint_availability.model.entity;
 
 public class SparqlEndpointStatusSummary {
 
+    private String URL;
+
     /*this variable indicates whether the sparql is active,
     or is inactive for less or more than a week*/
     private String statusString;
@@ -31,5 +33,13 @@ public class SparqlEndpointStatusSummary {
 
     public void setUptimelast7d(double uptimelast7d) {
         this.uptimelast7d = uptimelast7d;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 }
