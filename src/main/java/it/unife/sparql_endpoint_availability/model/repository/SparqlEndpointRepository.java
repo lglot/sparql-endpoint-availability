@@ -17,8 +17,6 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
     // This will be AUTO IMPLEMENTED by Spring into a Bean called sparqlEndpointRepository
     // CRUD refers Create, Read, Update, Delete
 
-    boolean existsSparqlEndpointByServiceURL(String serviceURL);
-
     SparqlEndpoint.OnlyURL findSparqlEndpointsById(Long id);
 
     List<SparqlEndpoint> findAllByOrderById();

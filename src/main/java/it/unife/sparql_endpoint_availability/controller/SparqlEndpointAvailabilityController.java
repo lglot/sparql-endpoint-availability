@@ -52,7 +52,7 @@ public class SparqlEndpointAvailabilityController {
         SparqlListResource sparqlListResource = ctx.getBean(SparqlListResource.class);
 
         /*Read spaql endpoint URL from resource and save them to DATA*/
-        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.update(sparqlEndpointManagement.getAllSparqlEndpoints(),sparqlListResource.read());
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.update(sparqlEndpointManagement.getAllSparqlEndpoints(), sparqlListResource.read());
 
         SparqlEndpointQueryService sparqlEndpointQueryService = ctx.getBean(SparqlEndpointQueryService.class);
         sparqlEndpointManagement.saveStatuses(sparqlEndpointQueryService.executeQuery(sparqlEndpointList));
@@ -62,7 +62,7 @@ public class SparqlEndpointAvailabilityController {
     }
 
     @GetMapping(path = "/view")
-    public String view(@RequestParam(name="lang",required = false,defaultValue = "en") String lang, Model model) {
+    public String view(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang, Model model) {
 
         /*HTTP PARAMETERS*/
         SortedMap<Long, SparqlEndpointStatusSummary> sparqlStatusMap = new TreeMap<>();
@@ -71,88 +71,96 @@ public class SparqlEndpointAvailabilityController {
         Date firstUpdate;
         long weeksPassed = 0;
         long daysPassed = 0;
+        String applicationMessage = null;
 
         Calendar previousWeek = Calendar.getInstance();
         Calendar previousDay = Calendar.getInstance();
         previousWeek.add(Calendar.WEEK_OF_YEAR, -1);
-        previousDay.add(Calendar.DAY_OF_YEAR,-1);
+        previousDay.add(Calendar.DAY_OF_YEAR, -1);
 
         List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.getSparqlEndpointsAfterQueryDate(previousWeek.getTime());
 
-        if (sparqlEndpointList.size() > 0) {
+        if (sparqlEndpointList.size() > 0 && sparqlEndpointList.get(0).getSparqlEndpointStatuses().size()>0) {
 
             List<SparqlEndpointStatus> statusTemp = sparqlEndpointList.get(0).getSparqlEndpointStatuses();
             firstUpdate = sparqlEndpointManagement.findFirstQueryDate();
-            lastUpdate  = statusTemp.get(0).getQueryDate();
+            lastUpdate = statusTemp.get(0).getQueryDate();
             daysPassed = ChronoUnit.DAYS.between(firstUpdate.toInstant(), lastUpdate.toInstant());
-            weeksPassed = daysPassed/7;
-        }
+            weeksPassed = daysPassed / 7;
 
-        for(SparqlEndpoint sparqlEndpoint : sparqlEndpointList){
 
-            SparqlEndpointStatusSummary statusSummary = new SparqlEndpointStatusSummary();
-            statusSummary.setURL(sparqlEndpoint.getServiceURL());
 
-            List<SparqlEndpointStatus> statusList = sparqlEndpoint.getSparqlEndpointStatuses();
+            for (SparqlEndpoint sparqlEndpoint : sparqlEndpointList) {
 
-            double totalStatus = statusList.size();
-            boolean activeFound = false;
-            double activeCounterThisDay = 0;
-            double activeCounterThisWeek = 0;
+                SparqlEndpointStatusSummary statusSummary = new SparqlEndpointStatusSummary();
+                statusSummary.setURL(sparqlEndpoint.getServiceURL());
 
-            if (statusList.get(0).isActive()) {
-                statusSummary.setStatusString(statusConfig.getActive());
-                activeFound=true;
-                activeCounterThisDay++;
-                activeCounterThisWeek++;
-                numberActive++;
-            }
-            else if(weeksPassed<1){
-                statusSummary.setStatusString(statusConfig.getGeneralInactive());
-                activeFound=true;
-            }
+                List<SparqlEndpointStatus> statusList = sparqlEndpoint.getSparqlEndpointStatuses();
 
-            int i=1;
-            Date yesterday = previousDay.getTime();
+                double totalStatus = statusList.size();
+                boolean activeFound = false;
+                double activeCounterThisDay = 0;
+                double activeCounterThisWeek = 0;
 
-            while(statusList.get(i).getQueryDate().after(yesterday) && i<totalStatus) {
-
-                SparqlEndpointStatus status=statusList.get(i);
-
-                if(status.isActive()){
-                    if(!activeFound){
-                        statusSummary.setStatusString(statusConfig.getInactiveLessday());
-                        activeFound=true;
-                    }
+                if (statusList.get(0).isActive()) {
+                    statusSummary.setStatusString(statusConfig.getActive());
+                    activeFound = true;
                     activeCounterThisDay++;
                     activeCounterThisWeek++;
+                    numberActive++;
+                } else if (weeksPassed < 1) {
+                    statusSummary.setStatusString(statusConfig.getGeneralInactive());
+                    activeFound = true;
                 }
-                i++;
-            }
 
-            int totalStatusThisDay = i;
+                int i = 1;
+                Date yesterday = previousDay.getTime();
 
-            for(SparqlEndpointStatus status : Iterables.skip(statusList,totalStatusThisDay)){
+                while (i < totalStatus && statusList.get(i).getQueryDate().after(yesterday)) {
 
-                if(status.isActive()){
-                    if(!activeFound){
-                        statusSummary.setStatusString(statusConfig.getInactiveLessweek());
-                        activeFound=true;
+                    SparqlEndpointStatus status = statusList.get(i);
+
+                    if (status.isActive()) {
+                        if (!activeFound) {
+                            statusSummary.setStatusString(statusConfig.getInactiveLessday());
+                            activeFound = true;
+                        }
+                        activeCounterThisDay++;
+                        activeCounterThisWeek++;
                     }
-                    activeCounterThisWeek++;
+                    i++;
                 }
-            }
-            if(!activeFound) statusSummary.setStatusString(statusConfig.getInactiveMoreweek());
-            statusSummary.setUptimelast7d((activeCounterThisWeek/totalStatus));
-            statusSummary.setUptimeLast24h(activeCounterThisDay/totalStatusThisDay);
-            sparqlStatusMap.put(sparqlEndpoint.getId(),statusSummary);
-        }
 
+                int totalStatusThisDay = i;
+
+                for (SparqlEndpointStatus status : Iterables.skip(statusList, totalStatusThisDay)) {
+
+                    if (status.isActive()) {
+                        if (!activeFound) {
+                            statusSummary.setStatusString(statusConfig.getInactiveLessweek());
+                            activeFound = true;
+                        }
+                        activeCounterThisWeek++;
+                    }
+                }
+                if (!activeFound) statusSummary.setStatusString(statusConfig.getInactiveMoreweek());
+                statusSummary.setUptimelast7d((activeCounterThisWeek / totalStatus));
+                statusSummary.setUptimeLast24h(activeCounterThisDay / totalStatusThisDay);
+                sparqlStatusMap.put(sparqlEndpoint.getId(), statusSummary);
+            }
+
+
+        } else applicationMessage = "No SPARQL endpoint DATA found";
+
+
+
+
+        model.addAttribute("applicationMessage",applicationMessage);
         model.addAttribute("sparqlStatusMap", sparqlStatusMap);
         model.addAttribute("numberActive", numberActive);
         model.addAttribute("lastUpdate", lastUpdate);
-        model.addAttribute("lang",lang);
-        model.addAttribute("daysPassed",daysPassed);
+        model.addAttribute("lang", lang);
+        model.addAttribute("daysPassed", daysPassed);
 
         return "view";
 

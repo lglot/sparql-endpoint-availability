@@ -65,7 +65,7 @@
     </div>
 </div>
 
-<fieldset class="border p-2 container">
+<fieldset th:if="${not #maps.isEmpty(sparqlStatusMap)}" class="border p-2 container">
     <legend th:text="#{legend}" class="w-auto">Legend</legend>
     <div class="row container">
         <div class="col-sm-2 media">
@@ -89,7 +89,7 @@
 </fieldset>
 
 <!--table-->
-<div class="container table-responsive">
+<div th:if="${not #maps.isEmpty(sparqlStatusMap)}" class="container table-responsive">
     <table class="table table-striped">
         <caption th:text="#{title.list}">List of Spraql Endpoint</caption>
         <thead class="thead-dark">
@@ -129,6 +129,10 @@
         </tr>
         </tbody>
     </table>
+</div>
+
+<div class="container">
+    <p class="lead display-4" th:if="${#maps.isEmpty(sparqlStatusMap)}" th:text="#{nodata}">No data found</p>
 </div>
 
 </body>

@@ -46,6 +46,11 @@ public class SparqlEndpointsQueryThread extends Thread {
             status.setSparqlEndpoint(sparqlEndpoint);
 
             String sparqlQueryString = "SELECT * WHERE {?s ?p ?o} LIMIT 1";
+
+            /* QueryExecution -> A interface for a single execution of a query.
+            * QueryExecutionFactory -> Place to make QueryExecution objects from Query objects or a string.
+            * .sparqlService(String service, Query query) -> Create a QueryExecution that will access a SPARQL service over HTTP
+            * */
             try (QueryExecution qexec = QueryExecutionFactory.sparqlService(sparqlEndpoint.getServiceURL(), sparqlQueryString)) {
                 qexec.setTimeout(60, TimeUnit.SECONDS);
                 ResultSet rs = qexec.execSelect();
@@ -55,7 +60,6 @@ public class SparqlEndpointsQueryThread extends Thread {
                 //else status.setActive(true);
             } catch (Exception e) {
                 status.setActive(false);
-
             }
             status.setQueryDate(new Timestamp(System.currentTimeMillis()));
             sparqlEndpointStatusList.add(status);
