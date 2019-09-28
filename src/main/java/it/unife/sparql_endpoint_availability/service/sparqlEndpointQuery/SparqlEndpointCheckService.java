@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface SparqlEndpointCheckService {
 
-    List<SparqlEndpointStatus> executeQuery(List<SparqlEndpoint> sparqlEndpoints);
+    List<SparqlEndpointStatus> executeCheck(List<SparqlEndpoint> sparqlEndpoints);
 }

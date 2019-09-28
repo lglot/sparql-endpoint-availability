@@ -48,14 +48,14 @@ class SparqlEndpointCheckTask {
     public void service(){
 
         /*Read sparql endpoint URL from resource and save them to DATA*/
-        if(sparqlEndpointListFileManagament.isModified() || iterator==1) {
+        if(sparqlEndpointListFileManagament.isModified() || iterator==1 || sparqlEndpointList.isEmpty()) {
             logger.info((iterator!=1)? "Sparql URL list Resource has been modified - " : "" + "Updating Sparql Endpoint List from Resource");
             List<String> sparqlEndpointURLlist = sparqlEndpointListFileManagament.read();
             sparqlEndpointList = sparqlEndpointDATAManagement.update(sparqlEndpointList,sparqlEndpointURLlist);
         }
 
-        /*Execute query and save status to DATA*/
-        List<SparqlEndpointStatus> sparqlEndpointStatuses = sparqlEndpointCheckService.executeQuery(sparqlEndpointList);
+        /*Execute check and save status to DATA*/
+        List<SparqlEndpointStatus> sparqlEndpointStatuses = sparqlEndpointCheckService.executeCheck(sparqlEndpointList);
 
         sparqlEndpointDATAManagement.saveStatuses(sparqlEndpointStatuses);
 

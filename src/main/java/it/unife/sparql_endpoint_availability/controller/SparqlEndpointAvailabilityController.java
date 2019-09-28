@@ -55,7 +55,7 @@ public class SparqlEndpointAvailabilityController {
         List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointDATAManagement.update(sparqlEndpointDATAManagement.getAllSparqlEndpoints(), sparqlEndpointListFileManagament.read());
 
         SparqlEndpointCheckService sparqlEndpointCheckService = ctx.getBean(SparqlEndpointCheckService.class);
-        sparqlEndpointDATAManagement.saveStatuses(sparqlEndpointCheckService.executeQuery(sparqlEndpointList));
+        sparqlEndpointDATAManagement.saveStatuses(sparqlEndpointCheckService.executeCheck(sparqlEndpointList));
 
         logger.info("Executed manually check terminated in date " + new Timestamp(System.currentTimeMillis()).toString());
         return "updated";

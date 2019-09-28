@@ -9,12 +9,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class SparqlEndpointListFileManagamentFileImpl implements SparqlEndpointListFileManagament {
+public class SparqlEndpointListFileManagamentImpl implements SparqlEndpointListFileManagament {
 
     private File file;
     private long lastModified;
 
-    public SparqlEndpointListFileManagamentFileImpl(String fileName) {
+    public SparqlEndpointListFileManagamentImpl(String fileName) {
         String filePath = Objects.requireNonNull(SparqlEndpointAvailabilityController.class.getClassLoader().getResource(fileName)).getFile();
         file = new File(filePath);
         lastModified = file.lastModified();

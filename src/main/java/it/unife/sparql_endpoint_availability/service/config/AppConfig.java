@@ -1,7 +1,7 @@
 package it.unife.sparql_endpoint_availability.service.config;
 
 
-import it.unife.sparql_endpoint_availability.service.resourceManagement.FileImpl.SparqlEndpointListFileManagamentFileImpl;
+import it.unife.sparql_endpoint_availability.service.resourceManagement.FileImpl.SparqlEndpointListFileManagamentImpl;
 import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagament;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointCheckService;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueryMultiThreadImpl.SECheckServiceMultiThreadImpl;
@@ -20,12 +20,12 @@ public class AppConfig {
     public static final String LOCAL_TIMEZONE = "Europe/Rome";
 
     @Bean
-    public SparqlEndpointCheckService getSparqlEndpointQueryService(){
+    public SparqlEndpointCheckService getSparqlEndpointCheckService(){
         return new SECheckServiceMultiThreadImpl(QUERY_NUMBER_BY_THREAD);
     }
 
     @Bean
-    public SparqlEndpointListFileManagament getSparqlListResource(){
-        return new SparqlEndpointListFileManagamentFileImpl(SPARQL_ENDPOINTS_LIST_FILENAME);
+    public SparqlEndpointListFileManagament getSparqlEndpointListFileManagament(){
+        return new SparqlEndpointListFileManagamentImpl(SPARQL_ENDPOINTS_LIST_FILENAME);
     }
 }

@@ -20,7 +20,7 @@ public class SECheckServiceMultiThreadImpl implements SparqlEndpointCheckService
     }
 
     @Override
-    public List<SparqlEndpointStatus> executeQuery(List<SparqlEndpoint> sparqlEndpoints) {
+    public List<SparqlEndpointStatus> executeCheck(List<SparqlEndpoint> sparqlEndpoints) {
 
         /*MultiThread Query*/
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
@@ -29,7 +29,8 @@ public class SECheckServiceMultiThreadImpl implements SparqlEndpointCheckService
 
 
         for (int i = 0; i < sparqlEndpoints.size(); i = i + queryNumberByThread) {
-            SparqlEndpointsCheckThread thread = (SparqlEndpointsCheckThread) context.getBean("sparqlEndpointsCheckThread");
+            //SparqlEndpointsCheckThread thread = (SparqlEndpointsCheckThread) context.getBean("sparqlEndpointsCheckThread");
+            SparqlEndpointsCheckThread thread = new SparqlEndpointsCheckThread();
             threads.add(thread);
             thread.setPartialSparqlEndpointsList(sparqlEndpoints.subList(i, Math.min(i + queryNumberByThread, sparqlEndpoints.size())));
             thread.start();
@@ -41,7 +42,6 @@ public class SECheckServiceMultiThreadImpl implements SparqlEndpointCheckService
             for (SparqlEndpointsCheckThread thread : threads) {
                 thread.join();
                 statusList.addAll(thread.getSparqlEndpointStatusList());
-                //System.out.println(thread.getName()+" "+thread.getState().toString());
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
