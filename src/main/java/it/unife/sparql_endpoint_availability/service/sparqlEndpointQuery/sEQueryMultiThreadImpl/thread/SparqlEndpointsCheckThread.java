@@ -19,7 +19,7 @@ it is requested from the container. It is defined by setting the value
 prototype to the @Scope annotation in the bean definition:*/
 @Scope("prototype")
 
-public class SparqlEndpointsQueryThread extends Thread {
+public class SparqlEndpointsCheckThread extends Thread {
 
     private List<SparqlEndpoint> partialSparqlEndpointsList;
     private List<SparqlEndpointStatus> sparqlEndpointStatusList;
@@ -32,7 +32,7 @@ public class SparqlEndpointsQueryThread extends Thread {
         return sparqlEndpointStatusList;
     }
 
-    public SparqlEndpointsQueryThread() {
+    public SparqlEndpointsCheckThread() {
         super();
         sparqlEndpointStatusList = new ArrayList<>();
     }

@@ -2,7 +2,7 @@ package it.unife.sparql_endpoint_availability.model.management.JPAImpl;
 
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
-import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
+import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
 import it.unife.sparql_endpoint_availability.model.repository.SparqlEndpointRepository;
 import it.unife.sparql_endpoint_availability.model.repository.SparqlEndpointStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +14,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement {
+public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAManagement {
 
 
     private SparqlEndpointRepository sparqlEndpointRepository;
     private SparqlEndpointStatusRepository sparqlEndpointStatusRepository;
 
     @Autowired
-    public SparqlEndpointManagementJPAImpl(SparqlEndpointRepository sparqlEndpointRepository,
-                                           SparqlEndpointStatusRepository sparqlEndpointStatusRepository) {
+    public SparqlEndpointDATAManagementJPAImpl(SparqlEndpointRepository sparqlEndpointRepository,
+                                               SparqlEndpointStatusRepository sparqlEndpointStatusRepository) {
         this.sparqlEndpointRepository = sparqlEndpointRepository;
         this.sparqlEndpointStatusRepository = sparqlEndpointStatusRepository;
     }

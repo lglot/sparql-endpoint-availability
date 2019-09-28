@@ -3,11 +3,11 @@ package it.unife.sparql_endpoint_availability.controller;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusSummary;
-import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
+import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
 import it.unife.sparql_endpoint_availability.service.config.AppConfig;
 import it.unife.sparql_endpoint_availability.service.config.SparqlEndpointStatusConfig;
-import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlListResource;
-import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointQueryService;
+import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagament;
+import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointCheckService;
 import org.apache.jena.ext.com.google.common.collect.Iterables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,14 +30,14 @@ import java.util.*;
 @RequestMapping(path = "/sparql-endpoint-availability")
 public class SparqlEndpointAvailabilityController {
 
-    private final SparqlEndpointManagement sparqlEndpointManagement;
+    private final SparqlEndpointDATAManagement sparqlEndpointDATAManagement;
     private final SparqlEndpointStatusConfig statusConfig;
 
     private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointAvailabilityController.class);
 
     @Autowired
-    public SparqlEndpointAvailabilityController(SparqlEndpointManagement sparqlEndpointManagement, SparqlEndpointStatusConfig statusConfig) {
-        this.sparqlEndpointManagement = sparqlEndpointManagement;
+    public SparqlEndpointAvailabilityController(SparqlEndpointDATAManagement sparqlEndpointDATAManagement, SparqlEndpointStatusConfig statusConfig) {
+        this.sparqlEndpointDATAManagement = sparqlEndpointDATAManagement;
         this.statusConfig = statusConfig;
     }
 
@@ -49,13 +49,13 @@ public class SparqlEndpointAvailabilityController {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 
         /*Get istance of class that provide access to sparql Endpoint file*/
-        SparqlListResource sparqlListResource = ctx.getBean(SparqlListResource.class);
+        SparqlEndpointListFileManagament sparqlEndpointListFileManagament = ctx.getBean(SparqlEndpointListFileManagament.class);
 
         /*Read spaql endpoint URL from resource and save them to DATA*/
-        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.update(sparqlEndpointManagement.getAllSparqlEndpoints(), sparqlListResource.read());
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointDATAManagement.update(sparqlEndpointDATAManagement.getAllSparqlEndpoints(), sparqlEndpointListFileManagament.read());
 
-        SparqlEndpointQueryService sparqlEndpointQueryService = ctx.getBean(SparqlEndpointQueryService.class);
-        sparqlEndpointManagement.saveStatuses(sparqlEndpointQueryService.executeQuery(sparqlEndpointList));
+        SparqlEndpointCheckService sparqlEndpointCheckService = ctx.getBean(SparqlEndpointCheckService.class);
+        sparqlEndpointDATAManagement.saveStatuses(sparqlEndpointCheckService.executeQuery(sparqlEndpointList));
 
         logger.info("Executed manually check terminated in date " + new Timestamp(System.currentTimeMillis()).toString());
         return "updated";
@@ -78,12 +78,12 @@ public class SparqlEndpointAvailabilityController {
         previousWeek.add(Calendar.WEEK_OF_YEAR, -1);
         previousDay.add(Calendar.DAY_OF_YEAR, -1);
 
-        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.getSparqlEndpointsAfterQueryDate(previousWeek.getTime());
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointDATAManagement.getSparqlEndpointsAfterQueryDate(previousWeek.getTime());
 
         if (sparqlEndpointList.size() > 0 && sparqlEndpointList.get(0).getSparqlEndpointStatuses().size()>0) {
 
             List<SparqlEndpointStatus> statusTemp = sparqlEndpointList.get(0).getSparqlEndpointStatuses();
-            firstUpdate = sparqlEndpointManagement.findFirstQueryDate();
+            firstUpdate = sparqlEndpointDATAManagement.findFirstQueryDate();
             lastUpdate = statusTemp.get(0).getQueryDate();
             daysPassed = ChronoUnit.DAYS.between(firstUpdate.toInstant(), lastUpdate.toInstant());
             weeksPassed = daysPassed / 7;

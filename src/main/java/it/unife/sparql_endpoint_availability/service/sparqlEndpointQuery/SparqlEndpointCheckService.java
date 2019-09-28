@@ -6,7 +6,7 @@ import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 
 import java.util.List;
 
-public interface SparqlEndpointQueryService {
+public interface SparqlEndpointCheckService {
 
     List<SparqlEndpointStatus> executeQuery(List<SparqlEndpoint> sparqlEndpoints);
 }

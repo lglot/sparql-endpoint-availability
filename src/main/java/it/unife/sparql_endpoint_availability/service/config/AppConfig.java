@@ -1,10 +1,10 @@
 package it.unife.sparql_endpoint_availability.service.config;
 
 
-import it.unife.sparql_endpoint_availability.service.resourceManagement.FileImpl.SparqlListResourceFileImpl;
-import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlListResource;
-import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointQueryService;
-import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueryMultiThreadImpl.SEQueryServiceMultiThreadImpl;
+import it.unife.sparql_endpoint_availability.service.resourceManagement.FileImpl.SparqlEndpointListFileManagamentFileImpl;
+import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagament;
+import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointCheckService;
+import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueryMultiThreadImpl.SECheckServiceMultiThreadImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,12 +20,12 @@ public class AppConfig {
     public static final String LOCAL_TIMEZONE = "Europe/Rome";
 
     @Bean
-    public SparqlEndpointQueryService getSparqlEndpointQueryService(){
-        return new SEQueryServiceMultiThreadImpl(QUERY_NUMBER_BY_THREAD);
+    public SparqlEndpointCheckService getSparqlEndpointQueryService(){
+        return new SECheckServiceMultiThreadImpl(QUERY_NUMBER_BY_THREAD);
     }
 
     @Bean
-    public SparqlListResource getSparqlListResource(){
-        return new SparqlListResourceFileImpl(SPARQL_ENDPOINTS_LIST_FILENAME);
+    public SparqlEndpointListFileManagament getSparqlListResource(){
+        return new SparqlEndpointListFileManagamentFileImpl(SPARQL_ENDPOINTS_LIST_FILENAME);
     }
 }

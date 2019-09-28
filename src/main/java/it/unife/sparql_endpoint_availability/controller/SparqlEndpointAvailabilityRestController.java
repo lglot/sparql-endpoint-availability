@@ -2,7 +2,7 @@ package it.unife.sparql_endpoint_availability.controller;
 
 
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
-import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
+import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,24 +18,24 @@ import java.util.Calendar;
 @RequestMapping(path = "/sparql-endpoint")
 public class SparqlEndpointAvailabilityRestController {
 
-    private final SparqlEndpointManagement sparqlEndpointManagement;
+    private final SparqlEndpointDATAManagement sparqlEndpointDATAManagement;
 
     private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointAvailabilityController.class);
 
     @Autowired
-    public SparqlEndpointAvailabilityRestController(SparqlEndpointManagement sparqlEndpointManagement) {
-        this.sparqlEndpointManagement = sparqlEndpointManagement;
+    public SparqlEndpointAvailabilityRestController(SparqlEndpointDATAManagement sparqlEndpointDATAManagement) {
+        this.sparqlEndpointDATAManagement = sparqlEndpointDATAManagement;
     }
 
 
     @GetMapping(path = "")
     public Iterable<SparqlEndpoint.OnlyURL> getURLSparqlEndpoints() {
-        return sparqlEndpointManagement.getAllURLSparqlEndpoints();
+        return sparqlEndpointDATAManagement.getAllURLSparqlEndpoints();
     }
 
     @GetMapping(path = "/{id}")
     public SparqlEndpoint.OnlyURL getURLSparqlEndpoint(@PathVariable @NotNull Long id) {
-        return sparqlEndpointManagement.getURLSparqlEndpointById(id);
+        return sparqlEndpointDATAManagement.getURLSparqlEndpointById(id);
     }
 
     /*@GetMapping(path = "/status")
@@ -45,17 +45,17 @@ public class SparqlEndpointAvailabilityRestController {
 
     @GetMapping(path = "/status/current")
     public Iterable<SparqlEndpoint> getMostRecentStatusSparqlEndpoints() {
-        return sparqlEndpointManagement.getSparqlEndpointsWithCurrentStatus();
+        return sparqlEndpointDATAManagement.getSparqlEndpointsWithCurrentStatus();
     }
 
     @GetMapping(path = "/status/current/active")
     public Iterable<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints(){
-        return sparqlEndpointManagement.getCurrentlyActiveSparqlEndpoints();
+        return sparqlEndpointDATAManagement.getCurrentlyActiveSparqlEndpoints();
     }
 
     @GetMapping(path = "/status/current/{id}")
     public SparqlEndpoint getMostRecentStatusSparqlEndpointById(@PathVariable @NotNull Long id) {
-        return sparqlEndpointManagement.getSparqlEndpointWithCurrentStatusById(id);
+        return sparqlEndpointDATAManagement.getSparqlEndpointWithCurrentStatusById(id);
     }
 
     @GetMapping(path = "/status/weekly-history")
@@ -64,7 +64,7 @@ public class SparqlEndpointAvailabilityRestController {
         Calendar previousWeek = Calendar.getInstance();
         previousWeek.add(Calendar.WEEK_OF_YEAR, -1);
         logger.info("Requested sparql endopoint availabilty from previuos week " + previousWeek.getTime().toString());
-        return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDate(previousWeek.getTime());
+        return sparqlEndpointDATAManagement.getSparqlEndpointsAfterQueryDate(previousWeek.getTime());
     }
 
     @GetMapping(path = "/status/weekly-history/{id}")
@@ -73,7 +73,7 @@ public class SparqlEndpointAvailabilityRestController {
         Calendar previousWeek = Calendar.getInstance();
         previousWeek.add(Calendar.WEEK_OF_YEAR, -1);
         logger.info("Requested sparql endopoint availabilty from previuos week " + previousWeek.getTime().toString());
-        return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDateById(previousWeek.getTime(),id);
+        return sparqlEndpointDATAManagement.getSparqlEndpointsAfterQueryDateById(previousWeek.getTime(),id);
     }
 
     @GetMapping(path = "/status/daily-history")
@@ -82,7 +82,7 @@ public class SparqlEndpointAvailabilityRestController {
         Calendar previousDay = Calendar.getInstance();
         previousDay.add(Calendar.DAY_OF_YEAR,-1);
         logger.info("Requested sparql endopoint availabilty from previuos day " + previousDay.getTime().toString());
-        return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDate(previousDay.getTime());
+        return sparqlEndpointDATAManagement.getSparqlEndpointsAfterQueryDate(previousDay.getTime());
     }
 
     @GetMapping(path = "/status/daily-history/{id}")
@@ -91,7 +91,7 @@ public class SparqlEndpointAvailabilityRestController {
         Calendar previousDay = Calendar.getInstance();
         previousDay.add(Calendar.DAY_OF_YEAR,-1);
         logger.info("Requested sparql endopoint availabilty from previuos day " + previousDay.getTime().toString());
-        return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDateById(previousDay.getTime(),id);
+        return sparqlEndpointDATAManagement.getSparqlEndpointsAfterQueryDateById(previousDay.getTime(),id);
     }
 
 

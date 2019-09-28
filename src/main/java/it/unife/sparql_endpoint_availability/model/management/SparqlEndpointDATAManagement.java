@@ -6,7 +6,7 @@ import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import java.util.Date;
 import java.util.List;
 
-public interface SparqlEndpointManagement {
+public interface SparqlEndpointDATAManagement {
 
     List<SparqlEndpoint> update(List<SparqlEndpoint> sparqlEndpointList, List<String> sparqlUrlList);
 
