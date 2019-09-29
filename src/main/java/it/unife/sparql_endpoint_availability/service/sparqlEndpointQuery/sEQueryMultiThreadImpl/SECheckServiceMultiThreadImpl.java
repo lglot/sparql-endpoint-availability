@@ -29,8 +29,8 @@ public class SECheckServiceMultiThreadImpl implements SparqlEndpointCheckService
 
 
         for (int i = 0; i < sparqlEndpoints.size(); i = i + queryNumberByThread) {
-            //SparqlEndpointsCheckThread thread = (SparqlEndpointsCheckThread) context.getBean("sparqlEndpointsCheckThread");
-            SparqlEndpointsCheckThread thread = new SparqlEndpointsCheckThread();
+
+            SparqlEndpointsCheckThread thread = (SparqlEndpointsCheckThread) context.getBean("sparqlEndpointsCheckThread");
             threads.add(thread);
             thread.setPartialSparqlEndpointsList(sparqlEndpoints.subList(i, Math.min(i + queryNumberByThread, sparqlEndpoints.size())));
             thread.start();
