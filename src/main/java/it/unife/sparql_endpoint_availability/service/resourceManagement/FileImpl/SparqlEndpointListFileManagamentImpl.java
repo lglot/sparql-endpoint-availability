@@ -22,7 +22,11 @@ public class SparqlEndpointListFileManagamentImpl implements SparqlEndpointListF
 
     @Override
     public boolean isModified() {
-        return lastModified != file.lastModified();
+
+        boolean isModified = lastModified != file.lastModified();
+        if(isModified)
+            lastModified = file.lastModified();
+        return isModified;
     }
 
     @Override
