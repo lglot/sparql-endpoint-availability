@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SparqlEndpointDATAManagement {
 
-    List<SparqlEndpoint> update(List<SparqlEndpoint> sparqlEndpointList, List<String> sparqlUrlList);
+    void update(List<String> sparqlUrlList);
 
     void saveStatuses(List<SparqlEndpointStatus> sparqlEndpointStatuses);
 

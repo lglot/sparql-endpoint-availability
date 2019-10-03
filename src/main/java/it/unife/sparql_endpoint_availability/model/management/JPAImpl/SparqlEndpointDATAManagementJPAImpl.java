@@ -33,7 +33,9 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
     /*Metodo per aggiornare la lista degli sparql Endpoint sul DB,in input il metodo riceve la lista presente attualmente sul DB
     * e la lista degli URL degli endpoint letti da file. Nello specifico verrannò aggiunti al DB gli endpoint trovati nella lista-file che
     * non sono nella lista-DB, e viceversa verranno cancellati dal DB, gli endpoint della lista-DB che non sono presenti nella lista-file */
-    public List<SparqlEndpoint> update(List<SparqlEndpoint> sparqlListDB, List<String> sparqlUrlListResource) {
+    public void update(List<String> sparqlUrlListResource) {
+
+        List<SparqlEndpoint> sparqlListDB = sparqlEndpointRepository.findAllByOrderById();
 
         List<String> sparqlUrlListDB = sparqlListDB.stream().map(SparqlEndpoint::getServiceURL).collect(Collectors.toList());
         List<String> sparqlUrlResource1 = new ArrayList<>(sparqlUrlListResource);
@@ -53,7 +55,6 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
         if(sparqlUrlListDB.size()>0)
             sparqlEndpointRepository.deleteByServiceURLIn(sparqlUrlListDB);
 
-        return (List<SparqlEndpoint>) sparqlEndpointRepository.findAll();
     }
 
     @Override

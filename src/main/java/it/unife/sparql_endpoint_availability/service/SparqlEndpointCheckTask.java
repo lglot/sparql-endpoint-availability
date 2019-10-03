@@ -28,8 +28,6 @@ class SparqlEndpointCheckTask {
     private SparqlEndpointListFileManagament sparqlEndpointListFileManagament;
     private SparqlEndpointCheckService sparqlEndpointCheckService;
 
-    private List<SparqlEndpoint> sparqlEndpointList;
-
 
     @Autowired
     public SparqlEndpointCheckTask(SparqlEndpointDATAManagement sparqlEndpointDATAManagement,
@@ -39,20 +37,23 @@ class SparqlEndpointCheckTask {
         this.sparqlEndpointDATAManagement = sparqlEndpointDATAManagement;
         this.sparqlEndpointListFileManagament = sparqlEndpointListFileManagament;
         this.sparqlEndpointCheckService = sparqlEndpointCheckService;
-        sparqlEndpointList=(this.sparqlEndpointDATAManagement).getAllSparqlEndpoints();
         iterator = 1;
     }
 
     @Scheduled(fixedRate=1000*60*60)
     @Transactional
-    public void service(){
+    public synchronized void service(){
+
+        List<SparqlEndpoint> sparqlEndpointList;
 
         /*Read sparql endpoint URL from resource and save them to DATA*/
-        if(sparqlEndpointListFileManagament.isModified() || iterator==1 || sparqlEndpointList.isEmpty()) {
+        if(sparqlEndpointListFileManagament.isModified() || iterator==1) {
             logger.info((iterator!=1)? "Sparql URL list Resource has been modified - " : "" + "Updating Sparql Endpoint List from Resource");
             List<String> sparqlEndpointURLlist = sparqlEndpointListFileManagament.read();
-            sparqlEndpointList = sparqlEndpointDATAManagement.update(sparqlEndpointList,sparqlEndpointURLlist);
+            sparqlEndpointDATAManagement.update(sparqlEndpointURLlist);
         }
+
+        sparqlEndpointList = sparqlEndpointDATAManagement.getAllSparqlEndpoints();
 
         /*Execute check and save status to DATA*/
         List<SparqlEndpointStatus> sparqlEndpointStatuses = sparqlEndpointCheckService.executeCheck(sparqlEndpointList);
