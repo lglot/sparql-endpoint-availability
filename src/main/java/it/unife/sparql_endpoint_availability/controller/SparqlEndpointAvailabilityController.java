@@ -52,7 +52,9 @@ public class SparqlEndpointAvailabilityController {
         SparqlEndpointListFileManagament sparqlEndpointListFileManagament = ctx.getBean(SparqlEndpointListFileManagament.class);
 
         /*Read spaql endpoint URL from resource and save them to DATA*/
-        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointDATAManagement.update(sparqlEndpointDATAManagement.getAllSparqlEndpoints(), sparqlEndpointListFileManagament.read());
+        sparqlEndpointDATAManagement.update(sparqlEndpointListFileManagament.read());
+
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointDATAManagement.getAllSparqlEndpoints();
 
         SparqlEndpointCheckService sparqlEndpointCheckService = ctx.getBean(SparqlEndpointCheckService.class);
         sparqlEndpointDATAManagement.saveStatuses(sparqlEndpointCheckService.executeCheck(sparqlEndpointList));
