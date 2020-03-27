@@ -3,6 +3,7 @@ package it.unife.sparql_endpoint_availability.service.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+/*Classe che mappa i valori delle proprietà degli sparql enpoint contenuti nel file "application.properties"*/
 @Configuration
 @ConfigurationProperties(prefix = "sparql.endpoint.status")
 public class SparqlEndpointStatusConfig {

@@ -104,7 +104,8 @@
         <tbody>
         <tr th:scope="row" th:each="service : ${sparqlStatusMap}">
             <td th:text="${service.key}"></td>
-            <td class="serviceLabel text-break"><a th:text="${service.value.URL}" th:href="${service.value.URL}">Service</a></td>
+            <td class="serviceLabel text-break"><a th:text="${service.value.URL}"
+                                                   th:href="${service.value.URL}">Service</a></td>
             <td class="statusLabel lead" th:switch="${service.value.statusString}">
 
                 <img th:case="${@environment.getProperty('sparql.endpoint.status.active')}"

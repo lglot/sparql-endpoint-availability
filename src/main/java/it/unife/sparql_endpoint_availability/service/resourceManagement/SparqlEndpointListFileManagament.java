@@ -6,5 +6,6 @@ public interface SparqlEndpointListFileManagament {
 
     List<String> read();
 
+    /*verifica se il file è stato modificato dall'ultimo accesso*/
     boolean isModified();
 }

@@ -30,8 +30,8 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
 
     @Override
     @Transactional
-    /*Metodo per aggiornare la lista degli sparql Endpoint sul DB,in input il metodo riceve la lista presente attualmente sul DB
-    * e la lista degli URL degli endpoint letti da file. Nello specifico verrannò aggiunti al DB gli endpoint trovati nella lista-file che
+    /*Metodo per aggiornare la lista degli sparql Endpoint sul DB,in input il metodo riceve
+    * la lista degli URL degli endpoint letti da file. Nello specifico verrannò aggiunti al DB gli endpoint trovati nella lista-file che
     * non sono nella lista-DB, e viceversa verranno cancellati dal DB, gli endpoint della lista-DB che non sono presenti nella lista-file */
     public void update(List<String> sparqlUrlListResource) {
 

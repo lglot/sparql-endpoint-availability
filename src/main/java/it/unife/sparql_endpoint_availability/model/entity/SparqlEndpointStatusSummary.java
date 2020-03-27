@@ -1,5 +1,6 @@
 package it.unife.sparql_endpoint_availability.model.entity;
 
+//Classe DTO, serve per trasferire informazioni degli sparrql enpoint al client
 public class SparqlEndpointStatusSummary {
 
     private String URL;

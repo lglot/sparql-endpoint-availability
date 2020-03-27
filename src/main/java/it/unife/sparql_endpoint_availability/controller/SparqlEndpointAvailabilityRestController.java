@@ -29,12 +29,12 @@ public class SparqlEndpointAvailabilityRestController {
 
 
     @GetMapping(path = "")
-    public Iterable<SparqlEndpoint.OnlyURL> getURLSparqlEndpoints() {
+    public Iterable<SparqlEndpoint.OnlyURL> getAllURLSparqlEndpoints() {
         return sparqlEndpointDATAManagement.getAllURLSparqlEndpoints();
     }
 
     @GetMapping(path = "/{id}")
-    public SparqlEndpoint.OnlyURL getURLSparqlEndpoint(@PathVariable @NotNull Long id) {
+    public SparqlEndpoint.OnlyURL getURLSparqlEndpointById(@PathVariable @NotNull Long id) {
         return sparqlEndpointDATAManagement.getURLSparqlEndpointById(id);
     }
 
@@ -44,7 +44,7 @@ public class SparqlEndpointAvailabilityRestController {
     }*/
 
     @GetMapping(path = "/status/current")
-    public Iterable<SparqlEndpoint> getMostRecentStatusSparqlEndpoints() {
+    public Iterable<SparqlEndpoint> getSparqlEndpointsWithCurrentStatus() {
         return sparqlEndpointDATAManagement.getSparqlEndpointsWithCurrentStatus();
     }
 
@@ -54,7 +54,7 @@ public class SparqlEndpointAvailabilityRestController {
     }
 
     @GetMapping(path = "/status/current/{id}")
-    public SparqlEndpoint getMostRecentStatusSparqlEndpointById(@PathVariable @NotNull Long id) {
+    public SparqlEndpoint getSparqlEndpointWithCurrentStatusById(@PathVariable @NotNull Long id) {
         return sparqlEndpointDATAManagement.getSparqlEndpointWithCurrentStatusById(id);
     }
 

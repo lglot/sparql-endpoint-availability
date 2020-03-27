@@ -15,10 +15,17 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class AppConfig {
 
+    /*Nome del file che contiene la lista degli URL degli sparql endpoint da controllare*/
     private static final String SPARQL_ENDPOINTS_LIST_FILENAME = "sparqlEndpoints_list.txt";
+
+    /*numero di query da eseuire per ogni thread creato per eseguire il controllo
+    * dellla disponibilità*/
     private static final int QUERY_NUMBER_BY_THREAD = 5;
+
     public static final String LOCAL_TIMEZONE = "Europe/Rome";
 
+
+   /*Iniettori delle dipendenze*/
     @Bean
     public SparqlEndpointCheckService getSparqlEndpointCheckService(){
         return new SECheckServiceMultiThreadImpl(QUERY_NUMBER_BY_THREAD);
