@@ -60,6 +60,7 @@ class SparqlEndpointCheckTask {
 
         /*Execute check and save status to DATA*/
         List<SparqlEndpointStatus> sparqlEndpointStatuses = sparqlEndpointCheckService.executeCheck(sparqlEndpointList);
+
         sparqlEndpointDATAManagement.saveStatuses(sparqlEndpointStatuses);
 
         logger.info("Executed Scheduled Check "+ iterator +" terminated in date "+ new Timestamp(System.currentTimeMillis()).toString());

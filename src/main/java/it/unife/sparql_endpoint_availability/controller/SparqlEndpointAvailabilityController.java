@@ -108,6 +108,8 @@ public class SparqlEndpointAvailabilityController {
             daysPassed = ChronoUnit.DAYS.between(firstUpdate.toInstant(), lastUpdate.toInstant());
             weeksPassed = daysPassed / 7;
 
+
+
             for (SparqlEndpoint sparqlEndpoint : sparqlEndpointList) {
 
                 //creo un nuovo oggetto di tipo DTO (Data tranfer object),
@@ -212,3 +214,4 @@ public class SparqlEndpointAvailabilityController {
     }
 
 }
+
