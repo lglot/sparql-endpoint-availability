@@ -20,7 +20,7 @@ public class InternationalizationConfig implements WebMvcConfigurer {
     @Bean
     public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("Languages");
+        messageSource.setBasename("languages");
         return messageSource;
     }
 

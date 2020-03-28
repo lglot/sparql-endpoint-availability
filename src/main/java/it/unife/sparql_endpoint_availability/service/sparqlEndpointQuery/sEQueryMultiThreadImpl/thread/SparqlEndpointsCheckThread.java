@@ -20,32 +20,33 @@ prototype to the @Scope annotation in the bean definition:*/
 @Scope("prototype")
 
 public class SparqlEndpointsCheckThread extends Thread {
-
+    
     private List<SparqlEndpoint> partialSparqlEndpointsList;
     private List<SparqlEndpointStatus> sparqlEndpointStatusList;
-
+    
     public void setPartialSparqlEndpointsList(List<SparqlEndpoint> partialSparqlEndpointsList) {
         this.partialSparqlEndpointsList = partialSparqlEndpointsList;
     }
-
+    
     public List<SparqlEndpointStatus> getSparqlEndpointStatusList() {
         return sparqlEndpointStatusList;
     }
-
+    
     public SparqlEndpointsCheckThread() {
         super();
         sparqlEndpointStatusList = new ArrayList<>();
     }
-
+    
     @Override
     public void run() {
-
+        
         for (SparqlEndpoint sparqlEndpoint : partialSparqlEndpointsList) {
-
+            
             SparqlEndpointStatus status = new SparqlEndpointStatus();
             status.setSparqlEndpoint(sparqlEndpoint);
 
-            String sparqlQueryString = "SELECT * WHERE {?s ?p ?o} LIMIT 1";
+            //String sparqlQueryString = "SELECT * WHERE {?s ?p ?o} LIMIT 1";
+            String sparqlQueryString = "ASK {?s ?p ?o}";
 
             /* QueryExecution -> A interface for a single execution of a query.
             * QueryExecutionFactory -> Place to make QueryExecution objects from Query objects or a string.
@@ -53,10 +54,11 @@ public class SparqlEndpointsCheckThread extends Thread {
             * */
             try (QueryExecution qexec = QueryExecutionFactory.sparqlService(sparqlEndpoint.getServiceURL(), sparqlQueryString)) {
                 qexec.setTimeout(60, TimeUnit.SECONDS);
-                ResultSet rs = qexec.execSelect();
-                if (rs.hasNext()) {
-                    status.setActive(true);
-                }
+//                ResultSet rs = qexec.execSelect();
+//                if (rs.hasNext()) {
+//                    status.setActive(true);
+//                }
+                status.setActive(qexec.execAsk());
                 //else status.setActive(true);
             } catch (Exception e) {
                 status.setActive(false);
@@ -64,6 +66,6 @@ public class SparqlEndpointsCheckThread extends Thread {
             status.setQueryDate(new Timestamp(System.currentTimeMillis()));
             sparqlEndpointStatusList.add(status);
         }
-
+        
     }
 }

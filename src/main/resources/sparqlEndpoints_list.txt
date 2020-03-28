@@ -1,3 +1,4 @@
+https://query.wikidata.org/sparql
 HTTP://VISUALDATAWEB.INFOR.UVA.ES/SPARQL
 http://biolit.rkbexplorer.com/sparql
 HTTP://AEMET.LINKEDDATA.ES/SPARQL
