@@ -23,7 +23,7 @@ public class AppConfig {
 
     /*numero di query da eseuire per ogni thread creato per eseguire il controllo
     * dellla disponibilità*/
-    private static final int QUERY_NUMBER_BY_THREAD = 5;
+    private static final int QUERY_NUMBER_BY_THREAD = 16;
 
     public static final String LOCAL_TIMEZONE = "Europe/Rome";
 

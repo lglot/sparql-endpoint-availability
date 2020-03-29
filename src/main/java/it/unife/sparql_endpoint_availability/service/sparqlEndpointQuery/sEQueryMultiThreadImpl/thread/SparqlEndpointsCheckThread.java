@@ -18,7 +18,6 @@ import java.util.concurrent.TimeUnit;
 it is requested from the container. It is defined by setting the value
 prototype to the @Scope annotation in the bean definition:*/
 @Scope("prototype")
-
 public class SparqlEndpointsCheckThread extends Thread {
     
     private List<SparqlEndpoint> partialSparqlEndpointsList;

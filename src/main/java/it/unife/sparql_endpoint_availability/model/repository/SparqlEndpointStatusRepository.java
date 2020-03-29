@@ -23,4 +23,5 @@ public interface SparqlEndpointStatusRepository extends CrudRepository<SparqlEnd
 
     SparqlEndpointStatus findTopByOrderByQueryDate();
     
+    void deleteSparqlEndpointStatusByQueryDateBefore(Date queryDate);
 }
