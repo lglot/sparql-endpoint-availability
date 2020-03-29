@@ -6,7 +6,6 @@ import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusSu
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
 import it.unife.sparql_endpoint_availability.service.config.AppConfig;
 import it.unife.sparql_endpoint_availability.service.config.SparqlEndpointStatusConfig;
-import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagament;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointCheckService;
 import org.apache.jena.ext.com.google.common.collect.Iterables;
 import org.slf4j.Logger;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.sql.Timestamp;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagement;
 
 //Classe controller che gestisce le richieste del client
 @Controller
@@ -50,10 +50,10 @@ public class SparqlEndpointAvailabilityController {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 
         /*Get istance of class that provide access to sparql Endpoint file*/
-        SparqlEndpointListFileManagament sparqlEndpointListFileManagament = ctx.getBean(SparqlEndpointListFileManagament.class);
+        SparqlEndpointListFileManagement sparqlEndpointListFileManagament = ctx.getBean(SparqlEndpointListFileManagement.class);
 
         /*Read spaql endpoint URL from resource and save them to DATA*/
-        sparqlEndpointDATAManagement.update(sparqlEndpointListFileManagament.read());
+        sparqlEndpointDATAManagement.update(sparqlEndpointListFileManagament.getSparqlEndpoints());
 
         List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointDATAManagement.getAllSparqlEndpoints();
 
@@ -194,8 +194,9 @@ public class SparqlEndpointAvailabilityController {
                 } else {
                     statusSummary.setUptimeLast24h(-1);
                 }
-
+                statusSummary.setName(sparqlEndpoint.getName());
                 sparqlStatusMap.put(sparqlEndpoint.getId(), statusSummary);
+                
             }
 
         } else {

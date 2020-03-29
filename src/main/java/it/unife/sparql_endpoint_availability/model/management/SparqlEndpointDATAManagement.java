@@ -5,13 +5,14 @@ import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 //Componente che gestisce l'accesso alla persistenza e quindi al databasse
 public interface SparqlEndpointDATAManagement {
 
     /* Metodo per aggiornare la lista degli sparql Endpoint sul DB,in input il metodo riceve
-    * la lista degli URL degli endpoint letti da file.*/
-    void update(List<String> sparqlUrlList);
+    * l'insieme degli endpoint letti da file.*/
+    void update(Set<SparqlEndpoint> sparqlEndpoints);
 
     /*Metodo per aggiornare gli stati degli sparql enpoint sul DB ottenuti dai risulati delle query sparql*/
     void saveStatuses(List<SparqlEndpointStatus> sparqlEndpointStatuses);

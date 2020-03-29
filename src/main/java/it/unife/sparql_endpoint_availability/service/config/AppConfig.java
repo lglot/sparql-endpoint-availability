@@ -2,13 +2,13 @@ package it.unife.sparql_endpoint_availability.service.config;
 
 
 import it.unife.sparql_endpoint_availability.service.resourceManagement.FileImpl.SparqlEndpointListFileManagamentImpl;
-import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagament;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointCheckService;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueryMultiThreadImpl.SECheckServiceMultiThreadImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagement;
 
 @Configuration
 @ComponentScan(basePackages = "it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueryMultiThreadImpl.thread")
@@ -16,7 +16,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class AppConfig {
 
     /*Nome del file che contiene la lista degli URL degli sparql endpoint da controllare*/
-    private static final String SPARQL_ENDPOINTS_LIST_FILENAME = "sparqlEndpoints_list.txt";
+    //private static final String SPARQL_ENDPOINTS_LIST_FILENAME = "sparqlEndpoints_list.txt";
+    /*Nome del file che contiene la lista degli sparql endpoint da controllare*/
+    private static final String SPARQL_ENDPOINTS_LIST_FILENAME = "sparql_endpoints.json";
+
 
     /*numero di query da eseuire per ogni thread creato per eseguire il controllo
     * dellla disponibilità*/
@@ -32,7 +35,7 @@ public class AppConfig {
     }
 
     @Bean
-    public SparqlEndpointListFileManagament getSparqlEndpointListFileManagament(){
+    public SparqlEndpointListFileManagement getSparqlEndpointListFileManagament(){
         return new SparqlEndpointListFileManagamentImpl(SPARQL_ENDPOINTS_LIST_FILENAME);
     }
 }

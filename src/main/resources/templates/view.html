@@ -90,20 +90,22 @@
         <!--table-->
         <div th:if="${not #maps.isEmpty(sparqlStatusMap)}" class="container table-responsive">
             <table class="table table-striped">
-                <caption th:text="#{title.list}">List of Spraql Endpoint</caption>
+                <caption th:text="#{title.list}">List of SPARQL Endpoint</caption>
                 <thead class="thead-dark">
                     <tr>
                         <th style="width: 4%" scope="col">ID</th>
-                        <th style="width: 64%" scope="col" th:text="#{col.name1}">Service</th>
-                        <th style="width: 4%" scope="col" th:text="#{col.name2}">STATUS</th>
-                        <th style="width: 14%" scope="col" th:text="#{col.name3}">Uptime last 24h</th>
-                        <th style="width: 14%" scope="col" th:text="#{col.name4}">Uptime last 7days</th>
+                        <th style="width: 64%" scope="col" th:text="#{col.name1}">SPARQL Endpoint</th>
+                        <th style="width: 64%" scope="col" th:text="#{col.name2}">URL</th>
+                        <th style="width: 4%" scope="col" th:text="#{col.name3}">STATUS</th>
+                        <th style="width: 14%" scope="col" th:text="#{col.name4}">Uptime last 24h</th>
+                        <th style="width: 14%" scope="col" th:text="#{col.name5}">Uptime last 7days</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr th:scope="row" th:each="service : ${sparqlStatusMap}">
                         <td th:text="${service.key}"></td>
+                        <td th:text="${service.value.name}">SPARQL Endpoint</td>
                         <td class="serviceLabel text-break"><a th:text="${service.value.URL}"
                                                                th:href="${service.value.URL}">Service</a></td>
                         <td class="statusLabel lead" th:switch="${service.value.statusString}">

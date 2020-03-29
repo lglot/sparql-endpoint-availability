@@ -8,6 +8,8 @@ public class SparqlEndpointStatusSummary {
     /*this variable indicates whether the sparql is active,
     or is inactive for less or more than a week*/
     private String statusString;
+    
+    private String name;
 
     private double uptimeLast24h;
     private double uptimelast7d;
@@ -42,5 +44,19 @@ public class SparqlEndpointStatusSummary {
 
     public void setURL(String URL) {
         this.URL = URL;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 }

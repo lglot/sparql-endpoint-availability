@@ -3,7 +3,6 @@ package it.unife.sparql_endpoint_availability.service;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
-import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagament;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointCheckService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
+import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagement;
+import java.util.Set;
 
 @Service
 @Scope("singleton")
@@ -25,13 +26,13 @@ class SparqlEndpointCheckTask {
     private int iterator;
 
     private SparqlEndpointDATAManagement sparqlEndpointDATAManagement;
-    private SparqlEndpointListFileManagament sparqlEndpointListFileManagament;
+    private SparqlEndpointListFileManagement sparqlEndpointListFileManagament;
     private SparqlEndpointCheckService sparqlEndpointCheckService;
 
 
     @Autowired
     public SparqlEndpointCheckTask(SparqlEndpointDATAManagement sparqlEndpointDATAManagement,
-                                   SparqlEndpointListFileManagament sparqlEndpointListFileManagament,
+                                   SparqlEndpointListFileManagement sparqlEndpointListFileManagament,
                                    SparqlEndpointCheckService sparqlEndpointCheckService){
 
         this.sparqlEndpointDATAManagement = sparqlEndpointDATAManagement;
@@ -51,8 +52,8 @@ class SparqlEndpointCheckTask {
         /*Reads sparql endpoint URL from resource and save them to DATA*/
         if(sparqlEndpointListFileManagament.isModified() || iterator==1) {
             logger.info((iterator!=1)? "Sparql URL list Resource has been modified - " : "" + "Updating Sparql Endpoint List from Resource");
-            List<String> sparqlEndpointURLlist = sparqlEndpointListFileManagament.read();
-            sparqlEndpointDATAManagement.update(sparqlEndpointURLlist);
+            Set<SparqlEndpoint> sparqlEndpoints = sparqlEndpointListFileManagament.getSparqlEndpoints();
+            sparqlEndpointDATAManagement.update(sparqlEndpoints);
         }
 
         /*Recupera gli sparql endpoint presenti sul db*/

@@ -1,0 +1,2826 @@
+[ {
+  "serviceURL" : "http://www.rdfabout.com/sparql",
+  "name" : "http://www.rdfabout.com/sparql (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://visualdataweb.infor.uva.es/sparql",
+  "name" : "http://visualdataweb.infor.uva.es/sparql (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://biolit.rkbexplorer.com/sparql",
+  "name" : "A Short Biographical Dictionary of English Literature (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://aemet.linkeddata.es/sparql",
+  "name" : "AEMET metereological dataset",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://202.45.139.84:10035/catalogs/fao/repositories/agris",
+  "name" : "AGRIS",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://202.45.139.84:10035/catalogs/fao/repositories/agrovoc",
+  "name" : "AGROVOC",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://202.73.13.50:55824/catalogs/performance/repositories/agrovoc",
+  "name" : "AGROVOC",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lexinfo.net/corpora/alpino/query.php",
+  "name" : "ALPINO RDF Treebank",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://imash.leeds.ac.uk:8080/openrdf-workbench/repositories/AMOnSPARQL/",
+  "name" : "AMOn+: Cultural Variations in Interpersonal Communication Ontology",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.ariadne-eu.org/sparql.tpl",
+  "name" : "ARIADNE",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.jesandco.org:8890/sparql",
+  "name" : "ASN:US",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://modip.aueb.gr/d2rq/sparql",
+  "name" : "AUEB Linked Open Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://purl.org/openbibliosets/iucrsparql",
+  "name" : "Academic Bibliography data available from Acta Cryst E",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://91.239.64.176:8890/sparql",
+  "name" : "Academic Offer of UNL",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.linkedopendata.it/grrp",
+  "name" : "Accommodations in Piedmont (LinkedOpenData.it)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.linkedopendata.it/grrt",
+  "name" : "Accommodations in Tuscany (LinkedOpenData.it)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://agrinepaldata.com/sparql",
+  "name" : "AgriNepalData",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/airports/services/sparql",
+  "name" : "Airport data from Our Airports published as RDF",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://adl-gazetteer.geog.ucsb.edu:3030/adl/sparql",
+  "name" : "Alexandria Digital Library (ADL) Gazetteer",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.allie.dbcls.jp/sparql",
+  "name" : "Allie Abbreviation And Long Form Database in Life Science",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://vocabulary.semantic-web.at/PoolParty/sparql/AustrianSkiTeam",
+  "name" : "Alpine Ski Racers of Austria",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://semanticweb.cs.vu.nl/europeana/sparql/",
+  "name" : "Amsterdam Museum as Linked Open Data in the Europeana Data Model",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://opendata.aragon.es/sparql",
+  "name" : "AragoDBPedia",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.archiveshub.ac.uk/sparql",
+  "name" : "Archives Hub Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.auth.gr/sparql",
+  "name" : "Aristotle University",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://acm.rkbexplorer.com/sparql/",
+  "name" : "Association for Computing Machinery (ACM) (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.aucklandmuseum.com",
+  "name" : "Auckland Museum Collections Online",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://abs.270a.info/sparql",
+  "name" : "Australian Bureau of Statistics (ABS) Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lab.environment.data.gov.au/sparql",
+  "name" : "Australian Climate Observations Reference Network - Surface Air Temperature Dataset",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lod.b3kat.de/sparql",
+  "name" : "B3Kat - Library Union Catalogues of Bavaria, Berlin and Brandenburg",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/bbc-backstage/services/sparql",
+  "name" : "http://api.talis.com/stores/bbc-backstage/services/sparql (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/bbc-wildlife/services/sparql",
+  "name" : "BBC Wildlife Finder",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dati.camera.it/sparql",
+  "name" : "http://dati.camera.it/sparql (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://babelnet.org/sparql/",
+  "name" : "BabelNet",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://bis.270a.info/sparql",
+  "name" : "Bank for International Settlements (BIS) Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.open-biomed.org.uk/sparql/endpoint/bdgp_20081030",
+  "name" : "Bdgp",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.bibbase.org:2020/sparql",
+  "name" : "BibBase",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://afcsid.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::ACFSID",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://affymetrix.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Affymetrix",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://biopax.biomodels.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::BioModels::BioPAX",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://biomodels.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Biomodels",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://bioportal.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Bioportal",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://chembl.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Chembl",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://clinicaltrials.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Clinicaltrials",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ctd.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Ctd",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dbsnp.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Dbsnp",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://drugbank.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Drugbank",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://genbank.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::GenBank",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://genage.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Genage",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://gendr.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Gendr",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://goa.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Goa",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://hgnc.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Hgnc",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://homologene.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Homologene",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://inoh.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::INOH",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://interpro.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Interpro",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://iproclass.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Iproclass",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://irefindex.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Irefindex",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://kegg.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::KEGG",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://biopax.kegg.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::KEGG::BioPAX",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linkedspl.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Linkedspl",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lsr.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Lsr",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://mesh.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Mesh",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://mgi.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Mgi",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ncbigene.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Ncbigene",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ndc.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Ndc",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://netpath.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::NetPath",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://omim.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Omim",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://orphanet.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Orphanet",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://pid.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::PID",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://pathwaycommons.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Pathwaycommons",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://biopax.pharmgkb.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::PharmGKB::BioPAX",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://pharmgkb.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Pharmgkb",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://pubchem.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::PubChem",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://pubmed.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Pubmed",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://reactome.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Reactome",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://rhea.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Rhea",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://spike.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::SPIKE",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sabiork.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Sabiork",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sgd.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Sgd",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sider.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Sider",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://taxonomy.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Taxonomy",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://wikipathways.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Wikipathways",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://wormbase.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::Wormbase",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://nextprot.bio2rdf.org/sparql",
+  "name" : "Bio2RDF::neXtProt",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "https://www.ebi.ac.uk/rdf/services/biomodels/sparql",
+  "name" : "BioModels RDF",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "https://www.ebi.ac.uk/rdf/services/biosamples/sparql",
+  "name" : "BioSamples RDF",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://helheim.deusto.es/bizkaisense/sparql",
+  "name" : "BizkaiSense",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.kasabi.com/dataset/bricklink/apis/sparql",
+  "name" : "Bricklink",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://collection.britishmuseum.org/Sparql",
+  "name" : "British Museum Collection",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://bnb.data.bl.uk/sparql",
+  "name" : "http://bnb.data.bl.uk/sparql (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://budapest.rkbexplorer.com/sparql/",
+  "name" : "Budapest University of Technology and Economics (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://bfs.270a.info/sparql",
+  "name" : "Bundesamt für Statistik (BFS) - Swiss Federal Statistical Office (FSO) Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://opendata-bundestag.de/sparql",
+  "name" : "BundestagNebeneinkuenfte",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.crystallography.net:2020/snorql/",
+  "name" : "COD inventory",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://zaire.dimis.fim.uni-passau.de:8890/sparql",
+  "name" : "CODE Endpoint",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://colinda.org/endpoint.php",
+  "name" : "COLINDA - Conference Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.colinda.org/endpoint.php",
+  "name" : "COLINDA - Conference Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://core.kmi.open.ac.uk/squery",
+  "name" : "CORE - Semantic Similarity of Open Access publications",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://eris.okfn.org/sparql",
+  "name" : "CORS Check - HTTP Header Logs for Linked Open Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://156.35.31.156/sparql",
+  "name" : "CPV 2003",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://purl.org/weso/sparql",
+  "name" : "http://purl.org/weso/sparql (9)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://crtm.linkeddata.es/sparql",
+  "name" : "CRTM",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.fundacionctic.org/sparql",
+  "name" : "CTIC Public Dataset Catalogs",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://catalogus-professorum.org/sparql",
+  "name" : "Catalogus Professorum Lipsiensis",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "https://www.ebi.ac.uk/rdf/services/chembl/sparql",
+  "name" : "ChEMBL RDF",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://rdf.farmbio.uu.se/chembl/sparql",
+  "name" : "ChEMBL-RDF (@ Uppsala University)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://chebi.bio2rdf.org/sparql",
+  "name" : "Chemical Entities of Biological Interest (ChEBI)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://citeseer.rkbexplorer.com/sparql/",
+  "name" : "CiteSeer (Research Index) (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/climb/services/sparql",
+  "name" : "Climb Dataincubator",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://cordis.rkbexplorer.com/sparql/",
+  "name" : "Community R&D Information Service (CORDIS) (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www4.wiwiss.fu-berlin.de/cordis/sparql",
+  "name" : "Community Research and Development Information Service (CORDIS)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://semantic.ckan.net/sparql/",
+  "name" : "Comprehensive Knowledge Archive Network",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.copac.ac.uk/sparql",
+  "name" : "Copac: union catalogue of major University, Specialist, and National Libraries in the UK and Ireland",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://vocabulary.wolterskluwer.de/PoolParty/sparql/court",
+  "name" : "Courts thesaurus",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://crystaleye.ch.cam.ac.uk/sparql/",
+  "name" : "Crystal Eye: Aggregated Crystallographic Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://cultura.linkeddata.es/sparql",
+  "name" : "CulturaLinkedData",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www4.wiwiss.fu-berlin.de/dblp/sparql",
+  "name" : "DBLP Bibliography Database in RDF (FU Berlin)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dblp.rkbexplorer.com/sparql/",
+  "name" : "DBLP Computer Science Bibliography (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dblp.l3s.de/d2r/sparql",
+  "name" : "DBLP in RDF (L3S)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dbtune.org/jamendo/sparql/",
+  "name" : "DBTune.org Jamendo RDF Server",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dbtune.org/bbc/peel/sparql/",
+  "name" : "DBTune.org John Peel sessions RDF server",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dbtune.org/magnatune/sparql/",
+  "name" : "DBTune.org Magnatune RDF server",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dbtune.org/musicbrainz/sparql",
+  "name" : "DBTune.org Musicbrainz D2R Server",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dbtune.org/myspace/sparql/",
+  "name" : "DBTune.org MySpace RDF Service",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dbtune.org/classical/sparql/",
+  "name" : "DBTune.org/classical",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dbpedia.org/sparql",
+  "name" : "DBpedia",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://commons.dbpedia.org/sparql",
+  "name" : "DBpedia Commons",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://wikidata.dbpedia.org/sparql",
+  "name" : "DBpedia Wikidata",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://eu.dbpedia.org/sparql",
+  "name" : "DBpedia in Basque",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://nl.dbpedia.org/sparql",
+  "name" : "DBpedia in Dutch",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://fr.dbpedia.org/sparql",
+  "name" : "DBpedia in French",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://de.dbpedia.org/sparql",
+  "name" : "DBpedia in German",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://el.dbpedia.org/sparql",
+  "name" : "DBpedia in Greek",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ja.dbpedia.org/sparql",
+  "name" : "DBpedia in Japanese",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://pt.dbpedia.org/sparql",
+  "name" : "DBpedia in Portuguese",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://es.dbpedia.org/sparql",
+  "name" : "DBpedia in Spanish",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://live.dbpedia.org/sparql",
+  "name" : "DBpedia-Live",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://deploy.rkbexplorer.com/sparql/",
+  "name" : "DEPLOY (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.duraark.eu/sparql",
+  "name" : "DURAARK - Linked Building Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www4.wiwiss.fu-berlin.de/dailymed/sparql",
+  "name" : "DailyMed",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/musicbrainz/services/sparql",
+  "name" : "Data Incubator: MusicBrainz",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://services.data.gov/sparql",
+  "name" : "Data.gov",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data-gov.ie/sparql",
+  "name" : "DataGovIE - Irish Government Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.ox.ac.uk/sparql/",
+  "name" : "http://data.ox.ac.uk/sparql/ (6)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://datos.bcn.cl/sparql",
+  "name" : "Datos.bcn.cl",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://deepblue.rkbexplorer.com/sparql/",
+  "name" : "Deep Blue (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ndb.publink.lod2.eu/sparql",
+  "name" : "Deutsche Biographie",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dewey.info/sparql.php",
+  "name" : "Dewey Decimal Classification (DDC)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://rdf.disgenet.org/sparql/",
+  "name" : "DisGeNET",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www4.wiwiss.fu-berlin.de/diseasome/sparql",
+  "name" : "Diseasome",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://italy.rkbexplorer.com/sparql",
+  "name" : "Diverse Italian ReSIST Partner Institutions (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linkeddata.finki.ukim.mk/sparql",
+  "name" : "Drug Data from the Health Insurance Fund of Macedonia",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www4.wiwiss.fu-berlin.de/drugbank/sparql",
+  "name" : "DrugBank",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dutchshipsandsailors.nl/data/sparql/",
+  "name" : "Dutch Ships and Sailors",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://semanticweb.cs.vu.nl/dss/sparql/",
+  "name" : "Dutch Ships and Sailors",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.kasabi.com/dataset/ecco-tcp-eighteenth-century-collections-online-texts/apis/sparql",
+  "name" : "ECCO-TCP Eighteenth Century Texts Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.eclap.eu/sparql",
+  "name" : "ECLAP",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://cr.eionet.europa.eu/sparql",
+  "name" : "http://cr.eionet.europa.eu/sparql (3)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://edit.elte.hu/sparql",
+  "name" : "ELTE Digital Institutional Repository (EDIT)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://era.rkbexplorer.com/sparql/",
+  "name" : "ERA - Australian Research Council publication ratings (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://agencies.publicdata.eu/sparql",
+  "name" : "EU Agencies and decentralized bodies (Agencies)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/eupmedia/services/sparql",
+  "name" : "EU Parliament Media Library",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/whoiswho/services/sparql",
+  "name" : "EU Who Is Who",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://fintrans.publicdata.eu/sparql",
+  "name" : "EU: fintrans.publicdata.eu",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/eumida/services/sparql",
+  "name" : "EUMIDA as Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://eur-lex.publicdata.eu/sparql",
+  "name" : "EUR-Lex as Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www4.wiwiss.fu-berlin.de/euraxess/sparql",
+  "name" : "EURAXESS - Researchers in Motion",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://idi.fundacionctic.org/classifications_endpoint/eurovoc",
+  "name" : "EUROVOC in SKOS",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/eutc-productions/services/sparql",
+  "name" : "Edinburgh University Theatre Company Productions",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://kent.zpr.fer.hr:8080/educationalProgram/sparql",
+  "name" : "Educational programs - SISVU",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.ege.edu.tr/ep/sparql",
+  "name" : "Ege University Linked Open Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://webenemasuno.linkeddata.es/sparql",
+  "name" : "El Viajero's tourism dataset",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.ida.liu.se/projects/semtech/openrdf-sesame/repositories/energy",
+  "name" : "Energy efficiency assessments and improvements",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://heritagedata.org/live/sparql",
+  "name" : "http://heritagedata.org/live/sparql (14)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.kasabi.com/dataset/english-heritage/apis/sparql",
+  "name" : "English Heritage Places",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/pbac/services/sparql",
+  "name" : "English Language Books listed in Printed Book Auction Catalogues from 17th Century Holland",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://enipedia.tudelft.nl/sparql",
+  "name" : "Enipedia - Energy Industry Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://environment.data.gov.uk/sparql/bwq/query",
+  "name" : "Environment Agency Bathing Water Quality",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://virtuoso-eurosentiment.paradigmatecnologico.com/sparql",
+  "name" : "EuroSentiment",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ecb.270a.info/sparql",
+  "name" : "European Central Bank (ECB) Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ecb.publicdata.eu/sparql",
+  "name" : "European Central Bank Statistics (PublicData.eu)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www4.wiwiss.fu-berlin.de/eccompetition/sparql",
+  "name" : "European Commission Competition data set (FU Berlin)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/elections/services/sparql",
+  "name" : "European Election Results",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www4.wiwiss.fu-berlin.de/eures/sparql",
+  "name" : "European Employment Services (EURES)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://semantic.eea.europa.eu/sparql",
+  "name" : "http://semantic.eea.europa.eu/sparql (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://epo.publicdata.eu/sparql",
+  "name" : "European Patent Office (EPO)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lod.euscreen.eu/sparql",
+  "name" : "European Television Heritage",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://europeana.ontotext.com/sparql",
+  "name" : "http://europeana.ontotext.com/sparql (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www4.wiwiss.fu-berlin.de/eurostat/sparql",
+  "name" : "Eurostat in RDF (FU Berlin)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://eventmedia.eurecom.fr/sparql",
+  "name" : "EventMedia",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://eculture2.cs.vu.nl:8890/sparql",
+  "name" : "Eventseer",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://foodpedia.tk/sparql",
+  "name" : "FOODpedia - Linked Data Dataset about Food Products and Ingredients",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.linkedu.eu/forge/query",
+  "name" : "FORGE Course information",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://factforge.net/sparql",
+  "name" : "Fact Forge",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://logd.tw.rpi.edu/sparql",
+  "name" : "http://logd.tw.rpi.edu/sparql (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://farolas.linkeddata.es/sparql",
+  "name" : "FarolApp Streetlight Dataset",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://http://crashmap.okfn.gr:8890/sparql",
+  "name" : "Fatal Traffic Accidents in greek roads",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://frb.270a.info/sparql",
+  "name" : "Federal Reserve Board (FRB) Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.kasabi.com/dataset/federal-reserve-economic-data/apis/sparql",
+  "name" : "Federal Reserve Economic Data RDF",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.open-biomed.org.uk/sparql/endpoint/flybase",
+  "name" : "Flybase",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.open-biomed.org.uk/sparql/endpoint/flyted",
+  "name" : "Flyted",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://fao.270a.info/sparql",
+  "name" : "Food and Agriculture Organization of the United Nations (FAO) Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.kasabi.com/dataset/foodista/apis/sparql",
+  "name" : "Foodista",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://kasabi.com/api/sparql-endpoint-foodista",
+  "name" : "Foodista",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ft.rkbexplorer.com/sparql/",
+  "name" : "France Telecom Recherche et Développement (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lisbon.rkbexplorer.com/sparql",
+  "name" : "Fundação da Faculdade de Ciencas da Universidade de Lisboa (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://cr3.eionet.europa.eu/sparql",
+  "name" : "GEneral Multilingual Environmental Thesaurus",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.ebi.ac.uk/rdf/services/atlas/sparql",
+  "name" : "Gene Expression Atlas RDF",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://geo.linkeddata.es/sparql",
+  "name" : "GeoLinkedData",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://resource.geolba.ac.at/PoolParty/sparql/GeologicTimeScale",
+  "name" : "Geological Survey of Austria (GBA) - Thesaurus",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://resource.geolba.ac.at/PoolParty/sparql/GeologicUnit",
+  "name" : "Geological Survey of Austria (GBA) - Thesaurus",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://resource.geolba.ac.at/PoolParty/sparql/lithology",
+  "name" : "Geological Survey of Austria (GBA) - Thesaurus",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://resource.geolba.ac.at/PoolParty/sparql/tectonicunit",
+  "name" : "Geological Survey of Austria (GBA) - Thesaurus",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://vocabulary.wolterskluwer.de/PoolParty/sparql/arbeitsrecht",
+  "name" : "German labor law thesaurus",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.lod2.eu/sparql",
+  "name" : "Germany - Bundesministerium der Finanzen - Budget",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ckan.eurohelp.es:8890/sparql",
+  "name" : "Gipuzkoa Demografia",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.globalchange.gov/sparql",
+  "name" : "Global Change Information System",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://extbi.lab.aau.dk/sparql/",
+  "name" : "GovAgriBus Denmark",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://extbi.lab.aau.dk:8080/sparql/",
+  "name" : "GovAgriBus Denmark",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://govwild.org/sparql",
+  "name" : "GovWILD - Government Web Integration for Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://wordnet.okfn.gr:8890/sparql/",
+  "name" : "Greek Wordnet",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://hcls.deri.org/sparql",
+  "name" : "HCLS Knowledge Base",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lod.hebis.de/sparql",
+  "name" : "HeBIS - Bibliographic Resources of the Library Union Catalogues of Hessen and parts of the Rhineland Palatinate",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://healthdata.tw.rpi.edu/sparql",
+  "name" : "HealthData.gov Platform (HDP) on the Semantic Web",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://helheim.deusto.es/hedatuz/sparql",
+  "name" : "Hedatuz",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://greek-lod.auth.gr/fire-brigade/sparql",
+  "name" : "Hellenic Fire Brigade",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://greek-lod.auth.gr/police/sparql",
+  "name" : "Hellenic Police",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://setaria.oszk.hu/sparql",
+  "name" : "Hungarian National Library (NSZL) catalog",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://semanticweb.cs.vu.nl/iati/sparql/",
+  "name" : "IATI as Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ibm.rkbexplorer.com/sparql/",
+  "name" : "IBM Research GmbH (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.icane.es/opendata/sparql",
+  "name" : "ICANE",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ieee.rkbexplorer.com/sparql/",
+  "name" : "IEEE Papers (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ieeevis.tw.rpi.edu/nosparql",
+  "name" : "IEEE VIS Source Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ieeevis.tw.rpi.edu/sparql",
+  "name" : "IEEE VIS Source Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.inertia-linkeddata.iti.gr:9090/inertia-endpoint/",
+  "name" : "INERTIA (INERTIA Energy Consumption Example Linked Data)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://services.insemtives.eu/forest/sparql",
+  "name" : "INSEMTIVES",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://156.35.82.103/sparql",
+  "name" : "ISIC V4",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dati.isprambiente.it/sparql",
+  "name" : "http://dati.isprambiente.it/sparql (5)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.linkedopendata.it/istat",
+  "name" : "ISTAT Immigration (LinkedOpenData.it)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://identifiers.org/services/sparql",
+  "name" : "Identifiers.org",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.imagesnippets.com/sparql/images",
+  "name" : "Imagesnippets Image Descriptions",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://opendatacommunities.org/sparql",
+  "name" : "http://opendatacommunities.org/sparql (7)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.influencetracker.com:8890/sparql",
+  "name" : "Influence Tracker Dataset",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://purl.org/twc/hub/sparql",
+  "name" : "Instance Hub (all)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://eurecom.rkbexplorer.com/sparql/",
+  "name" : "Institut Eurécom (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.ngii.go.kr/SPARQL/sparql",
+  "name" : "Integrated Human Geography Service for LOD by National Geographic Information Institute, Korea",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://imf.270a.info/sparql",
+  "name" : "International Monetary Fund (IMF) Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.rechercheisidore.fr/sparql",
+  "name" : "Isidore",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.linkedopendata.it/musei",
+  "name" : "Italian Museums",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.linkedopendata.it/scuole",
+  "name" : "Italian public schools (LinkedOpenData.it)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "https://stirdf.jglobal.jst.go.jp/sparql",
+  "name" : "J-GLOBAL knowledge",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://202.73.13.50:55824/catalogs/performance/repositories/jita",
+  "name" : "JITA Classification System of Library and Information Science",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/jgoodwin-genealogy/services/sparql",
+  "name" : "John Goodwin's Family Tree",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://greek-lod.math.auth.gr/kalikratis/sparql",
+  "name" : "Kallikratis municipalities",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.kupkb.org/sparql",
+  "name" : "Kidney and Urinary Pathway Knowledge Base",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lod.kipo.kr/data/sparql",
+  "name" : "Korea Intellectual Propert Office(KIPO)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://kisti.rkbexplorer.com/sparql/",
+  "name" : "Korean Institute of Science Technology and Information (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lod.kaist.ac.kr/sparql",
+  "name" : "Korean Traditional Recipes",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://laas.rkbexplorer.com/sparql/",
+  "name" : "LAAS-CNRS (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://kwijibo.talis.com/latc-linksets/sparql",
+  "name" : "LATC Linksets",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linkeddata.es/resource/ldqm/sparql",
+  "name" : "LDQM - Accessibility of DBpedia resources",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lab3.libris.kb.se/sparql",
+  "name" : "LIBRIS",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lod.ac/bdls/sparql",
+  "name" : "LODAC BDLS",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lod.my-eventos.com/en/services/sparql/",
+  "name" : "http://lod.my-eventos.com/en/services/sparql/ (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lodstats.aksw.org/sparql",
+  "name" : "LODStats",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.uni-muenster.de/sparql",
+  "name" : "LODUM",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.linkededucation.org/request/lak-conference/sparql",
+  "name" : "Learning Analytics and Knowledge (LAK) Dataset",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://corpora.nlp2rdf.org/sparql",
+  "name" : "Leipzig Corpora Collection (LCC)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.lesliesikos.com/sparql-endpoint/",
+  "name" : "Leslie Sikos, Ph.D. Semantic Web Researcher",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://spending.lichfielddc.gov.uk/sparql",
+  "name" : "Lichfield District Council - Spending",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.linklion.org:8890/sparql",
+  "name" : "LinkLion - A Link Repository for the Web of Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.reegle.info/",
+  "name" : "Linked Clean Energy Data (reegle.info)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.contextdatacloud.org",
+  "name" : "Linked Crowdsourced Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.bib.uni-mannheim.de/sparql",
+  "name" : "Linked Data Service der Universitätsbibliothek Mannheim",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linkedlifedata.com/sparql",
+  "name" : "Linked Life Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.logainm.ie/sparql",
+  "name" : "Linked Logainm",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.linkedmdb.org/sparql",
+  "name" : "Linked Movie DataBase",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.aalto.fi/sparql",
+  "name" : "Linked Open Aalto Data Service",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.linkedopendata.it/loc",
+  "name" : "Linked Open Camera (LinkedOpenData.it)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linkedopencommerce.com/sparql",
+  "name" : "http://linkedopencommerce.com/sparql (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ecowlim.tfri.gov.tw/sparql/query",
+  "name" : "Linked Open Data of Ecology",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.linkedopendata.it/los",
+  "name" : "Linked Open Senate (linkedopendata.it)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lov.okfn.org/endpoint/lov",
+  "name" : "Linked Open Vocabularies (LOV)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sonicbanana.cs.wright.edu:8890/sparql",
+  "name" : "Linked Sensor Data (Kno.e.sis)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "https://dbmi-icode-01.dbmi.pitt.edu/sparql",
+  "name" : "Linked Structured Product Labels",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://tcga.deri.ie",
+  "name" : "Linked TCGA",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://soa4all.isoco.net/luf/sparql",
+  "name" : "Linked User Feedback",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.linkedct.org/sparql",
+  "name" : "LinkedCT",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linkedgeodata.org/sparql/",
+  "name" : "LinkedGeoData",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/rsinger-dev4/services/sparql",
+  "name" : "LinkedLCCN",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linkedspending.aksw.org/sparql",
+  "name" : "LinkedSpending: OpenSpending becomes Linked Open Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://helheim.deusto.es/linkedstats/sparql",
+  "name" : "LinkedStats",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linkedu.eu/catalogue/sparql/",
+  "name" : "LinkedUp Catalogue of Educational Datasets",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sw.unime.it:8890/sparql",
+  "name" : "Linking Italian University Statistics Project",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://id.sgcb.mcu.es/sparql",
+  "name" : "Lista de Encabezamientos de Materia as Linked Open Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.lotico.com:3030/lotico/sparql",
+  "name" : "Lotico",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://onto.mondis.cz/openrdf-sesame/repositories/mondis-record-owlim",
+  "name" : "MONDIS",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://apps.morelab.deusto.es/labman/sparql",
+  "name" : "MORElab",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://geografia.ideca.gov.co/fuseki/dataset.html?tab=query&ds=/inf",
+  "name" : "http://geografia.ideca.gov.co/fuseki/dataset.html?tab=query&ds=/inf (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/massobservation/services/sparql",
+  "name" : "Mass Observation Archive catalogue",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.msc2010.org",
+  "name" : "Mathematics Subject Classification",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www4.wiwiss.fu-berlin.de/medicare/sparql",
+  "name" : "MediCare",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://doc.metalex.eu:8000/sparql/",
+  "name" : "MetaLex Document Server",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/metoffice/services/sparql",
+  "name" : "Metoffice Weather Forecasts",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/moseley/services/sparql",
+  "name" : "Moseley Folk Festival Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://rdf.muninn-project.org/sparql",
+  "name" : "Muninn World War I",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.kasabi.com/dataset/musicnet/apis/sparql",
+  "name" : "MusicNet Codex",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://futurewavehosting.com:3030/my-family-lineage/sparql",
+  "name" : "My Family Lineage",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://n-lex.publicdata.eu/sparql",
+  "name" : "N-Lex as Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.kasabi.com/dataset/nasa/apis/sparql",
+  "name" : "NASA Space Flight & Astronaut data in RDF",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://vocab.nerc.ac.uk/sparql/",
+  "name" : "NERC Vocabulary Server 2.0",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/gunnbib-digitalmanuskripter/sparql",
+  "name" : "NTNU special collections",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://id.ndl.go.jp/auth/ndlsh/",
+  "name" : "National Diet Library of Japan subject headings",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lod.sztaki.hu/sparql",
+  "name" : "National Digital Data Archive of Hungary (partial)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://nsf.rkbexplorer.com/sparql/",
+  "name" : "National Science Foundation (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.nature.com/query",
+  "name" : "Nature Publishing Group - ALL",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.neurocommons.org:8890/nsparql/",
+  "name" : "Neurocommons text mining pilot",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.nobelprize.org/sparql",
+  "name" : "Nobel Prizes",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/nvd/services/sparql",
+  "name" : "Norsk inndeling av vitenskapsdisipliner",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.lenka.no/sparql",
+  "name" : "Norwegian geo-divisions",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.noticias.universia.net/d2r-server/snorql/",
+  "name" : "Noticias Universia",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://spatial.ucd.ie/lod/sparql",
+  "name" : "OSM Semantic Network",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.linkedu.eu/don/query",
+  "name" : "OUNL DSpace in RDF",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.oceandrilling.org/sparql",
+  "name" : "http://data.oceandrilling.org/sparql (6)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://onto.beef.org.pl/sparql",
+  "name" : "OntoBeef",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://oai.rkbexplorer.com/sparql/",
+  "name" : "Open Archive Initiative Harvest over OAI-PMH (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.linkedu.eu/ocw/query",
+  "name" : "Open Courseware Consortium metadata in RDF",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://opendata.ccd.uniroma2.it/LMF/sparql/select",
+  "name" : "Open Data @ Tor Vergata",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://vocabulary.semantic-web.at/PoolParty/sparql/OpenData",
+  "name" : "Open Data Thesaurus",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.cnr.it/sparql-proxy/",
+  "name" : "Open Data from the Italian National Research Council",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.utpl.edu.ec/ecuadorresearch/lod/sparql",
+  "name" : "Open Data of Ecuador",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.opendiscoveryspace.eu/sparql.tpl",
+  "name" : "Open Discovery Space (ODS)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/openlibrary/services/sparql",
+  "name" : "Open Library data mirror in the Talis Platform",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://en.openei.org/sparql",
+  "name" : "OpenEI - Open Energy Info",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lod.openlinksw.com/sparql",
+  "name" : "OpenLink Software LOD Cache",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.openmobilenetwork.org",
+  "name" : "OpenMobileNetwork",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://apps.ideaconsult.net:8080/ontology",
+  "name" : "OpenTox",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://gov.tso.co.uk/coins/sparql",
+  "name" : "OpenUpLabs COINS",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://gov.tso.co.uk/dclg/sparql",
+  "name" : "OpenUpLabs DCLG",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://openuplabs.tso.co.uk/sparql/gov-education",
+  "name" : "OpenUpLabs Education",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://os.services.tso.co.uk/geo/sparql",
+  "name" : "OpenUpLabs Geographic",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://gov.tso.co.uk/legislation/sparql",
+  "name" : "OpenUpLabs Legislation",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://gov.tso.co.uk/transport/sparql",
+  "name" : "OpenUpLabs Transport",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.kasabi.com/dataset/openflights-routes/apis/sparql",
+  "name" : "Openflights Routes",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://os.rkbexplorer.com/sparql/",
+  "name" : "Ordnance Survey (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/ordnance-survey/services/sparql",
+  "name" : "Ordnance Survey Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.organic-edunet.eu/snorql/",
+  "name" : "Organic Edunet Linked Open Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.organic-edunet.eu/sparql",
+  "name" : "Organic Edunet Linked Open Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://oecd.270a.info/sparql",
+  "name" : "Organisation for Economic Co-operation and Development (OECD) Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://miuras.inf.um.es/sparql",
+  "name" : "Orthology and Diseases Information - OGO",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "https://data.ox.ac.uk/sparql/",
+  "name" : "OxPoints (University of Oxford)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.linkedu.eu/prod/query",
+  "name" : "PROD - JISC Project Directory in RDF",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.kasabi.com/dataset/pali-english-lexicon/apis/sparql",
+  "name" : "Pali English Lexicon",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ld.panlex.org/sparql",
+  "name" : "PanLex",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linked-data.org/sparql",
+  "name" : "Phonetics Information Base and Lexicon (PHOIBLE)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/pokedex/services/sparql",
+  "name" : "Pokedex data in RDF",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.linkedopendata.it/cap",
+  "name" : "Postal codes Italy (LinkedOpenData.it)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://prelex.publicdata.eu/sparql",
+  "name" : "PreLex",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://premon.fbk.eu/sparql",
+  "name" : "PreMOn (Predicate Model for Ontologies)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.kasabi.com/dataset/prelinger-archives/apis/sparql",
+  "name" : "Prelinger Archives",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql-procomun.educalab.es/",
+  "name" : "Procomún SPARQL",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/productdb/services/sparql",
+  "name" : "ProductDB",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www4.wiwiss.fu-berlin.de/gutendata/sparql",
+  "name" : "Project Gutenberg in RDF (FU Berlin)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://libver.math.auth.gr/sparql",
+  "name" : "Public Library of Veroia",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.sparql.org/sparql.html",
+  "name" : "Public Record Office Victoria Semantic Wiki",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://publicspending.medialab.ntua.gr/sparql",
+  "name" : "Public Spending in Greece",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linkeddata4.dia.fi.upm.es:8907/sparql",
+  "name" : "RDFLicense",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://risks.rkbexplorer.com/sparql/",
+  "name" : "RISKS Digest (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ruian.linked.opendata.cz/sparql",
+  "name" : "RUIAN - registry of land identification, addresses and properties of the Czech Republic",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://rdf.ng-london.org.uk/raphael",
+  "name" : "Raphael Research Resource",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://curriculum.rkbexplorer.com/sparql/",
+  "name" : "ReSIST MSc in Resilient Computing Curriculum (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://wiki.rkbexplorer.com/sparql/",
+  "name" : "ReSIST Project Wiki (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://resex.rkbexplorer.com/sparql/",
+  "name" : "ReSIST Resilience Mechanisms (RKBExplorer.com)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "https://www.ebi.ac.uk/rdf/services/reactome/sparql",
+  "name" : "Reactome RDF",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://eculture2.cs.vu.nl:5020/sparql/",
+  "name" : "Rechtspraak.nl",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.kasabi.com/dataset/renewable-energy-generators/apis/sparql",
+  "name" : "Renewable Energy Generators",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lod.xdams.org/sparql",
+  "name" : "http://lod.xdams.org/sparql (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://rae2001.rkbexplorer.com/sparql/",
+  "name" : "Research Assessment Exercise 2001 (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://courseware.rkbexplorer.com/sparql/",
+  "name" : "Resilient Computing Courseware (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://revyu.com/sparql",
+  "name" : "Revyu.com - Review Anything",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://rijksmuseum.dydra.com/lizzyjongma/rijksmuseum-collection/sparql",
+  "name" : "Rijksmuseum Collection Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://rijksmuseum.sealinc.eculture.labs.vu.nl/sparql/",
+  "name" : "Rijksmuseum Collection Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.sstu.ru:3030/speciality-vocabulary/query",
+  "name" : "Russian Universities Specialities",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://link.informatics.stonybrook.edu/sparql/",
+  "name" : "RxNorm",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.bibsys.no/data/query_authority.html",
+  "name" : "Rådata nå!",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.rism.info/sparql",
+  "name" : "http://data.rism.info/sparql (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://biordf.net/sparql",
+  "name" : "SADI Semantic Web Services framework registry",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://demo.spraakdata.gu.se/ltlod/test/",
+  "name" : "http://demo.spraakdata.gu.se/ltlod/test/ (4)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://seek.rkbexplorer.com/sparql/",
+  "name" : "SEEK-AT-WD ICT tools for education - Web-Share",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www4.wiwiss.fu-berlin.de/sider/sparql",
+  "name" : "SIDER: Side Effect Resource",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://labs.mondeca.com/endpoint/ends",
+  "name" : "SPARQL Endpoint Status",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www4.wiwiss.fu-berlin.de/stitch/sparql",
+  "name" : "STITCH: Chemical-Protein Interactions",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://zbw.eu/beta/sparql/stw/query",
+  "name" : "STW Thesaurus for Economics",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.kasabi.com/dataset/sanskrit-english-lexicon/apis/sparql",
+  "name" : "Sanskrit English Lexicon",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://212.81.220.68:2020/elviajero",
+  "name" : "Santillana Guide Dataset",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/schemapedia/services/sparql",
+  "name" : "Schemapedia: RDF schema compendium",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ecs.rkbexplorer.com/sparql",
+  "name" : "School of Electronics and Computer Science, University of Southampton",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://southampton.rkbexplorer.com/sparql/",
+  "name" : "School of Electronics and Computer Science, University of Southampton (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/smcjournals/services/sparql",
+  "name" : "Scottish Mountaineering Council Journals Issues 1-36",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://cb.semsol.org/sparql",
+  "name" : "Semantic CrunchBase",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://el-devtc01.tugraz.at/~ldv/interlinking/endpoint_handler.php",
+  "name" : "Semantic Profiling Network",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.semanticuniverse.com/sparql",
+  "name" : "Semantic Universe Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.semanticweb.org/sparql",
+  "name" : "Semantic Web Dog Food Corpus",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://http://opendata.intellidomo.es:8080/sparql/",
+  "name" : "Sensores de IntelliDomo",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://serendipity.utpl.edu.ec/lod/sparql",
+  "name" : "Serendipity",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.linkedu.eu/slidewiki/query",
+  "name" : "Slidewiki (RDF/SPARQL)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linked.opendata.cz/sparql",
+  "name" : "http://linked.opendata.cz/sparql (30)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://smartlink.open.ac.uk/smartlink/sparql",
+  "name" : "SmartLink: Linked Services Non-Functional Properties",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://socialarchive.iath.virginia.edu/sparql/eac",
+  "name" : "Social Networks and Archival Context Fall 2011",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://socialarchive.iath.virginia.edu/sparql/snac-viaf",
+  "name" : "Social Networks and Archival Context Fall 2011",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://vocabulary.semantic-web.at/PoolParty/sparql/semweb",
+  "name" : "Social Semantic Web Thesaurus",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://aseg.cs.concordia.ca/secold/sparqlendpoint",
+  "name" : "Source Code Ecosystem Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linguistic.linkeddata.es/sparql",
+  "name" : "Spanish Linguistic Datasets",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/eurobarometer/services/sparql",
+  "name" : "Standard Eurobarometer",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://crashmap.okfn.gr:8890/sparql",
+  "name" : "Statistics on Fatal Traffic Accidents in greek roads",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://crime.rkbexplorer.com/sparql/",
+  "name" : "Street level crime reports for England and Wales",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.sindice.com/sparql",
+  "name" : "Sudoc bibliographic data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://symbolicdata.org:8890/sparql",
+  "name" : "SymbolicData",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://agalpha.mathbiol.org/repositories/tcga",
+  "name" : "TCGA Roadmap",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.open-biomed.org.uk/sparql/endpoint/tcm",
+  "name" : "TCMGeneDIT Dataset",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.linkededucation.org/request/ted/sparql",
+  "name" : "TED Talks",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://asev.l3s.uni-hannover.de:8085/openrdf-sesame/repositories/TERENCE_STORY",
+  "name" : "TERENCE Reading Comprehension Dataset",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lod.apc.gov.tw/sparql",
+  "name" : "TIP",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://pomelo.iis.sinica.edu.tw:2020/sparql",
+  "name" : "Taiwan geographic names",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lsd.taxonconcept.org/sparql",
+  "name" : "http://lsd.taxonconcept.org/sparql (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://darmstadt.rkbexplorer.com/sparql/",
+  "name" : "Technische Universität Darmstadt (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://telegraphis.net/data/countries/sparql",
+  "name" : "Telegraphis Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linguistic.linkeddata.es/terminesp/sparql-editor",
+  "name" : "Terminesp Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://academia6.poolparty.biz/PoolParty/sparql/Tesauro-Materias-BUPM",
+  "name" : "Tesauro materias BUPM",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://apps.morelab.deusto.es/teseo/sparql",
+  "name" : "Teseo",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.odw.tw",
+  "name" : "Test Site, LOD Lab 317",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linkeddata.ge.imati.cnr.it:8890/sparql",
+  "name" : "http://linkeddata.ge.imati.cnr.it:8890/sparql (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ring.ciard.net/sparql1",
+  "name" : "The CIARD RING",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://hcls.deri.org:8080/openrdf-sesame/repositories/tcga",
+  "name" : "The Cancer Genome Atlas",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "https://dbmi-icode-01.dbmi.pitt.edu/dikb/sparql",
+  "name" : "The Drug Interaction Knowledge Base",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://eurostat.linked-statistics.org/sparql",
+  "name" : "The Eurostat Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://vocab.getty.edu/sparql",
+  "name" : "http://vocab.getty.edu/sparql (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/datagovuk/services/sparql",
+  "name" : "The London Gazette - Gazettes Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/theviewfrom/services/sparql",
+  "name" : "The View From",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lod.gesis.org/thesoz/sparql",
+  "name" : "TheSoz Thesaurus for the Social Sciences (GESIS)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://digitale.bncf.firenze.sbn.it/openrdf-workbench/repositories/NS/query",
+  "name" : "Thesaurus BNCF",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.archivesdefrance.culture.gouv.fr/thesaurus/sparql",
+  "name" : "Thesaurus W for Local Archives",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://tour-pedia.org/sparql",
+  "name" : "Tourpedia",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://tkm.kiom.re.kr/ontology/sparql",
+  "name" : "Traditional Korean Medicine Ontology",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.talis.com/stores/trafficscotland/services/sparql",
+  "name" : "Traffic Scotland",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://purl.org/twc/arrayexpress/virtuoso/sparql",
+  "name" : "http://purl.org/twc/arrayexpress/virtuoso/sparql (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://transparency.270a.info/sparql",
+  "name" : "Transparency International Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://twarql.org:8890/sparql",
+  "name" : "Twarql",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://rdfabout.com/sparql",
+  "name" : "U.S. Securities and Exchange Commission Corporate Ownership RDF Data (rdfabout)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://jisc.rkbexplorer.com/sparql/",
+  "name" : "UK JISC (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.kasabi.com/dataset/un-hazardous-material-numbers/apis/sparql",
+  "name" : "UN Hazardous Materials Numbers",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://unlocode.rkbexplorer.com/sparql/",
+  "name" : "UN/LOCODE (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://uis.270a.info/sparql",
+  "name" : "UNESCO Institute for Statistics (UIS) Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://skos.um.es/sparql/",
+  "name" : "UNESCO Thesaurus",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://vocabularies.unesco.org/sparql-form/",
+  "name" : "UNESCO Thesaurus",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.linkedu.eu/kis1112/query",
+  "name" : "UNISTAT-KIS 2011/2012 in RDF (Key Information Set - UK Universities)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.linkedu.eu/kis/query",
+  "name" : "UNISTAT-KIS in RDF (Key Information Set - UK Universities)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://unodc.publicdata.eu/sparql",
+  "name" : "UNODC - Statistics on criminal justice",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linkeddata.uriburner.com/sparql",
+  "name" : "URIBurner",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dacura.cs.tcd.ie/sparql",
+  "name" : "US Political Violence",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.lider-project.eu/usage/sparql",
+  "name" : "USAGE review corpus",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://platform.uberblic.org/api/v1/sparql",
+  "name" : "Uberblic.org",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.uniprot.org",
+  "name" : "http://sparql.uniprot.org (8)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://beta.sparql.uniprot.org",
+  "name" : "http://beta.sparql.uniprot.org (8)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.utpl.edu.ec/utpl/lod/sparql",
+  "name" : "Universidad Técnica Particular de Loja - Linked Open Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://193.145.57.56:8890/sparql",
+  "name" : "Universitat Pompeu Fabra - linked data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://resrev.ilrt.bris.ac.uk/data-server-workshop/sparql",
+  "name" : "University of Bristol",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.linkedu.eu/hud/query",
+  "name" : "University of Huddersfield -- Circulation and Recommendation Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://newcastle.rkbexplorer.com/sparql/",
+  "name" : "University of Newcastle upon Tyne (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://roma.rkbexplorer.com/sparql/",
+  "name" : "Università degli studi di Roma \"La Sapienza\" (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://pisa.rkbexplorer.com/sparql/",
+  "name" : "Università di Pisa (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ulm.rkbexplorer.com/sparql/",
+  "name" : "Universität Ulm (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://irit.rkbexplorer.com/sparql/",
+  "name" : "Université Paul Sabatier - Toulouse 3 (RKB Explorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://semanticweb.cs.vu.nl/verrijktkoninkrijk/sparql/",
+  "name" : "Verrijkt Koninkrijk",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://vidont.org/sparql/",
+  "name" : "VidOnt",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://kaunas.rkbexplorer.com/sparql",
+  "name" : "Vytautas Magnus University, Kaunas (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://id.ndl.go.jp/auth/ndla/",
+  "name" : "Web NDL Authorities - National Diet Library of Japan",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://webscience.rkbexplorer.com/sparql",
+  "name" : "Web Science Conference (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.wikipathways.org/",
+  "name" : "WikiPathways",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.opmw.org/sparql",
+  "name" : "Wings workflow provenance dataset",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://wordnet.rkbexplorer.com/sparql/",
+  "name" : "WordNet (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://worldbank.270a.info/sparql",
+  "name" : "World Bank Linked Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www4.wiwiss.fu-berlin.de/factbook/sparql",
+  "name" : "World Factbook (FU Berlin)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://mlode.nlp2rdf.org/sparql",
+  "name" : "http://mlode.nlp2rdf.org/sparql (5)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ldf.fi/ww1lod/sparql",
+  "name" : "World War 1 as Linked Open Data",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://api.kasabi.com/dataset/yahoo-geoplanet/apis/sparql",
+  "name" : "Yahoo Geoplanet RDF",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://neuroweb.med.yale.edu:8890/sparql",
+  "name" : "Yale Senselab",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.yovisto.com/",
+  "name" : "Yovisto - academic video search",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://zhishi.me/sparql",
+  "name" : "Zhishi.me",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://aksw.org/sparql",
+  "name" : "aksw.org Research Group dataset",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://services.data.gov.uk/business/sparql",
+  "name" : "business.data.gov.uk",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://river.styx.org/sparql",
+  "name" : "cablegate",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://crm.rkbexplorer.com/sparql",
+  "name" : "crm",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://140.109.28.64:2020/sparql",
+  "name" : "crowdsourcing-fb",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.hnm.hu/sparql",
+  "name" : "data-hnm-hu",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.szepmuveszeti.hu/sparql",
+  "name" : "data-szepmuveszeti-hu",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://data.open.ac.uk/query",
+  "name" : "data.open.ac.uk, Linked Data from the Open University",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://sparql.data.southampton.ac.uk/",
+  "name" : "http://sparql.data.southampton.ac.uk/ (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://aliada.scanbit.net:8891/sparql",
+  "name" : "datos-artium-org",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://datos.artium.org/sparql",
+  "name" : "datos-artium-org",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://datos.bne.es/sparql",
+  "name" : "datos.bne.es",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://kaiko.getalp.org/sparql",
+  "name" : "dbnary",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lod.eurohelp.es/engimu/query/",
+  "name" : "demografiaataun",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://digitaleconomy.rkbexplorer.com/sparql",
+  "name" : "digitaleconomy",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dotac.rkbexplorer.com/sparql/",
+  "name" : "dotAC (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://foreign.rkbexplorer.com/sparql/",
+  "name" : "ePrints Harvest (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://eprints.rkbexplorer.com/sparql/",
+  "name" : "ePrints3 Institutional Archive Collection (RKBExplorer)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://cdrewu.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Charles R. Drew University",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://cau.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Clark Atlanta University",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://dartmouth.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Dartmouth College",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://famu.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Florida Agricultural and Mechanical University",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://harvard.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Harvard University",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://howard.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Howard University",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://hunter-cuny.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Hunter College",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://jsu.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Jackson State University",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://meharry.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Meharry Medical College",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://montana.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Montana State University",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://msm.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Morehouse School of Medicine",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ohsu.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Oregon Health and Science University",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://psm.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Ponce School of Medicine",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://tsu.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Texas Southern University",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ccny-cuny.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ The City College of New York",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://tuskegee.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Tuskegee University",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://uccaribe.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Universidad Central del Caribe",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://alaska.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ University of Alaska Fairbanks",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://hawaii.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ University of Hawai'i at Mānoa",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://utep.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ University of Texas at El Paso",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://utsa.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ University of Texas at San Antonio",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "https://eagle-i.ea.vanderbilt.edu/sparqler/sparql",
+  "name" : "eagle-i @ Vanderbilt University",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://xula.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i @ Xavier University of Louisiana",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://upr.eagle-i.net/sparqler/sparql",
+  "name" : "eagle-i@ University of Puerto Rico - Medical Sciences Campus",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://services.data.gov.uk/education/sparql",
+  "name" : "education.data.gov.uk",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://enaktingpsi.rkbexplorer.com/sparql",
+  "name" : "enaktingpsi",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://services.data.gov.uk/environment/sparql",
+  "name" : "environment.data.gov.uk",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://epsrc.rkbexplorer.com/sparql",
+  "name" : "epsrc",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://www.open-biomed.org.uk/sparql/endpoint/flyatlas",
+  "name" : "flyatlas",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://fun.rkbexplorer.com/sparql",
+  "name" : "fun",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://gdlc.rkbexplorer.com/sparql",
+  "name" : "gdlc",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://iserve.kmi.open.ac.uk/iserve/sparql",
+  "name" : "iServe: Linked Services Registry",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://ichoose.tw.rpi.edu/sparql",
+  "name" : "ichoose",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://greek-lod.math.auth.gr/intervalue/sparql",
+  "name" : "intervalue",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://linkedarc.net/sparql",
+  "name" : "linkedarc.net archaeological datasets",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lobid.org/sparql/",
+  "name" : "http://lobid.org/sparql/ (2)",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://lofd.tw.rpi.edu/sparql",
+  "name" : "lofd",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://meducator.open.ac.uk/resourcesrestapi/rest/meducator/sparql",
+  "name" : "mEducator: Linked Educational Resources",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://rdf.myexperiment.org/sparql/",
+  "name" : "myExperiment",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://nomisma.org/sparql",
+  "name" : "nomisma",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://notube.rkbexplorer.com/sparql",
+  "name" : "notube",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://services.data.gov.uk/patents/sparql",
+  "name" : "patents.data.gov.uk",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://photos.rkbexplorer.com/sparql",
+  "name" : "photos",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://provenanceweb.org/sparql",
+  "name" : "provenanceweb",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://services.data.gov.uk/reference/sparql",
+  "name" : "reference.data.gov.uk",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://services.data.gov.uk/research/sparql",
+  "name" : "research.data.gov.uk",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://foreign.rkbexplorer.com/sparql",
+  "name" : "rkb-explorer-foreign",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://roni.rkbexplorer.com/sparql",
+  "name" : "roni",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "https://w3id.org/scholarlydata/sparql",
+  "name" : "scholarlydata",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://semantic-web-journal.com:3030/sparql.tpl",
+  "name" : "semantic-web-journal",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://services.data.gov.uk/statistics/sparql",
+  "name" : "statistics.data.gov.uk",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://services.data.gov.uk/transport/sparql",
+  "name" : "transport.data.gov.uk",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://opendap.tw.rpi.edu/sparql",
+  "name" : "twc-opendap",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://minsky.gsi.dit.upm.es/semanticwiki/index.php/Special:SPARQLEndpoint",
+  "name" : "vulnerapedia",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://webconf.rkbexplorer.com/sparql",
+  "name" : "webconf",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://wiktionary.dbpedia.org/sparql",
+  "name" : "wiktionary.dbpedia.org",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://km.aifb.kit.edu/services/xlike-lexicon/",
+  "name" : "xLiD-Lexica",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+}, {
+  "serviceURL" : "http://diwis.imis.athena-innovation.gr:8181/sparql",
+  "name" : "xxxxx",
+  "defaultGraphIRIs" : [ ],
+  "namedGraphIRIs" : [ ]
+} ]
