@@ -11,10 +11,24 @@ nav{
  /*   min-width: 540px;*/
 }
 
-.statusLabel{
+.sparql-status{
     text-transform: uppercase;
-
+    text-align: center;
+    width: 3%;
 }
+
+.sparql-name {
+    width: 27%;
+}
+
+.sparql-url {
+    width: 25%;
+}
+
+.sparql-uptime {
+    width: 15%;
+}
+
 
 #nav-title{
     line-height: 46px;

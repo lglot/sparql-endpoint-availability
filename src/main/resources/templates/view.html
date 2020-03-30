@@ -93,22 +93,22 @@
                 <caption th:text="#{title.list}">List of SPARQL Endpoint</caption>
                 <thead class="thead-dark">
                     <tr>
-                        <th style="width: 4%" scope="col">ID</th>
-                        <th style="width: 64%" scope="col" th:text="#{col.name1}">SPARQL Endpoint</th>
-                        <th style="width: 64%" scope="col" th:text="#{col.name2}">URL</th>
-                        <th style="width: 4%" scope="col" th:text="#{col.name3}">STATUS</th>
-                        <th style="width: 14%" scope="col" th:text="#{col.name4}">Uptime last 24h</th>
-                        <th style="width: 14%" scope="col" th:text="#{col.name5}">Uptime last 7days</th>
+                        <!--<th style="width: 4%" scope="col">ID</th>-->
+                        <th class="sparql-name" scope="col" th:text="#{col.name1}">SPARQL Endpoint</th>
+                        <th class="sparql-url" scope="col" th:text="#{col.name2}">URL</th>
+                        <th class="sparql-status" scope="col" th:text="#{col.name3}">STATUS</th>
+                        <th class="sparql-uptime" scope="col" th:text="#{col.name4}">Uptime last 24h</th>
+                        <th class="sparql-uptime" scope="col" th:text="#{col.name5}">Uptime last 7days</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr th:scope="row" th:each="service : ${sparqlStatusMap}">
-                        <td th:text="${service.key}"></td>
-                        <td th:text="${service.value.name}">SPARQL Endpoint</td>
-                        <td class="serviceLabel text-break"><a th:text="${service.value.URL}"
+                        <!--<td th:text="${service.key}"></td>-->
+                        <td class="sparql-name" th:text="${service.value.name}">SPARQL Endpoint</td>
+                        <td class="sparql-url text-break"><a th:text="${service.value.URL}"
                                                                th:href="${service.value.URL}">Service</a></td>
-                        <td class="statusLabel lead" th:switch="${service.value.statusString}">
+                        <td class="sparql-status lead" th:switch="${service.value.statusString}">
 
                             <img th:case="${@environment.getProperty('sparql.endpoint.status.active')}"
                                  th:src="@{/image/green.png}" src="../static/image/green.png" alt="">
@@ -126,12 +126,12 @@
                                  th:src="@{/image/gray.png}" src="../static/image/gray.png" alt="">
 
                         </td>
-                        <td class="lead" th:if="${service.value.uptimeLast24h >= 0}" 
+                        <td class="sparql-uptime" th:if="${service.value.uptimeLast24h >= 0}" 
                             th:text="${#numbers.formatPercent(service.value.uptimeLast24h,1,2)}">Uptime last 24h</td>
-                        <td class="lead" th:if="${service.value.uptimeLast24h < 0}" >N/A</td>
-                        <td class="lead" th:if="${service.value.uptimelast7d >= 0}"
+                        <td class="sparql-uptime" th:if="${service.value.uptimeLast24h < 0}" >N/A</td>
+                        <td class="sparql-uptime" th:if="${service.value.uptimelast7d >= 0}"
                             th:text="${#numbers.formatPercent(service.value.uptimelast7d,1,2)}">Uptime last 7d</td>
-                        <td class="lead" th:if="${service.value.uptimelast7d < 0}" >N/A</td>
+                        <td class="sparql-uptime" th:if="${service.value.uptimelast7d < 0}" >N/A</td>
                     </tr>
                 </tbody>
             </table>
