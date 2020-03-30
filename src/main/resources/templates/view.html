@@ -7,9 +7,22 @@
         <title>Status Sparql Endpoint</title>
         <link rel="stylesheet" href="../static/css/bootstrap.css" type="text/css" th:href="@{/css/bootstrap.css}"/>
         <link rel="stylesheet" href="../static/css/style.css" type="text/css" th:href="@{/css/style.css}"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
         <script src="/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js">
+        </script>
 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#sparql-endpoint-table').DataTable(
+                        {
+                            "pageLength": 50
+                        });
+            });
+        </script>
     </head>
 
     <body>
@@ -89,7 +102,7 @@
 
         <!--table-->
         <div th:if="${not #maps.isEmpty(sparqlStatusMap)}" class="container table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped" id="sparql-endpoint-table">
                 <caption th:text="#{title.list}">List of SPARQL Endpoint</caption>
                 <thead class="thead-dark">
                     <tr>
@@ -107,23 +120,32 @@
                         <!--<td th:text="${service.key}"></td>-->
                         <td class="sparql-name" th:text="${service.value.name}">SPARQL Endpoint</td>
                         <td class="sparql-url text-break"><a th:text="${service.value.URL}"
-                                                               th:href="${service.value.URL}">Service</a></td>
+                                                             th:href="${service.value.URL}">Service</a></td>
                         <td class="sparql-status lead" th:switch="${service.value.statusString}">
+                            <div th:case="${@environment.getProperty('sparql.endpoint.status.active')}">
+                                <img th:src="@{/image/green.png}" src="../static/image/green.png" alt="active"/>
+                                <span style="display:none;">active</span>
+                            </div>
 
-                            <img th:case="${@environment.getProperty('sparql.endpoint.status.active')}"
-                                 th:src="@{/image/green.png}" src="../static/image/green.png" alt="">
+                            <div th:case="${@environment.getProperty('sparql.endpoint.status.inactive_lessday')}">
+                                <img th:case="${@environment.getProperty('sparql.endpoint.status.inactive_lessday')}"
+                                     th:src="@{/image/orange.png}" src="../static/image/orange.png" alt="inactive_lessday"/>
+                                <span style="display:none;">inactive_lessday</span>
+                            </div>
 
-                            <img th:case="${@environment.getProperty('sparql.endpoint.status.inactive_lessday')}"
-                                 th:src="@{/image/orange.png}" src="../static/image/orange.png" alt="">
+                            <div th:case="${@environment.getProperty('sparql.endpoint.status.inactive_lessweek')}"> 
+                                <img th:src="@{/image/red.png}" src="../static/image/red.png" alt="inactive_lessweek"/>
+                            </div>
 
-                            <img th:case="${@environment.getProperty('sparql.endpoint.status.inactive_lessweek')}"
-                                 th:src="@{/image/red.png}" src="../static/image/red.png" alt="">
+                            <div th:case="${@environment.getProperty('sparql.endpoint.status.general_inactive')}">
+                                <img th:src="@{/image/red.png}" src="../static/image/red.png" alt="general_inactive"/>
+                                <span style="display:none;">inactive</span>
+                            </div>
 
-                            <img th:case="${@environment.getProperty('sparql.endpoint.status.general_inactive')}"
-                                 th:src="@{/image/red.png}" src="../static/image/red.png" alt="">
-
-                            <img th:case="${@environment.getProperty('sparql.endpoint.status.inactive_moreweek')}"
-                                 th:src="@{/image/gray.png}" src="../static/image/gray.png" alt="">
+                            <div th:case="${@environment.getProperty('sparql.endpoint.status.inactive_moreweek')}">
+                                <img th:src="@{/image/gray.png}" src="../static/image/gray.png" alt="inactive_moreweek"/>
+                                <span style="display:none;">inactive_moreweek</span>
+                            </div>
 
                         </td>
                         <td class="sparql-uptime" th:if="${service.value.uptimeLast24h >= 0}" 
