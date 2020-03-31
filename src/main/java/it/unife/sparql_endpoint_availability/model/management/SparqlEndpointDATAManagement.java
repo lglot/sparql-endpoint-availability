@@ -48,7 +48,7 @@ public interface SparqlEndpointDATAManagement {
     SparqlEndpoint getSparqlEndpointsAfterQueryDateById(Date queryDate,Long id);
 
     /*recupera gli sparql enpoint attualemete attivi*/
-    List<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints();
+    List<SparqlEndpoint.OnlySparqlEndpoint> getCurrentlyActiveSparqlEndpoints();
 
     /*ottiene la data della prima query sparql eseguita*/
     Date findFirstQueryDate();

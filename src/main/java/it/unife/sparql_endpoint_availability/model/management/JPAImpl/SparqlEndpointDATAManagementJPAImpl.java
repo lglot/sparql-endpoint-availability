@@ -137,8 +137,34 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
 
     @Override
     @Transactional(readOnly = true)
-    public List<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints() {
-        return sparqlEndpointRepository.findOnlyCurrentlyActive();
+    public List<SparqlEndpoint.OnlySparqlEndpoint> getCurrentlyActiveSparqlEndpoints() {
+        List<SparqlEndpoint.OnlySparqlEndpoint> sparqlEnpoints = sparqlEndpointRepository.findOnlyCurrentlyActive()
+                .stream()
+                .map(sparqlEndpoint -> {
+                    return new SparqlEndpoint.OnlySparqlEndpoint() {
+                        @Override
+                        public String getServiceURL() {
+                            return sparqlEndpoint.getServiceURL();
+                        }
+
+                        @Override
+                        public String getName() {
+                            return sparqlEndpoint.getName();
+                        }
+
+                        @Override
+                        public List<String> getDefaultGraphIRIs() {
+                            return sparqlEndpoint.getDefaultGraphIRIs();
+                        }
+
+                        @Override
+                        public List<String> getNamedGraphIRIs() {
+                            return sparqlEndpoint.getNamedGraphIRIs();
+                        }
+                    };
+                }).collect(Collectors.toList());
+
+        return sparqlEnpoints;
     }
 
     @Override

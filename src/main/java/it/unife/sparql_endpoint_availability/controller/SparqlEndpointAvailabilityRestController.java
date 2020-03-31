@@ -53,7 +53,7 @@ public class SparqlEndpointAvailabilityRestController {
     }
 
     @GetMapping(path = "/status/current/active")
-    public Iterable<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints() {
+    public Iterable<SparqlEndpoint.OnlySparqlEndpoint> getCurrentlyActiveSparqlEndpoints() {
         return sparqlEndpointDATAManagement.getCurrentlyActiveSparqlEndpoints();
     }
 

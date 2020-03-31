@@ -73,8 +73,9 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
                 " SELECT max(s.queryDate) " +
                 " FROM SparqlEndpointStatus s " +
                 " group by s.sparqlEndpoint) " +
-            "AND st.active=true " +
-            "order by s.id")
+            "AND st.active=true " 
+//           + "order by s.id"
+    )
     List<SparqlEndpoint> findOnlyCurrentlyActive();
 
     void deleteByServiceURLIn(Collection<@NotNull String> serviceURL);
