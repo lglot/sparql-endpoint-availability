@@ -1,7 +1,7 @@
 package it.unife.sparql_endpoint_availability.service.config;
 
 
-import it.unife.sparql_endpoint_availability.service.resourceManagement.FileImpl.SparqlEndpointListFileManagamentImpl;
+import it.unife.sparql_endpoint_availability.service.resourceManagement.FileImpl.SparqlEndpointListFileManagementImpl;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointCheckService;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueryMultiThreadImpl.SECheckServiceMultiThreadImpl;
 import org.springframework.context.annotation.Bean;
@@ -35,7 +35,7 @@ public class AppConfig {
     }
 
     @Bean
-    public SparqlEndpointListFileManagement getSparqlEndpointListFileManagament(){
-        return new SparqlEndpointListFileManagamentImpl(SPARQL_ENDPOINTS_LIST_FILENAME);
+    public SparqlEndpointListFileManagement getSparqlEndpointListFileManagement(){
+        return new SparqlEndpointListFileManagementImpl(SPARQL_ENDPOINTS_LIST_FILENAME);
     }
 }

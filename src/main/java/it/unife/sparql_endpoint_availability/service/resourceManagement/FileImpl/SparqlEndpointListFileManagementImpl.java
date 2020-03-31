@@ -11,19 +11,33 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagement;
+import java.io.FileNotFoundException;
+import java.net.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.ResourceUtils;
 
-public class SparqlEndpointListFileManagamentImpl implements SparqlEndpointListFileManagement {
+public class SparqlEndpointListFileManagementImpl implements SparqlEndpointListFileManagement {
 
     private File file;
     private long lastModified;
 
-    private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointListFileManagamentImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointListFileManagementImpl.class);
 
-    public SparqlEndpointListFileManagamentImpl(String fileName) {
-        String filePath = Objects.requireNonNull(SparqlEndpointAvailabilityController.class.getClassLoader().getResource(fileName)).getFile();
-        file = new File(filePath);
+    public SparqlEndpointListFileManagementImpl(String fileName) {
+//        String filePath = Objects.requireNonNull(SparqlEndpointAvailabilityController.class.getClassLoader().getResource(fileName)).getFile();
+//        ClassPathResource resource = new ClassPathResource(fileName);
+//
+//        try {
+//            file = resource.getFile();
+////            file = ResourceUtils.getFile(filePath);
+//        } catch (IOException ex) {
+//            throw new RuntimeException(ex);
+//        }
+//        String filePath = Objects.requireNonNull(SparqlEndpointAvailabilityController.class.getClassLoader().getResource(fileName)).getFile();
+//        file = new File(filePath);
+        file = new File(fileName);
         lastModified = file.lastModified();
     }
 
@@ -53,7 +67,6 @@ public class SparqlEndpointListFileManagamentImpl implements SparqlEndpointListF
 //        }
 //        return new ArrayList<>(sparqlSet);
 //    }
-    
     @Override
     public Set<SparqlEndpoint> getSparqlEndpoints() {
         ObjectMapper mapper = new ObjectMapper();

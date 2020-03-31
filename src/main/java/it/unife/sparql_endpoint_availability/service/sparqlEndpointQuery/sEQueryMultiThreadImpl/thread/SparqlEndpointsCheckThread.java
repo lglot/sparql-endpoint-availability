@@ -61,7 +61,7 @@ public class SparqlEndpointsCheckThread extends Thread {
 //                if (rs.hasNext()) {
 //                    status.setActive(true);
 //                }
-                logger.info("Send query to: " + sparqlEndpoint.getServiceURL());
+                logger.debug("Send query to: " + sparqlEndpoint.getServiceURL());
                 status.setActive(qexec.execAsk());
                 //else status.setActive(true);
             } catch (Exception e) {
