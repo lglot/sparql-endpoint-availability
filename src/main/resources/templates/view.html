@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Status Sparql Endpoint</title>
+        <link rel="icon" th:href="@{/image/sparql-icon.png}"/>
         <link rel="stylesheet" href="../static/css/bootstrap.css" type="text/css" th:href="@{/css/bootstrap.css}"/>
         <link rel="stylesheet" href="../static/css/style.css" type="text/css" th:href="@{/css/style.css}"/>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
@@ -19,7 +20,8 @@
             $(document).ready(function () {
                 $('#sparql-endpoint-table').DataTable(
                         {
-                            "pageLength": 50
+                            "pageLength": 50,
+                            dom:"<'myfilter col-sm-12 col-md-6'f><'mylength col-sm-12 col-md-6'l>t"
                         });
             });
         </script>
@@ -52,9 +54,9 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a th:class="'dropdown-item ' + ${lang.equals('en')? 'active' : ''}"
-                               href="/sparql-endpoint-availability/view?lang=en">English</a>
+                               href="/sparql-endpoint-availability?lang=en">English</a>
                             <a th:class="'dropdown-item ' + ${lang.equals('it')? 'active' : ''}"
-                               href="/sparql-endpoint-availability/view?lang=it">Italiano</a>
+                               href="/sparql-endpoint-availability?lang=it">Italiano</a>
                         </div>
                     </div>
                 </div>
@@ -74,6 +76,13 @@
                     <p th:text="#{last.update(${lastUpdate})}">Last Update:</p>
                     <p th:text="#{service.weeks.passed(${daysPassed})}">Days Passed</p>
                     <p th:text="#{number.available(${numberActive},${sparqlStatusMap.size()})}">Endpoints Available</p>
+                </div>
+                <hr>
+                <div class="lead">
+                    <p>
+                    <span th:text="#{group.message}"></span>
+                    <a th:href="'mailto:'+ #{group.email}" th:text="#{group.email}">ml@unife.it</a>
+                    </p>
                 </div>
             </div>
         </div>

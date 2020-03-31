@@ -27,7 +27,7 @@ import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEn
 
 //Classe controller che gestisce le richieste del client
 @Controller
-@RequestMapping(path = "/sparql-endpoint-availability")
+@RequestMapping(path = "/sparql-endpoint-availability", produces = "text/html")
 public class SparqlEndpointAvailabilityController {
 
     private final SparqlEndpointDATAManagement sparqlEndpointDATAManagement;
@@ -74,7 +74,7 @@ public class SparqlEndpointAvailabilityController {
     Altrimenti, per ogni sparlq endpoint, viene assegnato un'etichetta indicante lo stato indicante la disponibilià attuale,
     giornaliera e settimanale
      */
-    @GetMapping(path = "/view")
+    @GetMapping(path = "")
     public String view(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang, Model model) {
 
         /*HTTP PARAMETERS*/

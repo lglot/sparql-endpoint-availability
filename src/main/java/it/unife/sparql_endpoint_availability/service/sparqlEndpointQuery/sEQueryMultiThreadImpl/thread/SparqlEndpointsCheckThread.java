@@ -12,6 +12,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 /*A bean with prototype scope will return a different instance every time
@@ -19,28 +21,30 @@ it is requested from the container. It is defined by setting the value
 prototype to the @Scope annotation in the bean definition:*/
 @Scope("prototype")
 public class SparqlEndpointsCheckThread extends Thread {
-    
+
     private List<SparqlEndpoint> partialSparqlEndpointsList;
     private List<SparqlEndpointStatus> sparqlEndpointStatusList;
-    
+
+    private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointsCheckThread.class);
+
     public void setPartialSparqlEndpointsList(List<SparqlEndpoint> partialSparqlEndpointsList) {
         this.partialSparqlEndpointsList = partialSparqlEndpointsList;
     }
-    
+
     public List<SparqlEndpointStatus> getSparqlEndpointStatusList() {
         return sparqlEndpointStatusList;
     }
-    
+
     public SparqlEndpointsCheckThread() {
         super();
         sparqlEndpointStatusList = new ArrayList<>();
     }
-    
+
     @Override
     public void run() {
-        
+
         for (SparqlEndpoint sparqlEndpoint : partialSparqlEndpointsList) {
-            
+
             SparqlEndpointStatus status = new SparqlEndpointStatus();
             status.setSparqlEndpoint(sparqlEndpoint);
 
@@ -57,6 +61,7 @@ public class SparqlEndpointsCheckThread extends Thread {
 //                if (rs.hasNext()) {
 //                    status.setActive(true);
 //                }
+                logger.info("Send query to: " + sparqlEndpoint.getServiceURL());
                 status.setActive(qexec.execAsk());
                 //else status.setActive(true);
             } catch (Exception e) {
@@ -65,6 +70,6 @@ public class SparqlEndpointsCheckThread extends Thread {
             status.setQueryDate(new Timestamp(System.currentTimeMillis()));
             sparqlEndpointStatusList.add(status);
         }
-        
+
     }
 }

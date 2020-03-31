@@ -9,24 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAManagement {
 
-
     private SparqlEndpointRepository sparqlEndpointRepository;
     private SparqlEndpointStatusRepository sparqlEndpointStatusRepository;
 
     @Autowired
     public SparqlEndpointDATAManagementJPAImpl(SparqlEndpointRepository sparqlEndpointRepository,
-                                               SparqlEndpointStatusRepository sparqlEndpointStatusRepository) {
+            SparqlEndpointStatusRepository sparqlEndpointStatusRepository) {
         this.sparqlEndpointRepository = sparqlEndpointRepository;
         this.sparqlEndpointStatusRepository = sparqlEndpointStatusRepository;
     }
-
 
 //    @Override
 //    @Transactional
@@ -56,8 +53,6 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
 //            sparqlEndpointRepository.deleteByServiceURLIn(sparqlUrlListDB);
 //
 //    }
-    
-    
     @Override
     @Transactional
     /*Metodo per aggiornare la lista degli sparql Endpoint sul DB,in input il metodo riceve
@@ -68,24 +63,25 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
         List<SparqlEndpoint> sparqlListDB = sparqlEndpointRepository.findAllByOrderById();
 
         Set<SparqlEndpoint> sparqlEndpointsDB = new HashSet<>(sparqlListDB);
-        
+
         // set of SPARQL endpoints to remove from DB
         Set<SparqlEndpoint> sparqlEndpointsToRemove = new HashSet<>(sparqlEndpointsDB);
         sparqlEndpointsToRemove.removeAll(sparqlEndpoints);
         // set of SPARQL endpoints to add to DB
         Set<SparqlEndpoint> sparqlEndpointsToAdd = new HashSet<>(sparqlEndpoints);
         sparqlEndpointsToAdd.removeAll(sparqlEndpointsDB);
-        
-        
-        if (sparqlEndpointsToAdd.size() > 0)
-            sparqlEndpointRepository.saveAll(sparqlEndpointsToAdd);
 
-        if(sparqlEndpointsToRemove.size()>0)
-            sparqlEndpointRepository.deleteByServiceURLIn(sparqlEndpointsToRemove
+        if (sparqlEndpointsToRemove.size() > 0) {
+            List<String> urls = sparqlEndpointsToRemove
                     .stream()
                     .map(SparqlEndpoint::getServiceURL)
-                    .collect(Collectors.toList())
-            );
+                    .collect(Collectors.toList());
+            sparqlEndpointRepository.deleteByServiceURLIn(urls);
+        }
+
+        if (sparqlEndpointsToAdd.size() > 0) {
+            sparqlEndpointRepository.saveAll(sparqlEndpointsToAdd);
+        }
 
     }
 
@@ -97,13 +93,13 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
 
     @Override
     @Transactional(readOnly = true)
-    public List<SparqlEndpoint.OnlyURL> getAllURLSparqlEndpoints() {
+    public List<SparqlEndpoint.OnlySparqlEndpoint> getAllURLSparqlEndpoints() {
         return sparqlEndpointRepository.findAllURL();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public SparqlEndpoint.OnlyURL getURLSparqlEndpointById(Long id) {
+    public SparqlEndpoint.OnlySparqlEndpoint getURLSparqlEndpointById(Long id) {
         return sparqlEndpointRepository.findSparqlEndpointsById(id);
     }
 
@@ -114,7 +110,6 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
     }
 
     /*GET sparql URL with STATUS LIST*/
-
     @Override
     @Transactional(readOnly = true)
     public List<SparqlEndpoint> getSparqlEndpointsWithCurrentStatus() {
@@ -136,8 +131,8 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
 
     @Override
     @Transactional(readOnly = true)
-    public SparqlEndpoint getSparqlEndpointsAfterQueryDateById(Date queryDate,Long id){
-        return sparqlEndpointRepository.findByIdAfterQueryDateStatus(queryDate,id);
+    public SparqlEndpoint getSparqlEndpointsAfterQueryDateById(Date queryDate, Long id) {
+        return sparqlEndpointRepository.findByIdAfterQueryDateStatus(queryDate, id);
     }
 
     @Override
@@ -152,5 +147,10 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
 
         SparqlEndpointStatus s = sparqlEndpointStatusRepository.findTopByOrderByQueryDate();
         return s.getQueryDate();
+    }
+
+    @Override
+    public SparqlEndpoint getSparqlEndpointByServiceURL(String url) {
+        return sparqlEndpointRepository.findByServiceURL(url);
     }
 }

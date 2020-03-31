@@ -18,10 +18,17 @@ public interface SparqlEndpointDATAManagement {
     void saveStatuses(List<SparqlEndpointStatus> sparqlEndpointStatuses);
 
     //metodo per ottenere tutti gli sparql endpoint memorizzati sul DB (solo URL)
-    List<SparqlEndpoint.OnlyURL> getAllURLSparqlEndpoints();
+    List<SparqlEndpoint.OnlySparqlEndpoint> getAllURLSparqlEndpoints();
 
     //ottiene uno sparql endpoint in base all'id specificato (ritorna solo l'URL)
-    SparqlEndpoint.OnlyURL getURLSparqlEndpointById(Long id);
+    SparqlEndpoint.OnlySparqlEndpoint getURLSparqlEndpointById(Long id);
+    
+    /**
+     * Return the SPARQL endpoint identified by the URL
+     * @param url
+     * @return 
+     */
+    SparqlEndpoint getSparqlEndpointByServiceURL(String url);
 
     //ottiene la lista degli sparql enpoint presenti sul db
     List<SparqlEndpoint> getAllSparqlEndpoints();

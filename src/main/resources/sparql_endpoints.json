@@ -2625,7 +2625,7 @@
   "namedGraphIRIs" : [ ]
 }, {
   "serviceURL" : "http://hawaii.eagle-i.net/sparqler/sparql",
-  "name" : "eagle-i @ University of Hawai'i at Mānoa",
+  "name" : "eagle-i @ University of Hawaii at Manoa",
   "defaultGraphIRIs" : [ ],
   "namedGraphIRIs" : [ ]
 }, {

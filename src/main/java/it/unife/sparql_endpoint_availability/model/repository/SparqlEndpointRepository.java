@@ -17,7 +17,7 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
     // This will be AUTO IMPLEMENTED by Spring into a Bean called sparqlEndpointRepository
     // CRUD refers Create, Read, Update, Delete
 
-    SparqlEndpoint.OnlyURL findSparqlEndpointsById(Long id);
+    SparqlEndpoint.OnlySparqlEndpoint findSparqlEndpointsById(Long id);
 
     List<SparqlEndpoint> findAllByOrderById();
 
@@ -64,7 +64,7 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
     @Query("SELECT s " +
             "from SparqlEndpoint s " +
             "order by s.id")
-    List<SparqlEndpoint.OnlyURL> findAllURL();
+    List<SparqlEndpoint.OnlySparqlEndpoint> findAllURL();
 
     @Query("SELECT s " +
             "from SparqlEndpoint s " +
@@ -78,5 +78,7 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
     List<SparqlEndpoint> findOnlyCurrentlyActive();
 
     void deleteByServiceURLIn(Collection<@NotNull String> serviceURL);
+    
+    SparqlEndpoint findByServiceURL(String serviceURL);
 
 }

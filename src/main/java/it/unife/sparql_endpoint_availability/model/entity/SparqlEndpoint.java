@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
@@ -39,12 +40,12 @@ public class SparqlEndpoint {
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "sparqlEndpoint",cascade = CascadeType.ALL)
     private List<SparqlEndpointStatus> sparqlEndpointStatuses;
 
-    public interface OnlyURL {
-        Long getId();
+    public interface OnlySparqlEndpoint {
+//        Long getId();
         String getServiceURL();
-//        String getName();
-//        List<String> getDefaultGraphIRIs();
-//        List<String> getNamedGraphIRIs();
+        String getName();
+        List<String> getDefaultGraphIRIs();
+        List<String> getNamedGraphIRIs();
     }
 
     @JsonIgnore
@@ -126,4 +127,13 @@ public class SparqlEndpoint {
         return this.name.equals(other.name) && 
                 this.serviceURL.equals(other.serviceURL);
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.serviceURL);
+        hash = 53 * hash + Objects.hashCode(this.name);
+        return hash;
+    }
+
 }
