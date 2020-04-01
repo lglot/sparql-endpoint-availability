@@ -19,12 +19,22 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#sparql-endpoint-table').DataTable(
-                        {
-                            "pageLength": 50,
-                            dom: "<'myfilter col-sm-12 col-md-6'f><'mylength col-sm-12 col-md-6'l><'mylength col-sm-12 col-md-6'p><'myfilter col-sm-12 col-md-6'i>t"
-                        });
+                var lang = "[[${lang.equals('it')? '/datatables_italian.json' : ''}]]"
+                lang += "[[${lang.equals('en')? '/datatables_english.json' : ''}]]"
+                //lang = "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Italian.json"
+                //lang = "[[@{/DataTables_italian.json}]]"
+                //lang = "/DataTables_italian.json"
+                console.log(lang)
+            $('#sparql-endpoint-table').DataTable(
+            {
+            "pageLength": 50,
+                    dom: "<'myfilter col-sm-12 col-md-6'f><'mylength col-sm-12 col-md-6'l><'mylength col-sm-12 col-md-6'p><'myfilter col-sm-12 col-md-6'i>t",
+                    "language": {
+                    "url": lang
+                    }
             });
+            }
+            );
         </script>
     </head>
 
