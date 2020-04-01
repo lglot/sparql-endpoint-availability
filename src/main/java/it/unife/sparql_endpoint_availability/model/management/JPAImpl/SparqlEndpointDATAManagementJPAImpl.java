@@ -76,7 +76,10 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
                     .stream()
                     .map(SparqlEndpoint::getServiceURL)
                     .collect(Collectors.toList());
-            sparqlEndpointRepository.deleteByServiceURLIn(urls);
+//            sparqlEndpointRepository.deleteByServiceURLIn(urls);
+            for(String url : urls) {
+                sparqlEndpointRepository.deleteByServiceURL(url.trim());
+            }
         }
 
         if (sparqlEndpointsToAdd.size() > 0) {

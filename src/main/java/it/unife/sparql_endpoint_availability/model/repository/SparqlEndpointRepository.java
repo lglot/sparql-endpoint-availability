@@ -80,6 +80,8 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
 
     void deleteByServiceURLIn(Collection<@NotNull String> serviceURL);
     
+    void deleteByServiceURL(String serviceURL);
+    
     SparqlEndpoint findByServiceURL(String serviceURL);
 
 }
