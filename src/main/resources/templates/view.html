@@ -9,7 +9,8 @@
         <link rel="stylesheet" href="../static/css/bootstrap.css" type="text/css" th:href="@{/css/bootstrap.css}"/>
         <link rel="stylesheet" href="../static/css/style.css" type="text/css" th:href="@{/css/style.css}"/>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
         <script src="/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -21,7 +22,7 @@
                 $('#sparql-endpoint-table').DataTable(
                         {
                             "pageLength": 50,
-                            dom:"<'myfilter col-sm-12 col-md-6'f><'mylength col-sm-12 col-md-6'l><'mylength col-sm-12 col-md-6'p><'myfilter col-sm-12 col-md-6'i>t"
+                            dom: "<'myfilter col-sm-12 col-md-6'f><'mylength col-sm-12 col-md-6'l><'mylength col-sm-12 col-md-6'p><'myfilter col-sm-12 col-md-6'i>t"
                         });
             });
         </script>
@@ -80,8 +81,8 @@
                 <hr>
                 <div class="lead">
                     <p>
-                    <span th:text="#{group.message}"></span>
-                    <a th:href="'mailto:'+ #{group.email}" th:text="#{group.email}">ml@unife.it</a>
+                        <span th:text="#{group.message}"></span>
+                        <a th:href="'mailto:'+ #{group.email}" th:text="#{group.email}">ml@unife.it</a>
                     </p>
                 </div>
             </div>
