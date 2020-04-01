@@ -19,8 +19,15 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                var lang = "[[${lang.equals('it')? '/datatables_italian.json' : ''}]]"
-                lang += "[[${lang.equals('en')? '/datatables_english.json' : ''}]]"
+                var lang = "[[${#locale}]]"
+                if (lang == "it") {
+                    datatables_json_file = "/datatables_italian.json"
+                } else if (lang == "en") {
+                    datatables_json_file = "/datatables_english.json"
+                }
+               
+//                var lang = "[[${lang.equals('it')? '/datatables_italian.json' : ''}]]"
+//                lang += "[[${lang.equals('en')? '/datatables_english.json' : ''}]]"
                 //lang = "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Italian.json"
                 //lang = "[[@{/DataTables_italian.json}]]"
                 //lang = "/DataTables_italian.json"
@@ -30,7 +37,7 @@
             "pageLength": 50,
                     dom: "<'myfilter col-sm-12 col-md-6'f><'mylength col-sm-12 col-md-6'l><'mylength col-sm-12 col-md-6'p><'myfilter col-sm-12 col-md-6'i>t",
                     "language": {
-                    "url": lang
+                    "url": datatables_json_file
                     }
             });
             }
@@ -64,9 +71,9 @@
                             Dropdown button
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a th:class="'dropdown-item ' + ${lang.equals('en')? 'active' : ''}"
+                            <a th:class="'dropdown-item ' + ${#strings.equals('en', #strings.toString(#locale)) ? 'active' : ''}"
                                href="/sparql-endpoint-availability?lang=en">English</a>
-                            <a th:class="'dropdown-item ' + ${lang.equals('it')? 'active' : ''}"
+                            <a th:class="'dropdown-item ' + ${#strings.equals('it', #strings.toString(#locale)) ? 'active' : ''}"
                                href="/sparql-endpoint-availability?lang=it">Italiano</a>
                         </div>
                     </div>
