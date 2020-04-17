@@ -24,6 +24,9 @@ import java.sql.Timestamp;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagement;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 //Classe controller che gestisce le richieste del client
 @Controller
@@ -81,6 +84,7 @@ public class SparqlEndpointAvailabilityController {
         SortedMap<Long, SparqlEndpointStatusSummary> sparqlStatusMap = new TreeMap<>();
         int numberActive = 0;
         Date lastUpdate = null;
+        LocalDateTime lastUpdateLocal = null;
         Date firstUpdate;
         long weeksPassed = 0;
         long daysPassed = 0;
@@ -103,6 +107,7 @@ public class SparqlEndpointAvailabilityController {
             List<SparqlEndpointStatus> statusTemp = sparqlEndpointList.get(0).getSparqlEndpointStatuses();
             //calcolo data dell'ultima query eseguita
             lastUpdate = statusTemp.get(0).getQueryDate();
+            lastUpdateLocal = LocalDateTime.ofInstant(lastUpdate.toInstant(), ZoneId.of("Z"));
 
             //calcolo i giorni e quindi le settimane passate dalla prima query eseguita
             daysPassed = ChronoUnit.DAYS.between(firstUpdate.toInstant(), lastUpdate.toInstant());
@@ -202,11 +207,16 @@ public class SparqlEndpointAvailabilityController {
         } else {
             applicationMessage = "No SPARQL endpoint DATA found";
         }
+        
+        String lastUpdateLocalString = lastUpdateLocal.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME );
+        lastUpdateLocalString = lastUpdateLocalString.split("T")[0] + " " + lastUpdateLocalString.split("T")[1];
 
         model.addAttribute("applicationMessage", applicationMessage);
         model.addAttribute("sparqlStatusMap", sparqlStatusMap);
         model.addAttribute("numberActive", numberActive);
         model.addAttribute("lastUpdate", lastUpdate);
+        
+        model.addAttribute("lastUpdateLocal", lastUpdateLocalString);
         model.addAttribute("lang", lang);
         model.addAttribute("daysPassed", daysPassed);
 

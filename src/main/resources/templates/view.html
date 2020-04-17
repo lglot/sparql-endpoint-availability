@@ -92,7 +92,7 @@
                     Description</p>
                 <hr>
                 <div class="lead">
-                    <p th:text="#{last.update(${lastUpdate})}">Last Update:</p>
+                    <p th:text="#{last.update(${lastUpdateLocal})}">Last Update (local time):</p>
                     <p th:text="#{service.weeks.passed(${daysPassed})}">Days Passed</p>
                     <p th:text="#{number.available(${numberActive},${sparqlStatusMap.size()})}">Endpoints Available</p>
                 </div>
