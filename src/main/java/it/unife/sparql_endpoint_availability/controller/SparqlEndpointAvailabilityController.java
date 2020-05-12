@@ -113,8 +113,6 @@ public class SparqlEndpointAvailabilityController {
             daysPassed = ChronoUnit.DAYS.between(firstUpdate.toInstant(), lastUpdate.toInstant());
             weeksPassed = daysPassed / 7;
 
-
-
             for (SparqlEndpoint sparqlEndpoint : sparqlEndpointList) {
 
                 //creo un nuovo oggetto di tipo DTO (Data tranfer object),
@@ -201,21 +199,24 @@ public class SparqlEndpointAvailabilityController {
                 }
                 statusSummary.setName(sparqlEndpoint.getName());
                 sparqlStatusMap.put(sparqlEndpoint.getId(), statusSummary);
-                
+
             }
 
         } else {
             applicationMessage = "No SPARQL endpoint DATA found";
         }
-        
-        String lastUpdateLocalString = lastUpdateLocal.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME );
-        lastUpdateLocalString = lastUpdateLocalString.split("T")[0] + " " + lastUpdateLocalString.split("T")[1];
+
+        String lastUpdateLocalString = "No date";
+        if (lastUpdateLocal != null) {
+            lastUpdateLocalString = lastUpdateLocal.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            lastUpdateLocalString = lastUpdateLocalString.split("T")[0] + " " + lastUpdateLocalString.split("T")[1];
+        }
 
         model.addAttribute("applicationMessage", applicationMessage);
         model.addAttribute("sparqlStatusMap", sparqlStatusMap);
         model.addAttribute("numberActive", numberActive);
         model.addAttribute("lastUpdate", lastUpdate);
-        
+
         model.addAttribute("lastUpdateLocal", lastUpdateLocalString);
         model.addAttribute("lang", lang);
         model.addAttribute("daysPassed", daysPassed);
@@ -225,4 +226,3 @@ public class SparqlEndpointAvailabilityController {
     }
 
 }
-
