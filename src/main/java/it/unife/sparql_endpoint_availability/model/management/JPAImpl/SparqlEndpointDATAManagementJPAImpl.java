@@ -74,7 +74,7 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
         if (sparqlEndpointsToRemove.size() > 0) {
             List<String> urls = sparqlEndpointsToRemove
                     .stream()
-                    .map(SparqlEndpoint::getServiceURL)
+                    .map(SparqlEndpoint::getUrl)
                     .collect(Collectors.toList());
 //            sparqlEndpointRepository.deleteByServiceURLIn(urls);
             for(String url : urls) {
@@ -146,8 +146,8 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
                 .map(sparqlEndpoint -> {
                     return new SparqlEndpoint.OnlySparqlEndpoint() {
                         @Override
-                        public String getServiceURL() {
-                            return sparqlEndpoint.getServiceURL();
+                        public String getURL() {
+                            return sparqlEndpoint.getUrl();
                         }
 
                         @Override

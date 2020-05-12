@@ -47,7 +47,7 @@ public class ParseHTMLAvailableEndpoints {
             //endpointURL = Jsoup.parse(endpointURL).text();
             endpointURL = URLDecoder.decode(endpointURL, Charsets.UTF_8);
             endpoint.setName(endpointName);
-            endpoint.setServiceURL(endpointURL);
+            endpoint.setUrl(endpointURL);
             sparqlEndpoints.add(endpoint);
         }
         

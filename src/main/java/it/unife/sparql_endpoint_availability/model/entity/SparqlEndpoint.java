@@ -23,7 +23,7 @@ public class SparqlEndpoint {
 
     @Column(unique = true)
     @NotNull
-    private String serviceURL;
+    private String url;
     
     @NotNull
     private String name;
@@ -42,7 +42,7 @@ public class SparqlEndpoint {
 
     public interface OnlySparqlEndpoint {
 //        Long getId();
-        String getServiceURL();
+        String getURL();
         String getName();
         List<String> getDefaultGraphIRIs();
         List<String> getNamedGraphIRIs();
@@ -57,12 +57,12 @@ public class SparqlEndpoint {
         this.id = id;
     }
 
-    public String getServiceURL() {
-        return serviceURL;
+    public String getUrl() {
+        return url;
     }
 
-    public void setServiceURL(String serviceURL) {
-        this.serviceURL = serviceURL;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public List<SparqlEndpointStatus> getSparqlEndpointStatuses() {
@@ -125,13 +125,13 @@ public class SparqlEndpoint {
         }
         SparqlEndpoint other = (SparqlEndpoint) o;
         return this.name.equals(other.name) && 
-                this.serviceURL.equals(other.serviceURL);
+                this.url.equals(other.url);
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.serviceURL);
+        hash = 53 * hash + Objects.hashCode(this.url);
         hash = 53 * hash + Objects.hashCode(this.name);
         return hash;
     }

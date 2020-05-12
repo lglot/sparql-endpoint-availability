@@ -119,7 +119,7 @@ public class SparqlEndpointAvailabilityController {
                 // che conterrà le informazioni di ogni sparlq endpoint e che sarà poi
                 //trasferito al VIEWW LAYER
                 SparqlEndpointStatusSummary statusSummary = new SparqlEndpointStatusSummary();
-                statusSummary.setURL(sparqlEndpoint.getServiceURL());
+                statusSummary.setURL(sparqlEndpoint.getUrl());
 
                 //prelevo la lista con i risultati delle query sparql
                 List<SparqlEndpointStatus> statusList = sparqlEndpoint.getSparqlEndpointStatuses();

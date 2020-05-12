@@ -55,13 +55,13 @@ public class SparqlEndpointsCheckThread extends Thread {
             * QueryExecutionFactory -> Place to make QueryExecution objects from Query objects or a string.
             * .sparqlService(String service, Query query) -> Create a QueryExecution that will access a SPARQL service over HTTP
             * */
-            try (QueryExecution qexec = QueryExecutionFactory.sparqlService(sparqlEndpoint.getServiceURL(), sparqlQueryString)) {
+            try (QueryExecution qexec = QueryExecutionFactory.sparqlService(sparqlEndpoint.getUrl(), sparqlQueryString)) {
                 qexec.setTimeout(60, TimeUnit.SECONDS);
 //                ResultSet rs = qexec.execSelect();
 //                if (rs.hasNext()) {
 //                    status.setActive(true);
 //                }
-                logger.debug("Send query to: " + sparqlEndpoint.getServiceURL());
+                logger.debug("Send query to: " + sparqlEndpoint.getUrl());
                 status.setActive(qexec.execAsk());
                 //else status.setActive(true);
             } catch (Exception e) {
