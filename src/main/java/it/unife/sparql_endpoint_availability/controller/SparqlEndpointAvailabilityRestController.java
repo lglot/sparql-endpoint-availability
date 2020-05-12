@@ -65,7 +65,7 @@ public class SparqlEndpointAvailabilityRestController {
     @GetMapping(path = "/status/current/{url}")
         public SparqlEndpoint getSparqlEndpointWithCurrentStatusByURL(@PathVariable @NotNull String url) {
             url = URLDecoder.decode(url, Charsets.UTF_8);
-            return sparqlEndpointDATAManagement.getSparqlEndpointByServiceURL(url);
+            return sparqlEndpointDATAManagement.getSparqlEndpointByUrl(url);
     }
     
 

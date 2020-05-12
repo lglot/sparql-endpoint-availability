@@ -78,10 +78,10 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
     )
     List<SparqlEndpoint> findOnlyCurrentlyActive();
 
-    void deleteByServiceURLIn(Collection<@NotNull String> serviceURL);
+    void deleteByUrlIn(Collection<@NotNull String> url);
     
-    void deleteByServiceURL(String serviceURL);
+    void deleteByUrl(String url);
     
-    SparqlEndpoint findByServiceURL(String serviceURL);
+    SparqlEndpoint findByUrl(String url);
 
 }

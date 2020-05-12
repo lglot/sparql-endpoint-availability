@@ -28,7 +28,7 @@ public interface SparqlEndpointDATAManagement {
      * @param url
      * @return 
      */
-    SparqlEndpoint getSparqlEndpointByServiceURL(String url);
+    SparqlEndpoint getSparqlEndpointByUrl(String url);
 
     //ottiene la lista degli sparql enpoint presenti sul db
     List<SparqlEndpoint> getAllSparqlEndpoints();

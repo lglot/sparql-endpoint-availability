@@ -78,7 +78,7 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
                     .collect(Collectors.toList());
 //            sparqlEndpointRepository.deleteByServiceURLIn(urls);
             for(String url : urls) {
-                sparqlEndpointRepository.deleteByServiceURL(url.trim());
+                sparqlEndpointRepository.deleteByUrl(url.trim());
             }
         }
 
@@ -179,7 +179,7 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
     }
 
     @Override
-    public SparqlEndpoint getSparqlEndpointByServiceURL(String url) {
-        return sparqlEndpointRepository.findByServiceURL(url);
+    public SparqlEndpoint getSparqlEndpointByUrl(String url) {
+        return sparqlEndpointRepository.findByUrl(url);
     }
 }
