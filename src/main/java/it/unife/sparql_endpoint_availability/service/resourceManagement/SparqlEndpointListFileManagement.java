@@ -6,9 +6,9 @@ import java.util.Set;
 
 public interface SparqlEndpointListFileManagement {
 
-//    List<String> listSPARQLEndpoints();
+    // List<String> listSPARQLEndpoints();
     Set<SparqlEndpoint> getSparqlEndpoints();
 
-    /*verifica se il file è stato modificato dall'ultimo accesso*/
-    boolean isModified();
+    /* verifica se il file è stato modificato dall'ultimo accesso */
+    // boolean isModified();
 }

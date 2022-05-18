@@ -45,37 +45,43 @@ class SparqlEndpointCheckTask {
         iterator = 1;
     }
 
-    /*servizio principale dell'applicazione eseguito una volta all'ora automaticamente
-    * che effettua il controllo della disponibilità degli sparql enpoint e memorizza il risultato sul db*/
+    /*
+     * servizio principale dell'applicazione eseguito una volta all'ora
+     * automaticamente
+     * che effettua il controllo della disponibilità degli sparql enpoint e
+     * memorizza il risultato sul db
+     */
     @Scheduled(fixedRate = 1000 * 60 * 60)
     @Transactional
     public synchronized void service() {
 
         List<SparqlEndpoint> sparqlEndpointList;
 
-        /*Reads sparql endpoint URL from resource and save them to DATA*/
-        if (sparqlEndpointListFileManagament.isModified() || iterator == 1) {
-            logger.info((iterator != 1) ? "Sparql URL list Resource has been modified - " : "" + "Updating Sparql Endpoint List from Resource");
+        /* Reads sparql endpoint URL from resource and save them to DATA */
+        if (/* sparqlEndpointListFileManagament.isModified() || */ iterator == 1) {
+            logger.info((iterator != 1) ? "Sparql URL list Resource has been modified - "
+                    : "" + "Updating Sparql Endpoint List from Resource");
             Set<SparqlEndpoint> sparqlEndpoints = sparqlEndpointListFileManagament.getSparqlEndpoints();
             sparqlEndpointDATAManagement.update(sparqlEndpoints);
         }
 
-        /*Recupera gli sparql endpoint presenti sul db*/
+        /* Recupera gli sparql endpoint presenti sul db */
         sparqlEndpointList = sparqlEndpointDATAManagement.getAllSparqlEndpoints();
 
-        /*Execute check and save status to DATA*/
+        /* Execute check and save status to DATA */
         List<SparqlEndpointStatus> sparqlEndpointStatuses = sparqlEndpointCheckService.executeCheck(sparqlEndpointList);
 
         sparqlEndpointDATAManagement.saveStatuses(sparqlEndpointStatuses);
         // delete rows older than 1 year
-        //calculate date
+        // calculate date
         Calendar cal = Calendar.getInstance();
         Date today = cal.getTime();
         cal.add(Calendar.YEAR, -1);
         Date previousYear = cal.getTime();
         sparqlEndpointStatusRepository.deleteSparqlEndpointStatusByQueryDateBefore(previousYear);
 
-        logger.info("Executed Scheduled Check " + iterator + " terminated in date " + new Timestamp(System.currentTimeMillis()).toString());
+        logger.info("Executed Scheduled Check " + iterator + " terminated in date "
+                + new Timestamp(System.currentTimeMillis()).toString());
 
         iterator++;
     }
