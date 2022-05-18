@@ -1,0 +1,40 @@
+version: "3"
+
+networks:
+  local:
+    driver: bridge
+
+services:
+  app:
+    container_name: app
+    networks:
+      - local
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/sparql_endpoint_availability?serverTimezone=Europe/Rome
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  db:
+    image: mysql:latest
+    container_name: db
+    env_file:
+      - .env
+    networks:
+      - local
+    environment:
+      MYSQL_DATABASE: sparql_endpoint_availability
+    volumes:
+      - db_volume:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  db_volume:
+    external: false

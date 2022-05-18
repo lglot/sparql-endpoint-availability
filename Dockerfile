@@ -1,14 +1,8 @@
-# Maven - Java 11 image
-FROM ubuntu:18.04
-
-
-RUN apt update -y
-RUN apt install -y \
-	openjdk-11-jdk \
-	vim \
-	git \
-	maven \
-	mysql-server
-
-
-WORKDIR /web-app 
+FROM openjdk:17-alpine
+RUN addgroup -S spring && adduser -S spring -G spring
+USER spring:spring
+ARG DEPENDENCY=target/dependency
+COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY ${DEPENDENCY}/META-INF /app/META-INF
+COPY ${DEPENDENCY}/BOOT-INF/classes /app
+ENTRYPOINT ["java","-cp","app:app/lib/*","it.unife.sparql_endpoint_availability.SparqlEndpointAvailabilityApplication"]

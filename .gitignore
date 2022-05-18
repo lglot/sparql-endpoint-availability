@@ -34,3 +34,5 @@ nbactions.xml
 
 *.log
 logs/
+.env
+
