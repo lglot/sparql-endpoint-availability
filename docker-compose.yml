@@ -21,7 +21,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/sparql_endpoint_availability?serverTimezone=Europe/Rome
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
   db:
     image: mysql:latest
     container_name: db
