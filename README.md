@@ -7,7 +7,7 @@
 ## Instruction for running develop enviroment
 * Clone repo:
 ```console
-   git clone https://lotitolg@bitbucket.org/machinelearningunife/sparql-endpoint-availability.git
+   git clone https://bitbucket.org/machinelearningunife/sparql-endpoint-availability
 ```
 * **Create database**:
 ```console
