@@ -2,7 +2,7 @@ package it.unife.sparql_endpoint_availability.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import it.unife.sparql_endpoint_availability.service.config.AppConfig;
+import it.unife.sparql_endpoint_availability.config.AppConfig;
 
 import javax.persistence.*;
 import java.util.Date;

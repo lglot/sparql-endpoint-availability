@@ -2,7 +2,7 @@ package it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQuer
 
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
-import it.unife.sparql_endpoint_availability.service.config.AppConfig;
+import it.unife.sparql_endpoint_availability.config.AppConfig;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointCheckService;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueryMultiThreadImpl.thread.SparqlEndpointsCheckThread;
 import org.springframework.context.ApplicationContext;

@@ -1,4 +1,4 @@
-package it.unife.sparql_endpoint_availability.service.config;
+package it.unife.sparql_endpoint_availability.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

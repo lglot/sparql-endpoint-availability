@@ -1,7 +1,6 @@
 package it.unife.sparql_endpoint_availability.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import it.unife.sparql_endpoint_availability.utilities.StringListConverter;
 import java.util.ArrayList;
@@ -10,11 +9,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
-import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-@NamedEntityGraph(name = "SparqlEndpoint.detail",
-        attributeNodes = @NamedAttributeNode("sparqlEndpointStatuses"))
+@NamedEntityGraph(name = "SparqlEndpoint.detail", attributeNodes = @NamedAttributeNode("sparqlEndpointStatuses"))
 public class SparqlEndpoint {
 
     @Id
@@ -24,27 +21,30 @@ public class SparqlEndpoint {
     @Column(unique = true)
     @NotNull
     private String url;
-    
+
     @NotNull
     private String name;
-    
+
     @NotNull
     @Convert(converter = StringListConverter.class)
     private List<String> defaultGraphIRIs = new ArrayList<>();
-    
+
     @NotNull
     @Convert(converter = StringListConverter.class)
     private List<String> namedGraphIRIs = new ArrayList<>();
 
-    @JsonManagedReference //Inclued in serialization
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "sparqlEndpoint",cascade = CascadeType.ALL)
+    @JsonManagedReference // Inclued in serialization
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sparqlEndpoint", cascade = CascadeType.ALL)
     private List<SparqlEndpointStatus> sparqlEndpointStatuses;
 
     public interface OnlySparqlEndpoint {
-//        Long getId();
+        // Long getId();
         String getURL();
+
         String getName();
+
         List<String> getDefaultGraphIRIs();
+
         List<String> getNamedGraphIRIs();
     }
 
@@ -114,7 +114,7 @@ public class SparqlEndpoint {
     public void setNamedGraphIRIs(List<String> namedGraphIRIs) {
         this.namedGraphIRIs = namedGraphIRIs;
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -124,7 +124,7 @@ public class SparqlEndpoint {
             return false;
         }
         SparqlEndpoint other = (SparqlEndpoint) o;
-        return this.name.equals(other.name) && 
+        return this.name.equals(other.name) &&
                 this.url.equals(other.url);
     }
 

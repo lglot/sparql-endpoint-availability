@@ -2,6 +2,8 @@ package it.unife.sparql_endpoint_availability.controller;
 
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
+
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,10 +30,10 @@ public class SparqlEndpointAvailabilityRestController {
         this.sparqlEndpointDATAManagement = sparqlEndpointDATAManagement;
     }
 
-//    @GetMapping(path = "")
-//    public Iterable<SparqlEndpoint.OnlyURL> getAllURLSparqlEndpoints() {
-//        return sparqlEndpointDATAManagement.getAllURLSparqlEndpoints();
-//    }
+    // @GetMapping(path = "")
+    // public Iterable<SparqlEndpoint.OnlyURL> getAllURLSparqlEndpoints() {
+    // return sparqlEndpointDATAManagement.getAllURLSparqlEndpoints();
+    // }
 
     @GetMapping(path = "")
     public Iterable<SparqlEndpoint.OnlySparqlEndpoint> getAllSparqlEndpoints() {
@@ -43,10 +45,12 @@ public class SparqlEndpointAvailabilityRestController {
         return sparqlEndpointDATAManagement.getURLSparqlEndpointById(id);
     }
 
-    /*@GetMapping(path = "/status")
-    public Iterable<SparqlEndpoint> getAllStatusSparqlEndpoints(){
-        return sparqlEndpointManagement.getAllSparqlEndpoints();
-    }*/
+    /*
+     * @GetMapping(path = "/status")
+     * public Iterable<SparqlEndpoint> getAllStatusSparqlEndpoints(){
+     * return sparqlEndpointManagement.getAllSparqlEndpoints();
+     * }
+     */
     @GetMapping(path = "/status/current")
     public Iterable<SparqlEndpoint> getSparqlEndpointsWithCurrentStatus() {
         return sparqlEndpointDATAManagement.getSparqlEndpointsWithCurrentStatus();
@@ -57,17 +61,22 @@ public class SparqlEndpointAvailabilityRestController {
         return sparqlEndpointDATAManagement.getCurrentlyActiveSparqlEndpoints();
     }
 
-//    @GetMapping(path = "/status/current/{id}")
-//    public SparqlEndpoint getSparqlEndpointWithCurrentStatusById(@PathVariable @NotNull Long id) {
-//        return sparqlEndpointDATAManagement.getSparqlEndpointWithCurrentStatusById(id);
-//    }
-    
+    // @GetMapping(path = "/status/current/{id}")
+    // public SparqlEndpoint getSparqlEndpointWithCurrentStatusById(@PathVariable
+    // @NotNull Long id) {
+    // return
+    // sparqlEndpointDATAManagement.getSparqlEndpointWithCurrentStatusById(id);
+    // }
+
     @GetMapping(path = "/status/current/{url}")
-        public SparqlEndpoint getSparqlEndpointWithCurrentStatusByURL(@PathVariable @NotNull String url) {
-            url = URLDecoder.decode(url, Charsets.UTF_8);
-            return sparqlEndpointDATAManagement.getSparqlEndpointByUrl(url);
+    public SparqlEndpoint getSparqlEndpointWithCurrentStatusByURL(@PathVariable @NotNull String url) {
+        try {
+            url = URLDecoder.decode(url, Charsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return sparqlEndpointDATAManagement.getSparqlEndpointByUrl(url);
     }
-    
 
     @GetMapping(path = "/status/weekly-history")
     public Iterable<SparqlEndpoint> getWeeklyHistoryStatusSparqlEndpoints() {

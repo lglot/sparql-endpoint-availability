@@ -36,3 +36,4 @@ nbactions.xml
 logs/
 .env
 
+db*
