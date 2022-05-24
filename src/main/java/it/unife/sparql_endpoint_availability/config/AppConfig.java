@@ -4,6 +4,8 @@ import it.unife.sparql_endpoint_availability.service.resourceManagement.FileImpl
 import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagement;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointCheckService;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueryMultiThreadImpl.SECheckServiceMultiThreadImpl;
+import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueyTestService.SparqlEndpointCheckServiceTestImpl;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +36,8 @@ public class AppConfig {
     /* Iniettori delle dipendenze */
     @Bean
     public SparqlEndpointCheckService getSparqlEndpointCheckService() {
-        return new SECheckServiceMultiThreadImpl(QUERY_NUMBER_BY_THREAD);
+        // return new SECheckServiceMultiThreadImpl(QUERY_NUMBER_BY_THREAD);
+        return new SparqlEndpointCheckServiceTestImpl();
     }
 
     @Bean
