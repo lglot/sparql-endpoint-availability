@@ -52,7 +52,7 @@ class SparqlEndpointCheckTask {
      * memorizza il risultato sul db
      */
     @Scheduled(fixedRate = 1000 * 60 * 60)
-    @Transactional
+    // @Transactional
     public synchronized void service() {
 
         List<SparqlEndpoint> sparqlEndpointList;

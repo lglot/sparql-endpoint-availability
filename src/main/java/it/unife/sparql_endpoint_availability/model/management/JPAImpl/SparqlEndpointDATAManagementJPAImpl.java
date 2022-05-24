@@ -25,39 +25,50 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
         this.sparqlEndpointStatusRepository = sparqlEndpointStatusRepository;
     }
 
-//    @Override
-//    @Transactional
-//    /*Metodo per aggiornare la lista degli sparql Endpoint sul DB,in input il metodo riceve
-//    * la lista degli URL degli endpoint letti da file. Nello specifico verrannò aggiunti al DB gli endpoint trovati nella lista-file che
-//    * non sono nella lista-DB, e viceversa verranno cancellati dal DB, gli endpoint della lista-DB che non sono presenti nella lista-file */
-//    public void update(List<String> sparqlUrlListResource) {
-//
-//        List<SparqlEndpoint> sparqlListDB = sparqlEndpointRepository.findAllByOrderById();
-//
-//        List<String> sparqlUrlListDB = sparqlListDB.stream().map(SparqlEndpoint::getServiceURL).collect(Collectors.toList());
-//        List<String> sparqlUrlResource1 = new ArrayList<>(sparqlUrlListResource);
-//
-//        sparqlUrlListResource.removeAll(sparqlUrlListDB);
-//        sparqlUrlListDB.removeAll(sparqlUrlResource1);
-//
-//        Set<SparqlEndpoint> sparqlEndpointSetToSave = sparqlUrlListResource.stream().map(serviceURL -> {
-//            SparqlEndpoint sparqlEndpoint = new SparqlEndpoint();
-//            sparqlEndpoint.setServiceURL(serviceURL);
-//            return sparqlEndpoint;
-//        }).collect(Collectors.toSet());
-//
-//        if (sparqlEndpointSetToSave.size() > 0)
-//            sparqlEndpointRepository.saveAll(sparqlEndpointSetToSave);
-//
-//        if(sparqlUrlListDB.size()>0)
-//            sparqlEndpointRepository.deleteByServiceURLIn(sparqlUrlListDB);
-//
-//    }
+    // @Override
+    // @Transactional
+    // /*Metodo per aggiornare la lista degli sparql Endpoint sul DB,in input il
+    // metodo riceve
+    // * la lista degli URL degli endpoint letti da file. Nello specifico verrannò
+    // aggiunti al DB gli endpoint trovati nella lista-file che
+    // * non sono nella lista-DB, e viceversa verranno cancellati dal DB, gli
+    // endpoint della lista-DB che non sono presenti nella lista-file */
+    // public void update(List<String> sparqlUrlListResource) {
+    //
+    // List<SparqlEndpoint> sparqlListDB =
+    // sparqlEndpointRepository.findAllByOrderById();
+    //
+    // List<String> sparqlUrlListDB =
+    // sparqlListDB.stream().map(SparqlEndpoint::getServiceURL).collect(Collectors.toList());
+    // List<String> sparqlUrlResource1 = new ArrayList<>(sparqlUrlListResource);
+    //
+    // sparqlUrlListResource.removeAll(sparqlUrlListDB);
+    // sparqlUrlListDB.removeAll(sparqlUrlResource1);
+    //
+    // Set<SparqlEndpoint> sparqlEndpointSetToSave =
+    // sparqlUrlListResource.stream().map(serviceURL -> {
+    // SparqlEndpoint sparqlEndpoint = new SparqlEndpoint();
+    // sparqlEndpoint.setServiceURL(serviceURL);
+    // return sparqlEndpoint;
+    // }).collect(Collectors.toSet());
+    //
+    // if (sparqlEndpointSetToSave.size() > 0)
+    // sparqlEndpointRepository.saveAll(sparqlEndpointSetToSave);
+    //
+    // if(sparqlUrlListDB.size()>0)
+    // sparqlEndpointRepository.deleteByServiceURLIn(sparqlUrlListDB);
+    //
+    // }
     @Override
     @Transactional
-    /*Metodo per aggiornare la lista degli sparql Endpoint sul DB,in input il metodo riceve
-    * la lista degli URL degli endpoint letti da file. Nello specifico verrannò aggiunti al DB gli endpoint trovati nella lista-file che
-    * non sono nella lista-DB, e viceversa verranno cancellati dal DB, gli endpoint della lista-DB che non sono presenti nella lista-file */
+    /*
+     * Metodo per aggiornare la lista degli sparql Endpoint sul DB,in input il
+     * metodo riceve
+     * la lista degli URL degli endpoint letti da file. Nello specifico verrannò
+     * aggiunti al DB gli endpoint trovati nella lista-file che
+     * non sono nella lista-DB, e viceversa verranno cancellati dal DB, gli endpoint
+     * della lista-DB che non sono presenti nella lista-file
+     */
     public void update(Set<SparqlEndpoint> sparqlEndpoints) {
 
         List<SparqlEndpoint> sparqlListDB = sparqlEndpointRepository.findAllByOrderById();
@@ -71,13 +82,14 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
         Set<SparqlEndpoint> sparqlEndpointsToAdd = new HashSet<>(sparqlEndpoints);
         sparqlEndpointsToAdd.removeAll(sparqlEndpointsDB);
 
+        sparqlEndpointsToRemove.removeAll(Collections.singleton(null));
         if (sparqlEndpointsToRemove.size() > 0) {
             List<String> urls = sparqlEndpointsToRemove
                     .stream()
                     .map(SparqlEndpoint::getUrl)
                     .collect(Collectors.toList());
-//            sparqlEndpointRepository.deleteByServiceURLIn(urls);
-            for(String url : urls) {
+            // sparqlEndpointRepository.deleteByServiceURLIn(urls);
+            for (String url : urls) {
                 sparqlEndpointRepository.deleteByUrl(url.trim());
             }
         }
@@ -112,7 +124,7 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
         return sparqlEndpointRepository.findAllByOrderById();
     }
 
-    /*GET sparql URL with STATUS LIST*/
+    /* GET sparql URL with STATUS LIST */
     @Override
     @Transactional(readOnly = true)
     public List<SparqlEndpoint> getSparqlEndpointsWithCurrentStatus() {
