@@ -11,7 +11,7 @@ import java.util.Date;
 public class SparqlEndpointStatus {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer statusId;
 
     @ManyToOne(fetch = FetchType.EAGER)
