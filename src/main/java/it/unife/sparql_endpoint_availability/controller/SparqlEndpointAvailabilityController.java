@@ -39,23 +39,24 @@ public class SparqlEndpointAvailabilityController {
     private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointAvailabilityController.class);
 
     @Autowired
-    public SparqlEndpointAvailabilityController(SparqlEndpointDATAManagement sparqlEndpointDATAManagement, SparqlEndpointStatusConfig statusConfig) {
+    public SparqlEndpointAvailabilityController(SparqlEndpointDATAManagement sparqlEndpointDATAManagement,
+            SparqlEndpointStatusConfig statusConfig) {
         this.sparqlEndpointDATAManagement = sparqlEndpointDATAManagement;
         this.statusConfig = statusConfig;
     }
 
-    //metodo per forzare l'aggiornamento degli sparql endopoint da parte del client
+    // metodo per forzare l'aggiornamento degli sparql endopoint da parte del client
     @GetMapping(path = "/update")
-    public @ResponseBody
-    String update() {
+    public @ResponseBody String update() {
 
-        /*Get Application Context*/
+        /* Get Application Context */
         ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        /*Get istance of class that provide access to sparql Endpoint file*/
-        SparqlEndpointListFileManagement sparqlEndpointListFileManagament = ctx.getBean(SparqlEndpointListFileManagement.class);
+        /* Get istance of class that provide access to sparql Endpoint file */
+        SparqlEndpointListFileManagement sparqlEndpointListFileManagament = ctx
+                .getBean(SparqlEndpointListFileManagement.class);
 
-        /*Read spaql endpoint URL from resource and save them to DATA*/
+        /* Read spaql endpoint URL from resource and save them to DATA */
         sparqlEndpointDATAManagement.update(sparqlEndpointListFileManagament.getSparqlEndpoints());
 
         List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointDATAManagement.getAllSparqlEndpoints();
@@ -63,25 +64,34 @@ public class SparqlEndpointAvailabilityController {
         SparqlEndpointCheckService sparqlEndpointCheckService = ctx.getBean(SparqlEndpointCheckService.class);
         sparqlEndpointDATAManagement.saveStatuses(sparqlEndpointCheckService.executeCheck(sparqlEndpointList));
 
-        logger.info("Executed manually check terminated in date " + new Timestamp(System.currentTimeMillis()).toString());
+        logger.info(
+                "Executed manually check terminated in date " + new Timestamp(System.currentTimeMillis()).toString());
         return "updated";
     }
 
-    /*Metodo che viene chiamato su richiesta del client per ottenere la lista degli sparql endopoint
-    dove vengono prelevati le informazioni sulla disponibilità dell'ultima settimana degli sparlq enpoint
-    e settati come parametri del modello dei dati che andrà a riempire il template lato VIEW
-
-    In particolare viene richiesto al gestore del database di ottenere la lista con le query sparql effettuate nella settimana;
-    se la lista ottenuta è vuota (ovvero non c'è nessuno sparql endopoint sul database oppure non è ancora stata acquistia alcuno informazione
-    sulla loro disponibilità essendo il server da poco avviato) si rimanda indietro un messaggio di errore.
-    Altrimenti, per ogni sparlq endpoint, viene assegnato un'etichetta indicante lo stato indicante la disponibilià attuale,
-    giornaliera e settimanale
+    /*
+     * Metodo che viene chiamato su richiesta del client per ottenere la lista degli
+     * sparql endopoint
+     * dove vengono prelevati le informazioni sulla disponibilità dell'ultima
+     * settimana degli sparlq enpoint
+     * e settati come parametri del modello dei dati che andrà a riempire il
+     * template lato VIEW
+     * 
+     * In particolare viene richiesto al gestore del database di ottenere la lista
+     * con le query sparql effettuate nella settimana;
+     * se la lista ottenuta è vuota (ovvero non c'è nessuno sparql endopoint sul
+     * database oppure non è ancora stata acquistia alcuno informazione
+     * sulla loro disponibilità essendo il server da poco avviato) si rimanda
+     * indietro un messaggio di errore.
+     * Altrimenti, per ogni sparlq endpoint, viene assegnato un'etichetta indicante
+     * lo stato indicante la disponibilià attuale,
+     * giornaliera e settimanale
      */
     @GetMapping(path = "")
     public String view(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang, Model model) {
 
-        /*HTTP PARAMETERS*/
-        SortedMap<Long, SparqlEndpointStatusSummary> sparqlStatusMap = new TreeMap<>();
+        /* HTTP PARAMETERS */
+        SortedMap<Integer, SparqlEndpointStatusSummary> sparqlStatusMap = new TreeMap<>();
         int numberActive = 0;
         Date lastUpdate = null;
         LocalDateTime lastUpdateLocal = null;
@@ -95,47 +105,53 @@ public class SparqlEndpointAvailabilityController {
         previousWeek.add(Calendar.WEEK_OF_YEAR, -1);
         previousDay.add(Calendar.DAY_OF_YEAR, -1);
 
-        //Ottengo la lista degli sparql enpoint con risultati delle query sparql dal database
-        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointDATAManagement.getSparqlEndpointsAfterQueryDate(previousWeek.getTime());
+        // Ottengo la lista degli sparql enpoint con risultati delle query sparql dal
+        // database
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointDATAManagement
+                .getSparqlEndpointsAfterQueryDate(previousWeek.getTime());
 
-        //controllo se la lista non sia vuota e che sia stata almento eseguita una query sparql
+        // controllo se la lista non sia vuota e che sia stata almento eseguita una
+        // query sparql
         if (sparqlEndpointList.size() > 0 && sparqlEndpointList.get(0).getSparqlEndpointStatuses().size() > 0) {
 
-            //ottengo data della prima query eseguita dall'avvio del server collegandomi di nuovo al database
+            // ottengo data della prima query eseguita dall'avvio del server collegandomi di
+            // nuovo al database
             firstUpdate = sparqlEndpointDATAManagement.findFirstQueryDate();
 
             List<SparqlEndpointStatus> statusTemp = sparqlEndpointList.get(0).getSparqlEndpointStatuses();
-            //calcolo data dell'ultima query eseguita
+            // calcolo data dell'ultima query eseguita
             lastUpdate = statusTemp.get(0).getQueryDate();
             lastUpdateLocal = LocalDateTime.ofInstant(lastUpdate.toInstant(), ZoneId.of("Z"));
 
-            //calcolo i giorni e quindi le settimane passate dalla prima query eseguita
+            // calcolo i giorni e quindi le settimane passate dalla prima query eseguita
             daysPassed = ChronoUnit.DAYS.between(firstUpdate.toInstant(), lastUpdate.toInstant());
             weeksPassed = daysPassed / 7;
 
             for (SparqlEndpoint sparqlEndpoint : sparqlEndpointList) {
 
-                //creo un nuovo oggetto di tipo DTO (Data tranfer object),
+                // creo un nuovo oggetto di tipo DTO (Data tranfer object),
                 // che conterrà le informazioni di ogni sparlq endpoint e che sarà poi
-                //trasferito al VIEWW LAYER
+                // trasferito al VIEWW LAYER
                 SparqlEndpointStatusSummary statusSummary = new SparqlEndpointStatusSummary();
                 statusSummary.setURL(sparqlEndpoint.getUrl());
 
-                //prelevo la lista con i risultati delle query sparql
+                // prelevo la lista con i risultati delle query sparql
                 List<SparqlEndpointStatus> statusList = sparqlEndpoint.getSparqlEndpointStatuses();
 
-                //calcolo il numero totale delle query eseuguite per lo sparql endpoint dell'attuale iterazione
+                // calcolo il numero totale delle query eseuguite per lo sparql endpoint
+                // dell'attuale iterazione
                 double totalStatus = statusList.size();
 
-                //booleano che mi dice l'endpoint in questa iterazione è attivo attualmente
+                // booleano che mi dice l'endpoint in questa iterazione è attivo attualmente
                 boolean activeFound = false;
 
-                //variabili per contare il numero delle volte che l'endopint di questa iterazione è risultato
-                //attivo in questa giornata e in questa settimana
+                // variabili per contare il numero delle volte che l'endopint di questa
+                // iterazione è risultato
+                // attivo in questa giornata e in questa settimana
                 double activeCounterThisDay = 0;
                 double activeCounterThisWeek = 0;
 
-                //controllo se l'endpoint è attivo attualmente
+                // controllo se l'endpoint è attivo attualmente
                 if (statusList.get(0).isActive()) {
                     statusSummary.setStatusString(statusConfig.getActive());
                     activeFound = true;
@@ -150,7 +166,7 @@ public class SparqlEndpointAvailabilityController {
                 int i = 1;
                 Date yesterday = previousDay.getTime();
 
-                //controllo se e quante volte l'endopint è risultativo nelle ultime 24 ore
+                // controllo se e quante volte l'endopint è risultativo nelle ultime 24 ore
                 while (i < totalStatus && statusList.get(i).getQueryDate().after(yesterday)) {
 
                     SparqlEndpointStatus status = statusList.get(i);
@@ -167,7 +183,8 @@ public class SparqlEndpointAvailabilityController {
                 }
 
                 int totalStatusThisDay = i;
-                //controllo se e quante volte l'endpoint è risultato attivo negli ultimi 7 giorni (la
+                // controllo se e quante volte l'endpoint è risultato attivo negli ultimi 7
+                // giorni (la
                 // lista non contiene stati oltre la settimana passata)
                 for (SparqlEndpointStatus status : Iterables.skip(statusList, totalStatusThisDay)) {
 
@@ -183,7 +200,7 @@ public class SparqlEndpointAvailabilityController {
                     statusSummary.setStatusString(statusConfig.getInactiveMoreweek());
                 }
 
-                //calcolo uptime
+                // calcolo uptime
                 // hours in a week 168
                 int hoursWeek = 168;
                 int hoursDay = 24;

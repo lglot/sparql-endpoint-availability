@@ -52,7 +52,7 @@ public class DBconfig {
             hibernateProperties.setProperty("hibernate.show_sql", env.getProperty("spring.jpa.show-sql"));
         }
         hibernateProperties.setProperty("hibernate.connection.pool_size", "1");
-        hibernateProperties.setProperty("hibernate.connection.autocommit", "true");
+        // hibernateProperties.setProperty("hibernate.connection.autocommit", "true");
         return hibernateProperties;
     }
 }

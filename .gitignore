@@ -30,7 +30,7 @@ nbactions.xml
 
 ### VS Code ###
 .vscode/
-
+data/
 
 *.log
 logs/

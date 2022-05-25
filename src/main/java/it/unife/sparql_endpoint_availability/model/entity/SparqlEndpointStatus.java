@@ -11,11 +11,11 @@ import java.util.Date;
 public class SparqlEndpointStatus {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long statusId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer statusId;
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JsonBackReference //Omitted from serialization
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference // Omitted from serialization
     private SparqlEndpoint sparqlEndpoint;
 
     @Basic(optional = false)
@@ -26,11 +26,11 @@ public class SparqlEndpointStatus {
 
     private boolean active;
 
-    public Long getStatusId() {
+    public Integer getStatusId() {
         return statusId;
     }
 
-    public void setStatusId(Long statusId) {
+    public void setStatusId(Integer statusId) {
         this.statusId = statusId;
     }
 
