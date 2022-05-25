@@ -11,7 +11,7 @@
 ```
 * Run the application:
 ```console
-mvn spring-boot:run 
+   mvn spring-boot:run 
 ``` 
 ## Viewing the running application
 To view the running application, visit [http://localhost:8080](http://localhost:8080) in your browser 
