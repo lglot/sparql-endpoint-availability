@@ -22,9 +22,9 @@ H2 has an embedded GUI console for browsing the contents of a database.
 After starting the application, we can navigate to [http://localhost:8080/h2-console](http://localhost:8080/h2-console).  
 On the login page, we'll insert the same credential that we used in the `application.properties`.  
 Default ones are:
-   - JDBC URL : `jdbc:h2:file:./data/h2_db`
-   - User name : `root`
-   - password : `root`
+- JDBC URL : `jdbc:h2:file:./data/h2_db`
+- User name : `root`
+- password : `root`
 
 # Deploy application with docker-compose (MySQL databse)
 

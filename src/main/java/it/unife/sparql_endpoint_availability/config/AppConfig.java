@@ -36,8 +36,8 @@ public class AppConfig {
     /* Iniettori delle dipendenze */
     @Bean
     public SparqlEndpointCheckService getSparqlEndpointCheckService() {
-        // return new SECheckServiceMultiThreadImpl(QUERY_NUMBER_BY_THREAD);
-        return new SparqlEndpointCheckServiceTestImpl();
+        return new SECheckServiceMultiThreadImpl(QUERY_NUMBER_BY_THREAD);
+        // return new SparqlEndpointCheckServiceTestImpl();
     }
 
     @Bean
