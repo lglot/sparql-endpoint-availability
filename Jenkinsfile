@@ -4,7 +4,7 @@ pipeline {
     stage('Build and Test') {
       agent {
         docker {
-          image 'jdk-11'
+          image 'openjdk:17-alpine'
         }
 
       }
