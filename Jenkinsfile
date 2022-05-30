@@ -9,7 +9,7 @@ pipeline {
 
       }
       steps {
-        sh './mvnw verify --file pom.xml'
+        sh './mvnw package --file pom.xml'
       }
     }
 
