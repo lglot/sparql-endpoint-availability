@@ -13,11 +13,5 @@ pipeline {
       }
     }
 
-    stage('Set commit status') {
-      steps {
-        setGitHubPullRequestStatus(state: 'SUCCESS', message: 'Build and test eseguito', context: 'Jenkins Pipeline')
-      }
-    }
-
   }
 }
