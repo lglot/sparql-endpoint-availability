@@ -20,7 +20,7 @@ jobs:
         run: sudo service mysql stop # Shutdown the Default MySQL, "sudo" is necessary, please not remove it
 
       - name: Set up MySQL
-        uses: mirromutth/mysql-action@latest
+        uses: mirromutth/mysql-action@v1.1
         with:
           mysql database: 'sparql_endpoint_availability'
           mysql root password: 'root' 
