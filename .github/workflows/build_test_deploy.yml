@@ -1,4 +1,4 @@
-name: Buil Test Deploy CI
+name: Build Test and Deploy CI
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
         uses: mirromutth/mysql-action@v1.1
         with:
           mysql database: 'sparql_endpoint_availability'
-          mysql root password: 'root' 
+          mysql root password: ${{ secret.MYSQL_PASSWORD }} 
 
       
       - name: Set up JDK 11
@@ -34,6 +34,9 @@ jobs:
           cache: maven
       - name: Test with Maven
         run: mvn -B test
-      - name: Build with Maven
-        run: mvn -B package
+        env:
+           SPRING_DATASOURCE_PASSWORD: ${{ secret.MYSQL_PASSWORD }} 
+      #- name: Build with Maven
+      #  run: mvn -B package
+      
       
