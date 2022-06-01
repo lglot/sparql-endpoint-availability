@@ -32,11 +32,39 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
+      
       - name: Test with Maven
         run: mvn -B test
         env:
            SPRING_DATASOURCE_PASSWORD: ${{ secrets.MYSQL_PASSWORD }} 
-      #- name: Build with Maven
-      #  run: mvn -B package
+      
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: "**/surefire-reports/WORKFLOW-*.xml"
+      
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build image e push to DockerHub 
+        run: |
+          mvn -B package
+          mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+          docker image build --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/sparql_endpoint_availability:$(date +%s) .
+          docker push ${{ secrets.DOCKER_USERNAME }}/sparql_endpoint_availability:$(date +%s)
+        env:
+           SPRING_DATASOURCE_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+
+
+      
+      
+      
+
+
+      
       
       
