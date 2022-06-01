@@ -9,11 +9,9 @@ import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueyT
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
 @ComponentScan(basePackages = "it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueryMultiThreadImpl.thread")
-@EnableScheduling
 public class AppConfig {
 
     /*
