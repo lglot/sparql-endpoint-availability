@@ -42,7 +42,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: "**/surefire-reports/WORKFLOW-*.xml"
+          files: "test-results/**/*.xml"
       
       - name: Log in to Docker Hub
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
@@ -54,8 +54,8 @@ jobs:
         run: |
           mvn -B package
           mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
-          docker image build --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/sparql_endpoint_availability:$(date +%s) .
-          docker push ${{ secrets.DOCKER_USERNAME }}/sparql_endpoint_availability:$(date +%s)
+          docker image build --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/sparql_endpoint_availability:v0.1 .
+          docker push ${{ secrets.DOCKER_USERNAME }}/sparql_endpoint_availability:v0.1
         env:
            SPRING_DATASOURCE_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
 
