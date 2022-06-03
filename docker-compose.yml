@@ -6,11 +6,12 @@ networks:
 
 services:
   app:
+    image: lglot/sparql_endpoint_availability:v0.1
     container_name: app
     networks:
       - local
-    build:
-      context: .
+    #build:
+    #  context: .
     ports:
       - 8080:8080
     depends_on:
