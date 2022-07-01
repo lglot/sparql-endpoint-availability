@@ -35,6 +35,10 @@ public class SparqlEndpointAvailabilityRestController {
     // return sparqlEndpointDATAManagement.getAllURLSparqlEndpoints();
     // }
 
+    @GetMapping(path = '/test')
+    public @ResponseBody String greeting() {
+		return "Hello, World";
+
     @GetMapping(path = "")
     public Iterable<SparqlEndpoint.OnlySparqlEndpoint> getAllSparqlEndpoints() {
         return sparqlEndpointDATAManagement.getAllURLSparqlEndpoints();
