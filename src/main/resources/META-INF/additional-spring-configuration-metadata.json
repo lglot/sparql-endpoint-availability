@@ -1,28 +1,32 @@
-{
-  "properties": [
-    {
-      "name": "sparql.endpoint.status.active",
-      "type": "java.lang.String",
-      "description": "Description for status.active."
-    },
-    {
-      "name": "sparql.endpoint.status.inactive_lessweek",
-      "type": "java.lang.String",
-      "description": "Description for status.inactive_less_than_a_week."
-    },
-    {
-      "name": "sparql.endpoint.status.inactive_moreweek",
-      "type": "java.lang.String",
-      "description": "Description for status.inactive_more_than_a_week."
-    },
-    {
-      "name": "sparql.endpoint.status.general_inactive",
-      "type": "java.lang.String",
-      "description": "Description for sparql.endpoint.status.general_inactive."
-    },
-    {
-      "name": "sparql.endpoint.status.inactive_lessday",
-      "type": "java.lang.String",
-      "description": "Description for sparql.endpoint.status.inactive_lessday."
-    }
-  ] }
+{"properties": [
+  {
+    "name": "sparql.endpoint.status.active",
+    "type": "java.lang.String",
+    "description": "Description for status.active."
+  },
+  {
+    "name": "sparql.endpoint.status.inactive_lessweek",
+    "type": "java.lang.String",
+    "description": "Description for status.inactive_less_than_a_week."
+  },
+  {
+    "name": "sparql.endpoint.status.inactive_moreweek",
+    "type": "java.lang.String",
+    "description": "Description for status.inactive_more_than_a_week."
+  },
+  {
+    "name": "sparql.endpoint.status.general_inactive",
+    "type": "java.lang.String",
+    "description": "Description for sparql.endpoint.status.general_inactive."
+  },
+  {
+    "name": "sparql.endpoint.status.inactive_lessday",
+    "type": "java.lang.String",
+    "description": "Description for sparql.endpoint.status.inactive_lessday."
+  },
+  {
+    "name": "app.scheduling.enable",
+    "type": "java.lang.String",
+    "description": "Property to enable the scheduling in application"
+  }
+]}
