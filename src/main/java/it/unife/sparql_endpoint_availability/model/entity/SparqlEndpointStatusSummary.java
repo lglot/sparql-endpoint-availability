@@ -5,10 +5,12 @@ public class SparqlEndpointStatusSummary {
 
     private String URL;
 
-    /*this variable indicates whether the sparql is active,
-    or is inactive for less or more than a week*/
+    /*
+     * this variable indicates whether the sparql is active,
+     * or is inactive for less or more than a week
+     */
     private String statusString;
-    
+
     private String name;
 
     private double uptimeLast24h;

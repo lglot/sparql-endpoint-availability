@@ -10,7 +10,6 @@ import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlE
 import org.apache.jena.ext.com.google.common.collect.Iterables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -38,7 +37,6 @@ public class SparqlEndpointAvailabilityController {
 
     private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointAvailabilityController.class);
 
-    @Autowired
     public SparqlEndpointAvailabilityController(SparqlEndpointDATAManagement sparqlEndpointDATAManagement,
             SparqlEndpointStatusConfig statusConfig) {
         this.sparqlEndpointDATAManagement = sparqlEndpointDATAManagement;
@@ -91,7 +89,7 @@ public class SparqlEndpointAvailabilityController {
     public String view(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang, Model model) {
 
         /* HTTP PARAMETERS */
-        SortedMap<Integer, SparqlEndpointStatusSummary> sparqlStatusMap = new TreeMap<>();
+        SortedMap<Number, SparqlEndpointStatusSummary> sparqlStatusMap = new TreeMap<>();
         int numberActive = 0;
         Date lastUpdate = null;
         LocalDateTime lastUpdateLocal = null;

@@ -7,7 +7,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,19 +24,9 @@ public class SparqlEndpointAvailabilityRestController {
 
     private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointAvailabilityController.class);
 
-    @Autowired
     public SparqlEndpointAvailabilityRestController(SparqlEndpointDATAManagement sparqlEndpointDATAManagement) {
         this.sparqlEndpointDATAManagement = sparqlEndpointDATAManagement;
     }
-
-    // @GetMapping(path = "")
-    // public Iterable<SparqlEndpoint.OnlyURL> getAllURLSparqlEndpoints() {
-    // return sparqlEndpointDATAManagement.getAllURLSparqlEndpoints();
-    // }
-
-    @GetMapping(path = '/test')
-    public @ResponseBody String greeting() {
-		return "Hello, World";
 
     @GetMapping(path = "")
     public Iterable<SparqlEndpoint.OnlySparqlEndpoint> getAllSparqlEndpoints() {
