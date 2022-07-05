@@ -121,6 +121,12 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
                 .stream()
                 .map(sparqlEndpoint -> {
                     return new SparqlEndpoint.OnlySparqlEndpoint() {
+
+                        @Override
+                        public Long getId() {
+                            return sparqlEndpoint.getId();
+                        }
+
                         @Override
                         public String getUrl() {
                             return sparqlEndpoint.getUrl();
@@ -131,15 +137,6 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
                             return sparqlEndpoint.getName();
                         }
 
-                        @Override
-                        public List<String> getDefaultGraphIRIs() {
-                            return sparqlEndpoint.getDefaultGraphIRIs();
-                        }
-
-                        @Override
-                        public List<String> getNamedGraphIRIs() {
-                            return sparqlEndpoint.getNamedGraphIRIs();
-                        }
                     };
                 }).collect(Collectors.toList());
 

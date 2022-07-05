@@ -37,15 +37,25 @@ public class SparqlEndpoint {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "sparqlEndpoint", cascade = CascadeType.ALL)
     private List<SparqlEndpointStatus> sparqlEndpointStatuses;
 
+    public SparqlEndpoint() {
+
+    }
+
+
     public interface OnlySparqlEndpoint {
+
+        Long getId();
 
         String getUrl();
 
         String getName();
 
-        List<String> getDefaultGraphIRIs();
+    }
 
-        List<String> getNamedGraphIRIs();
+    public SparqlEndpoint(Long id, String url, String name) {
+        this.id = id;
+        this.url = url;
+        this.name = name;
     }
 
     @JsonIgnore
@@ -134,6 +144,12 @@ public class SparqlEndpoint {
         hash = 53 * hash + Objects.hashCode(this.url);
         hash = 53 * hash + Objects.hashCode(this.name);
         return hash;
+    }
+
+    @Override
+    public String toString() {
+        return "SparqlEndpoint{" + "id=" + id + ", url=" + url + ", name=" + name + ", defaultGraphIRIs="
+                + defaultGraphIRIs + ", namedGraphIRIs=" + namedGraphIRIs + '}';
     }
 
 }

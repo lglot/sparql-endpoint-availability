@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="sparql-endpoint-availability" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" />
+    <module name="sparql_endpoint_availability" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="it.unife.sparql_endpoint_availability.SparqlEndpointAvailabilityApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
