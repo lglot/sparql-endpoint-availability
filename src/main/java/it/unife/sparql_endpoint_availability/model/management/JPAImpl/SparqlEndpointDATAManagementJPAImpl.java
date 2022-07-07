@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 @Service
 public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAManagement {
 
-    private SparqlEndpointRepository sparqlEndpointRepository;
-    private SparqlEndpointStatusRepository sparqlEndpointStatusRepository;
+    private final SparqlEndpointRepository sparqlEndpointRepository;
+    private final SparqlEndpointStatusRepository sparqlEndpointStatusRepository;
 
     public SparqlEndpointDATAManagementJPAImpl(SparqlEndpointRepository sparqlEndpointRepository,
             SparqlEndpointStatusRepository sparqlEndpointStatusRepository) {
@@ -37,22 +37,24 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
 
         List<SparqlEndpoint> sparqlListDB = sparqlEndpointRepository.findAllByOrderById();
 
+        // Hashset -> a collection that contains no duplicate elements.
         Set<SparqlEndpoint> sparqlEndpointsDB = new HashSet<>(sparqlListDB);
 
         // set of SPARQL endpoints to remove from DB
         Set<SparqlEndpoint> sparqlEndpointsToRemove = new HashSet<>(sparqlEndpointsDB);
         sparqlEndpointsToRemove.removeAll(sparqlEndpoints);
+
         // set of SPARQL endpoints to add to DB
         Set<SparqlEndpoint> sparqlEndpointsToAdd = new HashSet<>(sparqlEndpoints);
         sparqlEndpointsToAdd.removeAll(sparqlEndpointsDB);
 
-        sparqlEndpointsToRemove.removeAll(Collections.singleton(null));
+        //sparqlEndpointsToRemove.removeAll(Collections.singleton(null));
+
         if (sparqlEndpointsToRemove.size() > 0) {
             List<String> urls = sparqlEndpointsToRemove
                     .stream()
                     .map(SparqlEndpoint::getUrl)
                     .collect(Collectors.toList());
-            // sparqlEndpointRepository.deleteByServiceURLIn(urls);
             for (String url : urls) {
                 sparqlEndpointRepository.deleteByUrl(url.trim());
             }

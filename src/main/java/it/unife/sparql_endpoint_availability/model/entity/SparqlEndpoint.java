@@ -40,6 +40,15 @@ public class SparqlEndpoint {
     public SparqlEndpoint() {
 
     }
+    public SparqlEndpoint(Long id ,String url, String name) {
+        this.id = id;
+        this.url = url;
+        this.name = name;
+    }
+    public SparqlEndpoint(String url, String name) {
+        this.url = url;
+        this.name = name;
+    }
 
 
     public interface OnlySparqlEndpoint {
@@ -50,12 +59,6 @@ public class SparqlEndpoint {
 
         String getName();
 
-    }
-
-    public SparqlEndpoint(Long id, String url, String name) {
-        this.id = id;
-        this.url = url;
-        this.name = name;
     }
 
     @JsonIgnore
