@@ -25,14 +25,6 @@ public class SparqlEndpoint {
     @NotNull
     private String name;
 
-    @NotNull
-    @Convert(converter = StringListConverter.class)
-    private List<String> defaultGraphIRIs = new ArrayList<>();
-
-    @NotNull
-    @Convert(converter = StringListConverter.class)
-    private List<String> namedGraphIRIs = new ArrayList<>();
-
     @JsonManagedReference // Inclued in serialization
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "sparqlEndpoint", cascade = CascadeType.ALL)
     private List<SparqlEndpointStatus> sparqlEndpointStatuses;
@@ -100,34 +92,6 @@ public class SparqlEndpoint {
         this.name = name;
     }
 
-    /**
-     * @return the defaultGraphIRIs
-     */
-    public List<String> getDefaultGraphIRIs() {
-        return defaultGraphIRIs;
-    }
-
-    /**
-     * @param defaultGraphIRIs the defaultGraphIRIs to set
-     */
-    public void setDefaultGraphIRIs(List<String> defaultGraphIRIs) {
-        this.defaultGraphIRIs = defaultGraphIRIs;
-    }
-
-    /**
-     * @return the namedGraphIRIs
-     */
-    public List<String> getNamedGraphIRIs() {
-        return namedGraphIRIs;
-    }
-
-    /**
-     * @param namedGraphIRIs the namedGraphIRIs to set
-     */
-    public void setNamedGraphIRIs(List<String> namedGraphIRIs) {
-        this.namedGraphIRIs = namedGraphIRIs;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -151,8 +115,7 @@ public class SparqlEndpoint {
 
     @Override
     public String toString() {
-        return "SparqlEndpoint{" + "id=" + id + ", url=" + url + ", name=" + name + ", defaultGraphIRIs="
-                + defaultGraphIRIs + ", namedGraphIRIs=" + namedGraphIRIs + '}';
+        return "SparqlEndpoint{" + "id=" + id + ", url=" + url + ", name=" + name + '}';
     }
 
 }
