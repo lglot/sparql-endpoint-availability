@@ -173,6 +173,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- lombok -> crea automaticamente boilerplate come costruttori e getter e setter nelle classi entità -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <scope>provided</scope>
+        </dependency>
+
 
     </dependencies>
 
