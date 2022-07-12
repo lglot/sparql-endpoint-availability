@@ -2,6 +2,9 @@ package it.unife.sparql_endpoint_availability.model.entity;
 
 import lombok.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @ToString
 @Setter
 @Getter
@@ -12,5 +15,25 @@ public class SparqlEndpointDTO {
 
     private String url;
     private String name;
-    private boolean active;
+    private String status;
+
+    public static String getStatusString(SparqlEndpointStatus status) {
+        if (status.isActive()) {
+            return "active";
+        } else {
+            return "inactive";
+        }
+    }
+
+    public static List<SparqlEndpointDTO> fromSparqlEndpointList(List<SparqlEndpoint> sparqlEndpointList) {
+        return sparqlEndpointList.stream().map(SparqlEndpointDTO::fromSparqlEndpoint).collect(Collectors.toList());
+    }
+
+    public static SparqlEndpointDTO fromSparqlEndpoint(SparqlEndpoint sparqlEndpoint) {
+        return SparqlEndpointDTO.builder()
+                .url(sparqlEndpoint.getUrl())
+                .name(sparqlEndpoint.getName())
+                .status(getStatusString(sparqlEndpoint.getSparqlEndpointStatuses().get(0)))
+                .build();
+    }
 }

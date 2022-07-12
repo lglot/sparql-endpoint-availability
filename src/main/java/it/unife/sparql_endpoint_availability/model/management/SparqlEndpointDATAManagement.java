@@ -27,7 +27,7 @@ public interface SparqlEndpointDATAManagement {
     /*
      * Metodo per ottenere tutti gli sparql endpoint memorizzati sul DB (solo URL)
      */
-    List<SparqlEndpoint.OnlySparqlEndpoint> getAllURLSparqlEndpoints();
+    List<SparqlEndpoint> getAllURLSparqlEndpoints();
 
     /*
      * Ottiene uno sparql endpoint in base all'id specificato (ritorna solo l'URL)

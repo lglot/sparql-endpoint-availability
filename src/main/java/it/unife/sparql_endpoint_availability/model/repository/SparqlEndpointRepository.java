@@ -64,7 +64,7 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
     @Query("SELECT s " +
             "from SparqlEndpoint s " +
             "order by s.id")
-    List<SparqlEndpoint.OnlySparqlEndpoint> findAllURL();
+    List<SparqlEndpoint> findAllURL();
 
     @Query("SELECT s " +
             "from SparqlEndpoint s " +

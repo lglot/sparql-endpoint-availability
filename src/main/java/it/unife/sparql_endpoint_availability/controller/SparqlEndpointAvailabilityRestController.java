@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
+import java.util.List;
 
 import org.apache.jena.ext.com.google.common.base.Charsets;
 import org.springframework.web.server.ResponseStatusException;
@@ -34,19 +35,16 @@ public class SparqlEndpointAvailabilityRestController {
     }
 
     @GetMapping(path = "")
-    public Iterable<SparqlEndpoint.OnlySparqlEndpoint> getAllSparqlEndpoints() {
-        return sparqlEndpointDATAManagement.getAllURLSparqlEndpoints();
+    public Iterable<SparqlEndpointDTO> getAllSparqlEndpoints() {
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointDATAManagement.getSparqlEndpointsWithCurrentStatus();
+        return SparqlEndpointDTO.fromSparqlEndpointList(sparqlEndpointList);
     }
 
-    //get a sparql endpoint by id and return 404 if not found
     @GetMapping(path = "/{id}")
     public SparqlEndpointDTO getURLSparqlEndpointById(@PathVariable @NotNull Long id)  {
       try{
           SparqlEndpoint se = sparqlEndpointDATAManagement.getSparqlEndpointWithCurrentStatusById(id);
-          return SparqlEndpointDTO.builder()
-                    .name(se.getName())
-                    .url(se.getUrl())
-                    .active(se.getSparqlEndpointStatuses().get(0).isActive()).build();
+          return SparqlEndpointDTO.fromSparqlEndpoint(se);
       } catch (SparqlEndpointNotFoundException e) {
           throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
       }

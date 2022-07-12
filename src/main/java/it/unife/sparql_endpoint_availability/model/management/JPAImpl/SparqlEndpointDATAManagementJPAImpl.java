@@ -75,7 +75,7 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
 
     @Override
     @Transactional(readOnly = true)
-    public List<SparqlEndpoint.OnlySparqlEndpoint> getAllURLSparqlEndpoints() {
+    public List<SparqlEndpoint> getAllURLSparqlEndpoints() {
         return sparqlEndpointRepository.findAllURL();
     }
 
