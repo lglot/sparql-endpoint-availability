@@ -55,7 +55,7 @@ public interface SparqlEndpointDATAManagement {
     List<SparqlEndpoint> getSparqlEndpointsWithCurrentStatus();
 
     /* ottiene uno sparql enpoint con lo stato attuale in base all'id specificato */
-    SparqlEndpoint getSparqlEndpointWithCurrentStatusById(Long id);
+    SparqlEndpoint getSparqlEndpointWithCurrentStatusById(Long id) throws SparqlEndpointNotFoundException;
 
     /*
      * recupera tutti gli sparql enpoint con i risultati delle query sparql eseguite
@@ -68,7 +68,7 @@ public interface SparqlEndpointDATAManagement {
      * delle query sparql eseguite dopo
      * la data specificata
      */
-    SparqlEndpoint getSparqlEndpointsAfterQueryDateById(Date queryDate, Long id);
+    SparqlEndpoint getSparqlEndpointsAfterQueryDateById(Date queryDate, Long id) throws SparqlEndpointNotFoundException;
 
     /* recupera gli sparql enpoint attualemete attivi */
     List<SparqlEndpoint.OnlySparqlEndpoint> getCurrentlyActiveSparqlEndpoints();

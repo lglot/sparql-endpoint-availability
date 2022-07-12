@@ -2,6 +2,7 @@ package it.unife.sparql_endpoint_availability.controller;
 
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
+import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointDTO;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
 
 import java.io.UnsupportedEncodingException;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
-import java.util.Optional;
 
 import org.apache.jena.ext.com.google.common.base.Charsets;
 import org.springframework.web.server.ResponseStatusException;
@@ -40,10 +40,13 @@ public class SparqlEndpointAvailabilityRestController {
 
     //get a sparql endpoint by id and return 404 if not found
     @GetMapping(path = "/{id}")
-    public SparqlEndpoint getURLSparqlEndpointById(@PathVariable @NotNull Long id)  {
+    public SparqlEndpointDTO getURLSparqlEndpointById(@PathVariable @NotNull Long id)  {
       try{
-          return sparqlEndpointDATAManagement.getURLSparqlEndpointById(id);
-
+          SparqlEndpoint se = sparqlEndpointDATAManagement.getSparqlEndpointWithCurrentStatusById(id);
+          return SparqlEndpointDTO.builder()
+                    .name(se.getName())
+                    .url(se.getUrl())
+                    .active(se.getSparqlEndpointStatuses().get(0).isActive()).build();
       } catch (SparqlEndpointNotFoundException e) {
           throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
       }
@@ -97,7 +100,11 @@ public class SparqlEndpointAvailabilityRestController {
         Calendar previousWeek = Calendar.getInstance();
         previousWeek.add(Calendar.WEEK_OF_YEAR, -1);
         logger.info("Requested sparql endopoint availabilty from previuos week " + previousWeek.getTime());
-        return sparqlEndpointDATAManagement.getSparqlEndpointsAfterQueryDateById(previousWeek.getTime(), id);
+        try{
+            return sparqlEndpointDATAManagement.getSparqlEndpointsAfterQueryDateById(previousWeek.getTime(), id);
+        } catch (SparqlEndpointNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 
     @GetMapping(path = "/status/daily-history")
@@ -115,7 +122,11 @@ public class SparqlEndpointAvailabilityRestController {
         Calendar previousDay = Calendar.getInstance();
         previousDay.add(Calendar.DAY_OF_YEAR, -1);
         logger.info("Requested sparql endopoint availabilty from previuos day " + previousDay.getTime());
-        return sparqlEndpointDATAManagement.getSparqlEndpointsAfterQueryDateById(previousDay.getTime(), id);
+        try{
+            return sparqlEndpointDATAManagement.getSparqlEndpointsAfterQueryDateById(previousDay.getTime(), id);
+        } catch (SparqlEndpointNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 
 }

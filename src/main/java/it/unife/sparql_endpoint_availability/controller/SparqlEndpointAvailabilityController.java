@@ -63,7 +63,7 @@ public class SparqlEndpointAvailabilityController {
         sparqlEndpointDATAManagement.saveStatuses(sparqlEndpointCheckService.executeCheck(sparqlEndpointList));
 
         logger.info(
-                "Executed manually check terminated in date " + new Timestamp(System.currentTimeMillis()).toString());
+                "Executed manually check terminated in date " + new Timestamp(System.currentTimeMillis()));
         return "updated";
     }
 
@@ -89,12 +89,12 @@ public class SparqlEndpointAvailabilityController {
     public String view(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang, Model model) {
 
         /* HTTP PARAMETERS */
-        SortedMap<Number, SparqlEndpointStatusSummary> sparqlStatusMap = new TreeMap<>();
+        SortedMap<Long, SparqlEndpointStatusSummary> sparqlStatusMap = new TreeMap<>();
         int numberActive = 0;
         Date lastUpdate = null;
         LocalDateTime lastUpdateLocal = null;
         Date firstUpdate;
-        long weeksPassed = 0;
+        long weeksPassed;
         long daysPassed = 0;
         String applicationMessage = null;
 
@@ -131,7 +131,7 @@ public class SparqlEndpointAvailabilityController {
                 // che conterrà le informazioni di ogni sparlq endpoint e che sarà poi
                 // trasferito al VIEWW LAYER
                 SparqlEndpointStatusSummary statusSummary = new SparqlEndpointStatusSummary();
-                statusSummary.setURL(sparqlEndpoint.getUrl());
+                statusSummary.setUrl(sparqlEndpoint.getUrl());
 
                 // prelevo la lista con i risultati delle query sparql
                 List<SparqlEndpointStatus> statusList = sparqlEndpoint.getSparqlEndpointStatuses();
@@ -151,13 +151,13 @@ public class SparqlEndpointAvailabilityController {
 
                 // controllo se l'endpoint è attivo attualmente
                 if (statusList.get(0).isActive()) {
-                    statusSummary.setStatusString(statusConfig.getActive());
+                    statusSummary.setStatus(statusConfig.getActive());
                     activeFound = true;
                     activeCounterThisDay++;
                     activeCounterThisWeek++;
                     numberActive++;
                 } else if (weeksPassed < 1) {
-                    statusSummary.setStatusString(statusConfig.getGeneralInactive());
+                    statusSummary.setStatus(statusConfig.getGeneralInactive());
                     activeFound = true;
                 }
 
@@ -171,7 +171,7 @@ public class SparqlEndpointAvailabilityController {
 
                     if (status.isActive()) {
                         if (!activeFound) {
-                            statusSummary.setStatusString(statusConfig.getInactiveLessday());
+                            statusSummary.setStatus(statusConfig.getInactiveLessday());
                             activeFound = true;
                         }
                         activeCounterThisDay++;
@@ -188,14 +188,14 @@ public class SparqlEndpointAvailabilityController {
 
                     if (status.isActive()) {
                         if (!activeFound) {
-                            statusSummary.setStatusString(statusConfig.getInactiveLessweek());
+                            statusSummary.setStatus(statusConfig.getInactiveLessweek());
                             activeFound = true;
                         }
                         activeCounterThisWeek++;
                     }
                 }
                 if (!activeFound) {
-                    statusSummary.setStatusString(statusConfig.getInactiveMoreweek());
+                    statusSummary.setStatus(statusConfig.getInactiveMoreweek());
                 }
 
                 // calcolo uptime
@@ -213,7 +213,7 @@ public class SparqlEndpointAvailabilityController {
                     statusSummary.setUptimeLast24h(-1);
                 }
                 statusSummary.setName(sparqlEndpoint.getName());
-                sparqlStatusMap.put(sparqlEndpoint.getId(), statusSummary);
+                sparqlStatusMap.put((Long) sparqlEndpoint.getId(), statusSummary);
 
             }
 

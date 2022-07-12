@@ -21,9 +21,9 @@
             $(document).ready(function () {
                 var lang = "[[${#locale}]]"
                 datatables_json_file = "/datatables_english.json"
-                if (lang == "it") {
+                if (lang === "it") {
                     datatables_json_file = "/datatables_italian.json"
-                } else if (lang == "en") {
+                } else if (lang === "en") {
                     datatables_json_file = "/datatables_english.json"
                 }
                
@@ -147,9 +147,9 @@
                     <tr th:scope="row" th:each="service : ${sparqlStatusMap}">
                         <!--<td th:text="${service.key}"></td>-->
                         <td class="sparql-name" th:text="${service.value.name}">SPARQL Endpoint</td>
-                        <td class="sparql-url text-break"><a th:text="${service.value.URL}"
-                                                             th:href="${service.value.URL}">Service</a></td>
-                        <td class="sparql-status lead" th:switch="${service.value.statusString}">
+                        <td class="sparql-url text-break"><a th:text="${service.value.url}"
+                                                             th:href="${service.value.url}">Service</a></td>
+                        <td class="sparql-status lead" th:switch="${service.value.status}">
                             <div th:case="${@environment.getProperty('sparql.endpoint.status.active')}">
                                 <img th:src="@{/image/green.png}" src="../static/image/green.png" alt="active"/>
                                 <span style="display:none;">active</span>

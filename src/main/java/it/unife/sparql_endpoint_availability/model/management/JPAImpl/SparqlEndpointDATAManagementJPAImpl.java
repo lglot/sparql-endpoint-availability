@@ -82,12 +82,11 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
     @Override
     @Transactional(readOnly = true)
     public SparqlEndpoint getURLSparqlEndpointById(Long id) throws SparqlEndpointNotFoundException {
-        SparqlEndpoint se = sparqlEndpointRepository.findById(id).orElse(null);
-        if (se == null) {
+        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findSparqlEndpointsById(id));
+        if (!se.isPresent()) {
             throw new SparqlEndpointNotFoundException(id);
         }
-        se.setSparqlEndpointStatuses(null);
-        return se;
+        return se.get();
     }
 
     @Override
@@ -106,8 +105,12 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
 
     @Override
     @Transactional(readOnly = true)
-    public SparqlEndpoint getSparqlEndpointWithCurrentStatusById(Long id) {
-        return sparqlEndpointRepository.findByIdWithLastStatus(id);
+    public SparqlEndpoint getSparqlEndpointWithCurrentStatusById(Long id) throws SparqlEndpointNotFoundException {
+        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByIdWithLastStatus(id));
+        if (!se.isPresent()) {
+            throw new SparqlEndpointNotFoundException(id);
+        }
+        return se.get();
     }
 
     @Override
@@ -118,8 +121,12 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
 
     @Override
     @Transactional(readOnly = true)
-    public SparqlEndpoint getSparqlEndpointsAfterQueryDateById(Date queryDate, Long id) {
-        return sparqlEndpointRepository.findByIdAfterQueryDateStatus(queryDate, id);
+    public SparqlEndpoint getSparqlEndpointsAfterQueryDateById(Date queryDate, Long id) throws SparqlEndpointNotFoundException {
+        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByIdAfterQueryDateStatus(queryDate, id));
+        if (!se.isPresent()) {
+            throw new SparqlEndpointNotFoundException(id);
+        }
+        return se.get();
     }
 
     @Override
