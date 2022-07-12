@@ -1,5 +1,6 @@
 package it.unife.sparql_endpoint_availability.model.management;
 
+import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 
@@ -31,13 +32,13 @@ public interface SparqlEndpointDATAManagement {
     /*
      * Ottiene uno sparql endpoint in base all'id specificato (ritorna solo l'URL)
      */
-    SparqlEndpoint.OnlySparqlEndpoint getURLSparqlEndpointById(Long id);
+    SparqlEndpoint getURLSparqlEndpointById(Long id) throws SparqlEndpointNotFoundException;
 
     /**
      * Return the SPARQL endpoint identified by the URL
      * 
-     * @param url
-     * @return
+     * @param url the URL of the SPARQL endpoint
+     * @return the SPARQL endpoint identified by the URL
      */
     SparqlEndpoint getSparqlEndpointByUrl(String url);
 

@@ -1,5 +1,6 @@
 package it.unife.sparql_endpoint_availability.model.management.JPAImpl;
 
+import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
 import it.unife.sparql_endpoint_availability.model.repository.SparqlEndpointRepository;
@@ -70,11 +71,11 @@ class SparqlEndpointDATAManagementJPATest {
     }
 
     @Test
-    void getURLSparqlEndpointById() {
+    void getURLSparqlEndpointById() throws SparqlEndpointNotFoundException {
         SparqlEndpointRepository ser = Mockito.mock(SparqlEndpointRepository.class);
         SparqlEndpointDATAManagement sedm = new SparqlEndpointDATAManagementJPAImpl(ser, null);
         Mockito.when(ser.findSparqlEndpointsById(1L))
-                .thenReturn(new SparqlEndpoint.OnlySparqlEndpoint() {
+                .thenReturn(new SparqlEndpoint() {
                     @Override
                     public Long getId() {
                         return 1L;
@@ -90,7 +91,7 @@ class SparqlEndpointDATAManagementJPATest {
                         return null;
                     }
                 });
-        SparqlEndpoint.OnlySparqlEndpoint se = sedm.getURLSparqlEndpointById(1L);
+        SparqlEndpoint se = sedm.getURLSparqlEndpointById(1L);
 
         assertEquals(1L, se.getId());
     }

@@ -1,5 +1,6 @@
 package it.unife.sparql_endpoint_availability.model.management.JPAImpl;
 
+import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
@@ -80,8 +81,13 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
 
     @Override
     @Transactional(readOnly = true)
-    public SparqlEndpoint.OnlySparqlEndpoint getURLSparqlEndpointById(Long id) {
-        return sparqlEndpointRepository.findSparqlEndpointsById(id);
+    public SparqlEndpoint getURLSparqlEndpointById(Long id) throws SparqlEndpointNotFoundException {
+        SparqlEndpoint se = sparqlEndpointRepository.findById(id).orElse(null);
+        if (se == null) {
+            throw new SparqlEndpointNotFoundException(id);
+        }
+        se.setSparqlEndpointStatuses(null);
+        return se;
     }
 
     @Override
@@ -119,30 +125,27 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
     @Override
     @Transactional(readOnly = true)
     public List<SparqlEndpoint.OnlySparqlEndpoint> getCurrentlyActiveSparqlEndpoints() {
-        List<SparqlEndpoint.OnlySparqlEndpoint> sparqlEnpoints = sparqlEndpointRepository.findOnlyCurrentlyActive()
+
+        return sparqlEndpointRepository.findOnlyCurrentlyActive()
                 .stream()
-                .map(sparqlEndpoint -> {
-                    return new SparqlEndpoint.OnlySparqlEndpoint() {
+                .map(sparqlEndpoint -> new SparqlEndpoint.OnlySparqlEndpoint() {
 
-                        @Override
-                        public Long getId() {
-                            return sparqlEndpoint.getId();
-                        }
+                    @Override
+                    public Long getId() {
+                        return sparqlEndpoint.getId();
+                    }
 
-                        @Override
-                        public String getUrl() {
-                            return sparqlEndpoint.getUrl();
-                        }
+                    @Override
+                    public String getUrl() {
+                        return sparqlEndpoint.getUrl();
+                    }
 
-                        @Override
-                        public String getName() {
-                            return sparqlEndpoint.getName();
-                        }
+                    @Override
+                    public String getName() {
+                        return sparqlEndpoint.getName();
+                    }
 
-                    };
                 }).collect(Collectors.toList());
-
-        return sparqlEnpoints;
     }
 
     @Override
