@@ -40,7 +40,7 @@ public interface SparqlEndpointDATAManagement {
      * @param url the URL of the SPARQL endpoint
      * @return the SPARQL endpoint identified by the URL
      */
-    SparqlEndpoint getSparqlEndpointByUrl(String url);
+    SparqlEndpoint getSparqlEndpointByUrl(String url) throws SparqlEndpointNotFoundException;
 
     /*
      * Ottiene la lista degli sparql endpoint
@@ -71,7 +71,7 @@ public interface SparqlEndpointDATAManagement {
     SparqlEndpoint getSparqlEndpointsAfterQueryDateById(Date queryDate, Long id) throws SparqlEndpointNotFoundException;
 
     /* recupera gli sparql enpoint attualemete attivi */
-    List<SparqlEndpoint.OnlySparqlEndpoint> getCurrentlyActiveSparqlEndpoints();
+    List<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints();
 
     /* ottiene la data della prima query sparql eseguita */
     Date findFirstQueryDate();

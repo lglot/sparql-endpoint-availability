@@ -46,17 +46,6 @@ public class SparqlEndpoint {
         this.name = name;
     }
 
-
-    public interface OnlySparqlEndpoint {
-
-        Long getId();
-
-        String getUrl();
-
-        String getName();
-
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this) {

@@ -10,10 +10,7 @@ import java.net.URLDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
@@ -50,38 +47,29 @@ public class SparqlEndpointAvailabilityRestController {
       }
     }
 
-    /*
-     * @GetMapping(path = "/status")
-     * public Iterable<SparqlEndpoint> getAllStatusSparqlEndpoints(){
-     * return sparqlEndpointManagement.getAllSparqlEndpoints();
-     * }
-     */
+    @GetMapping(path = "/url")
+    public SparqlEndpointDTO getSparqlEndpointByUrl(@RequestParam @NotNull String url) {
+        try {
+            url = URLDecoder.decode(url, Charsets.UTF_8.name());
+            SparqlEndpoint se = sparqlEndpointDATAManagement.getSparqlEndpointByUrl(url);
+            return SparqlEndpointDTO.fromSparqlEndpoint(se);
+        } catch (UnsupportedEncodingException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        } catch (SparqlEndpointNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+    }
+
     @GetMapping(path = "/status/current")
     public Iterable<SparqlEndpoint> getSparqlEndpointsWithCurrentStatus() {
         return sparqlEndpointDATAManagement.getSparqlEndpointsWithCurrentStatus();
     }
 
     @GetMapping(path = "/status/current/active")
-    public Iterable<SparqlEndpoint.OnlySparqlEndpoint> getCurrentlyActiveSparqlEndpoints() {
-        return sparqlEndpointDATAManagement.getCurrentlyActiveSparqlEndpoints();
+    public Iterable<SparqlEndpointDTO> getCurrentlyActiveSparqlEndpoints() {
+        return SparqlEndpointDTO.fromSparqlEndpointList(sparqlEndpointDATAManagement.getCurrentlyActiveSparqlEndpoints());
     }
 
-    // @GetMapping(path = "/status/current/{id}")
-    // public SparqlEndpoint getSparqlEndpointWithCurrentStatusById(@PathVariable
-    // @NotNull Long id) {
-    // return
-    // sparqlEndpointDATAManagement.getSparqlEndpointWithCurrentStatusById(id);
-    // }
-
-    @GetMapping(path = "/status/current/{url}")
-    public SparqlEndpoint getSparqlEndpointWithCurrentStatusByURL(@PathVariable @NotNull String url) {
-        try {
-            url = URLDecoder.decode(url, Charsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return sparqlEndpointDATAManagement.getSparqlEndpointByUrl(url);
-    }
 
     @GetMapping(path = "/status/weekly-history")
     public Iterable<SparqlEndpoint> getWeeklyHistoryStatusSparqlEndpoints() {

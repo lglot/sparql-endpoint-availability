@@ -100,13 +100,13 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
     @Transactional(readOnly = true)
     public List<SparqlEndpoint> getSparqlEndpointsWithCurrentStatus() {
 
-        return sparqlEndpointRepository.findAllWithLastStatus();
+        return sparqlEndpointRepository.findAllWithCurrentStatus();
     }
 
     @Override
     @Transactional(readOnly = true)
     public SparqlEndpoint getSparqlEndpointWithCurrentStatusById(Long id) throws SparqlEndpointNotFoundException {
-        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByIdWithLastStatus(id));
+        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByIdWithCurrentStatus(id));
         if (!se.isPresent()) {
             throw new SparqlEndpointNotFoundException(id);
         }
@@ -131,28 +131,8 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
 
     @Override
     @Transactional(readOnly = true)
-    public List<SparqlEndpoint.OnlySparqlEndpoint> getCurrentlyActiveSparqlEndpoints() {
-
-        return sparqlEndpointRepository.findOnlyCurrentlyActive()
-                .stream()
-                .map(sparqlEndpoint -> new SparqlEndpoint.OnlySparqlEndpoint() {
-
-                    @Override
-                    public Long getId() {
-                        return sparqlEndpoint.getId();
-                    }
-
-                    @Override
-                    public String getUrl() {
-                        return sparqlEndpoint.getUrl();
-                    }
-
-                    @Override
-                    public String getName() {
-                        return sparqlEndpoint.getName();
-                    }
-
-                }).collect(Collectors.toList());
+    public List<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints() {
+        return sparqlEndpointRepository.findOnlyCurrentlyActive();
     }
 
     @Override
@@ -164,7 +144,11 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
     }
 
     @Override
-    public SparqlEndpoint getSparqlEndpointByUrl(String url) {
-        return sparqlEndpointRepository.findByUrl(url);
+    public SparqlEndpoint getSparqlEndpointByUrl(String url) throws SparqlEndpointNotFoundException {
+        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByUrlwithCurrentStatus(url));
+        if (!se.isPresent()) {
+            throw new SparqlEndpointNotFoundException(url);
+        }
+        return sparqlEndpointRepository.findByUrlwithCurrentStatus(url);
     }
 }

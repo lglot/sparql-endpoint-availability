@@ -30,7 +30,7 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
                 "FROM SparqlEndpointStatus s " +
                 "group by s.sparqlEndpoint) " +
             "order by sparql.id")
-    List<SparqlEndpoint> findAllWithLastStatus();
+    List<SparqlEndpoint> findAllWithCurrentStatus();
 
     @EntityGraph(value = "SparqlEndpoint.detail", type = EntityGraph.EntityGraphType.FETCH)
     @Query(" SELECT sparql " +
@@ -42,7 +42,7 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
                 "group by s.sparqlEndpoint) " +
             "AND sparql.id=?1 " +
             "order by sparql.id")
-    SparqlEndpoint findByIdWithLastStatus(@Param("id") Long id);
+    SparqlEndpoint findByIdWithCurrentStatus(@Param("id") Long id);
 
     @EntityGraph(value = "SparqlEndpoint.detail", type = EntityGraph.EntityGraphType.FETCH)
     @Query(" SELECT sparql " +
@@ -81,7 +81,17 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
     void deleteByUrlIn(Collection<@NotNull String> url);
     
     void deleteByUrl(String url);
-    
-    SparqlEndpoint findByUrl(String url);
+
+    @EntityGraph(value = "SparqlEndpoint.detail", type = EntityGraph.EntityGraphType.FETCH)
+    @Query(" SELECT sparql " +
+            "FROM SparqlEndpoint sparql " +
+            "LEFT JOIN FETCH sparql.sparqlEndpointStatuses as status " +
+            "where status.queryDate in (" +
+                "SELECT max(s.queryDate) " +
+                "FROM SparqlEndpointStatus s " +
+                "group by s.sparqlEndpoint) " +
+            "AND sparql.url=?1 " +
+            "order by sparql.url")
+    SparqlEndpoint findByUrlwithCurrentStatus(String url);
 
 }

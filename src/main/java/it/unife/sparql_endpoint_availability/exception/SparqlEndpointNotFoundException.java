@@ -10,4 +10,8 @@ public class SparqlEndpointNotFoundException extends Exception {
     public SparqlEndpointNotFoundException(@NotNull Long id) {
         super("SparqlEndpoint with id " + id + " not found");
     }
+
+    public SparqlEndpointNotFoundException(@NotNull String url) {
+        super("SparqlEndpoint with url " + url + " not found");
+    }
 }
