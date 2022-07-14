@@ -38,7 +38,7 @@ public class SparqlEndpointAvailabilityRestController {
     }
 
     @GetMapping(path = "/{id}")
-    public SparqlEndpointDTO getURLSparqlEndpointById(@PathVariable @NotNull Long id)  {
+    public SparqlEndpointDTO getSparqlEndpointById(@PathVariable @NotNull Long id)  {
       try{
           SparqlEndpoint se = sparqlEndpointDATAManagement.getSparqlEndpointWithCurrentStatusById(id);
           return SparqlEndpointDTO.fromSparqlEndpoint(se);

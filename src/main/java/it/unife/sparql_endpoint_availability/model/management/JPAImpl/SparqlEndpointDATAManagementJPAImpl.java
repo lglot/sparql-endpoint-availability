@@ -73,16 +73,11 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
         sparqlEndpointStatusRepository.saveAll(sparqlEndpointStatuses);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<SparqlEndpoint> getAllURLSparqlEndpoints() {
-        return sparqlEndpointRepository.findAllURL();
-    }
 
     @Override
     @Transactional(readOnly = true)
-    public SparqlEndpoint getURLSparqlEndpointById(Long id) throws SparqlEndpointNotFoundException {
-        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findSparqlEndpointsById(id));
+    public SparqlEndpoint getById(Long id) throws SparqlEndpointNotFoundException {
+        Optional<SparqlEndpoint> se = sparqlEndpointRepository.findById(id);
         if (!se.isPresent()) {
             throw new SparqlEndpointNotFoundException(id);
         }
@@ -91,7 +86,7 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
 
     @Override
     @Transactional(readOnly = true)
-    public List<SparqlEndpoint> getAllSparqlEndpoints() {
+    public List<SparqlEndpoint> getAll() {
         return sparqlEndpointRepository.findAllByOrderById();
     }
 
@@ -99,7 +94,6 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
     @Override
     @Transactional(readOnly = true)
     public List<SparqlEndpoint> getSparqlEndpointsWithCurrentStatus() {
-
         return sparqlEndpointRepository.findAllWithCurrentStatus();
     }
 
@@ -145,10 +139,10 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
 
     @Override
     public SparqlEndpoint getSparqlEndpointByUrl(String url) throws SparqlEndpointNotFoundException {
-        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByUrlwithCurrentStatus(url));
+        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByUrlWithCurrentStatus(url));
         if (!se.isPresent()) {
             throw new SparqlEndpointNotFoundException(url);
         }
-        return sparqlEndpointRepository.findByUrlwithCurrentStatus(url);
+        return sparqlEndpointRepository.findByUrlWithCurrentStatus(url);
     }
 }

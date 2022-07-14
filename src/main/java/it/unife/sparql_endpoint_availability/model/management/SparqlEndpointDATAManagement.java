@@ -24,15 +24,11 @@ public interface SparqlEndpointDATAManagement {
      */
     void saveStatuses(List<SparqlEndpointStatus> sparqlEndpointStatuses);
 
-    /*
-     * Metodo per ottenere tutti gli sparql endpoint memorizzati sul DB (solo URL)
-     */
-    List<SparqlEndpoint> getAllURLSparqlEndpoints();
 
     /*
      * Ottiene uno sparql endpoint in base all'id specificato (ritorna solo l'URL)
      */
-    SparqlEndpoint getURLSparqlEndpointById(Long id) throws SparqlEndpointNotFoundException;
+    SparqlEndpoint getById(Long id) throws SparqlEndpointNotFoundException;
 
     /**
      * Return the SPARQL endpoint identified by the URL
@@ -45,7 +41,7 @@ public interface SparqlEndpointDATAManagement {
     /*
      * Ottiene la lista degli sparql endpoint
      */
-    List<SparqlEndpoint> getAllSparqlEndpoints();
+    List<SparqlEndpoint> getAll();
 
     /*
      * Ottiene la lista di tutti gli sparql endpoint con lo stato

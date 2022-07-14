@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -27,10 +26,10 @@ class SparqlEndpointCheckTask {
     private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointCheckTask.class);
     private int iterator;
 
-    private SparqlEndpointDATAManagement sparqlEndpointDATAManagement;
-    private SparqlEndpointListFileManagement sparqlEndpointListFileManagament;
-    private SparqlEndpointCheckService sparqlEndpointCheckService;
-    private SparqlEndpointStatusRepository sparqlEndpointStatusRepository;
+    private final SparqlEndpointDATAManagement sparqlEndpointDATAManagement;
+    private final SparqlEndpointListFileManagement sparqlEndpointListFileManagament;
+    private final SparqlEndpointCheckService sparqlEndpointCheckService;
+    private final SparqlEndpointStatusRepository sparqlEndpointStatusRepository;
 
     @Autowired
     public SparqlEndpointCheckTask(SparqlEndpointDATAManagement sparqlEndpointDATAManagement,
@@ -65,7 +64,7 @@ class SparqlEndpointCheckTask {
         }
 
         /* Recupera gli sparql endpoint presenti sul db */
-        sparqlEndpointList = sparqlEndpointDATAManagement.getAllSparqlEndpoints();
+        sparqlEndpointList = sparqlEndpointDATAManagement.getAll();
 
         /* Execute check and save status to DATA */
         List<SparqlEndpointStatus> sparqlEndpointStatuses = sparqlEndpointCheckService.executeCheck(sparqlEndpointList);
@@ -80,7 +79,7 @@ class SparqlEndpointCheckTask {
         sparqlEndpointStatusRepository.deleteSparqlEndpointStatusByQueryDateBefore(previousYear);
 
         logger.info("Executed Scheduled Check " + iterator + " terminated in date "
-                + new Timestamp(System.currentTimeMillis()).toString());
+                + new Timestamp(System.currentTimeMillis()));
 
         iterator++;
     }

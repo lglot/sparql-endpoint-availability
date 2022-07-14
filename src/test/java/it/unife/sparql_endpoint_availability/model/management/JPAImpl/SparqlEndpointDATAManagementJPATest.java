@@ -8,13 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -71,28 +67,12 @@ class SparqlEndpointDATAManagementJPATest {
     }
 
     @Test
-    void getURLSparqlEndpointById() throws SparqlEndpointNotFoundException {
+    void getSparqlEndpointById() throws SparqlEndpointNotFoundException {
         SparqlEndpointRepository ser = Mockito.mock(SparqlEndpointRepository.class);
         SparqlEndpointDATAManagement sedm = new SparqlEndpointDATAManagementJPAImpl(ser, null);
-        Mockito.when(ser.findSparqlEndpointsById(1L))
-                .thenReturn(new SparqlEndpoint() {
-                    @Override
-                    public Long getId() {
-                        return 1L;
-                    }
+        Mockito.when(ser.findById(anyLong())).thenReturn(Optional.of(new SparqlEndpoint("http://localhost:8080/se1", "se1")));
+        SparqlEndpoint se = sedm.getById(1L);
 
-                    @Override
-                    public String getUrl() {
-                        return null;
-                    }
-
-                    @Override
-                    public String getName() {
-                        return null;
-                    }
-                });
-        SparqlEndpoint se = sedm.getURLSparqlEndpointById(1L);
-
-        assertEquals(1L, se.getId());
+        assertEquals("se1", se.getName());
     }
 }

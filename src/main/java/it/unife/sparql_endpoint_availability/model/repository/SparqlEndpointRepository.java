@@ -17,8 +17,6 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
     // This will be AUTO IMPLEMENTED by Spring into a Bean called sparqlEndpointRepository
     // CRUD refers Create, Read, Update, Delete
 
-    SparqlEndpoint findSparqlEndpointsById(Long id);
-
     List<SparqlEndpoint> findAllByOrderById();
 
     @EntityGraph(value = "SparqlEndpoint.detail", type = EntityGraph.EntityGraphType.FETCH)
@@ -61,10 +59,6 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
             "order by sparql.id asc,status.queryDate desc")
     SparqlEndpoint findByIdAfterQueryDateStatus(Date queryDate,Long id);
 
-    @Query("SELECT s " +
-            "from SparqlEndpoint s " +
-            "order by s.id")
-    List<SparqlEndpoint> findAllURL();
 
     @Query("SELECT s " +
             "from SparqlEndpoint s " +
@@ -92,6 +86,6 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
                 "group by s.sparqlEndpoint) " +
             "AND sparql.url=?1 " +
             "order by sparql.url")
-    SparqlEndpoint findByUrlwithCurrentStatus(String url);
+    SparqlEndpoint findByUrlWithCurrentStatus(String url);
 
 }
