@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "users")
-public class User {
+public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,17 +21,17 @@ public class User {
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;
-
-    @Column(name = "password", nullable = false)
-    private String password;
-
-    //role
-    @Column(name = "role", nullable = false)
-    private String role;
-
-    @Column(name = "enabled", nullable = false)
-    private boolean enabled;
-
-    @Column(name = "email", nullable = false)
-    private String email;
+//
+//    @Column(name = "password", nullable = false)
+//    private String password;
+//
+//    //role
+//    @Column(name = "role", nullable = false)
+//    private String role;
+//
+//    @Column(name = "enabled", nullable = false)
+//    private boolean enabled;
+//
+//    @Column(name = "email", nullable = false)
+//    private String email;
 }

@@ -3,6 +3,7 @@ package it.unife.sparql_endpoint_availability.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -15,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
 
     PasswordEncoder passwordEncoder;
@@ -27,6 +29,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                //.csrf().disable()
                 .authorizeRequests()
                 .anyRequest()
                 .authenticated()
@@ -35,8 +38,10 @@ public class SecurityConfiguration {
         return http.build();
     }
 
+
+
     //user detail service
-    @Bean
+    @Bean(name = "userDetailsService")
     public UserDetailsService userDetailsService() {
         UserDetails luigi = User.builder()
                 .username("luigi")

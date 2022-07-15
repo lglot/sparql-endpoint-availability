@@ -1,6 +1,6 @@
 package it.unife.sparql_endpoint_availability.model.repository;
 
-import it.unife.sparql_endpoint_availability.model.entity.User;
+import it.unife.sparql_endpoint_availability.model.entity.AppUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -13,34 +13,34 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class UserRepositoryTest {
+class AppUserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
 
     @Test
     public void should_save_user() {
-        User user = User.builder().username("username").build();
-        userRepository.save(user);
-        assertTrue(user.getId() > 0);
+        AppUser appUser = AppUser.builder().username("username").build();
+        userRepository.save(appUser);
+        assertTrue(appUser.getId() > 0);
     }
 
     @Test
     public void getUserTest() {
-        User user = User.builder().username("username").build();
-        userRepository.save(user);
-        Optional<User> user2 = userRepository.findById(user.getId());
+        AppUser appUser = AppUser.builder().username("username").build();
+        userRepository.save(appUser);
+        Optional<AppUser> user2 = userRepository.findById(appUser.getId());
         assertTrue(user2.isPresent());
-        assertEquals(user.getId(), user2.get().getId());
+        assertEquals(appUser.getId(), user2.get().getId());
     }
 
     @Test
     public void getUserListTest() {
-        User user = User.builder().username("username").build();
-        userRepository.save(user);
-        User user2 = User.builder().username("username2").build();
-        userRepository.save(user2);
-        Iterable<User> userList = userRepository.findAll();
+        AppUser appUser = AppUser.builder().username("username").build();
+        userRepository.save(appUser);
+        AppUser appUser2 = AppUser.builder().username("username2").build();
+        userRepository.save(appUser2);
+        Iterable<AppUser> userList = userRepository.findAll();
         assertTrue(userList.iterator().hasNext());
     }
 
