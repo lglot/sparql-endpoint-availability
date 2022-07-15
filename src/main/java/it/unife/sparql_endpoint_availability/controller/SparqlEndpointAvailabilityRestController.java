@@ -7,6 +7,8 @@ import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATA
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+
+import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,11 +26,14 @@ import org.springframework.web.server.ResponseStatusException;
 public class SparqlEndpointAvailabilityRestController {
 
     private final SparqlEndpointDATAManagement sparqlEndpointDATAManagement;
+    private final SparqlEndpointListFileManagement sparqlEndpointListFileManagement;
 
     private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointAvailabilityController.class);
 
-    public SparqlEndpointAvailabilityRestController(SparqlEndpointDATAManagement sparqlEndpointDATAManagement) {
+    public SparqlEndpointAvailabilityRestController(SparqlEndpointDATAManagement sparqlEndpointDATAManagement,
+                                                    SparqlEndpointListFileManagement sparqlEndpointListFileManagement) {
         this.sparqlEndpointDATAManagement = sparqlEndpointDATAManagement;
+        this.sparqlEndpointListFileManagement = sparqlEndpointListFileManagement;
     }
 
     @GetMapping(path = "")
@@ -58,6 +63,14 @@ public class SparqlEndpointAvailabilityRestController {
         } catch (SparqlEndpointNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
+    }
+
+    //post: /sparql-endpoint-availability/
+    @PostMapping(path = "")
+    public SparqlEndpointDTO createSparqlEndpoint(@RequestBody @NotNull SparqlEndpoint sparqlEndpoint) {
+        sparqlEndpointListFileManagement.addSparqlEndpoint(sparqlEndpoint);
+        SparqlEndpoint se = sparqlEndpointDATAManagement.createSparqlEndpoint(sparqlEndpoint);
+        return SparqlEndpointDTO.fromSparqlEndpoint(se);
     }
 
     @GetMapping(path = "/status/current")

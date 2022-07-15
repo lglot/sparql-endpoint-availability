@@ -9,6 +9,9 @@ public interface SparqlEndpointListFileManagement {
     // List<String> listSPARQLEndpoints();
     Set<SparqlEndpoint> getSparqlEndpoints();
 
+    //write a sparql endpoint to the file
+    void addSparqlEndpoint(SparqlEndpoint endpoint);
+
     /* verifica se il file è stato modificato dall'ultimo accesso */
     // boolean isModified();
 }

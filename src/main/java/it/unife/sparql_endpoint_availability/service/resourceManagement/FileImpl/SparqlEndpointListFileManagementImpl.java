@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 
+import java.io.DataOutput;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -50,5 +51,23 @@ public class SparqlEndpointListFileManagementImpl implements SparqlEndpointListF
         }
 
         return endpoints;
+    }
+
+    //write a sparql endpoint to the file
+    @Override
+    public void addSparqlEndpoint(SparqlEndpoint endpoint) {
+        Set<SparqlEndpoint> endpoints = getSparqlEndpoints();
+        endpoints.add(endpoint);
+        writeSparqlEndpoints(endpoints);
+    }
+
+    private void writeSparqlEndpoints(Set<SparqlEndpoint> endpoints) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writeValue((DataOutput) file, endpoints);
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

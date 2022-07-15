@@ -138,6 +138,11 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
     }
 
     @Override
+    public SparqlEndpoint createSparqlEndpoint(SparqlEndpoint se) {
+        return sparqlEndpointRepository.save(se);
+    }
+
+    @Override
     public SparqlEndpoint getSparqlEndpointByUrl(String url) throws SparqlEndpointNotFoundException {
         Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByUrlWithCurrentStatus(url));
         if (!se.isPresent()) {

@@ -72,4 +72,5 @@ public interface SparqlEndpointDATAManagement {
     /* ottiene la data della prima query sparql eseguita */
     Date findFirstQueryDate();
 
+    SparqlEndpoint createSparqlEndpoint(SparqlEndpoint se);
 }

@@ -7,31 +7,16 @@ import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundExc
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
-import it.unife.sparql_endpoint_availability.security.SecurityConfiguration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -42,7 +27,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 
 @ExtendWith(SpringExtension.class)
@@ -141,7 +126,8 @@ class SparqlEndpointAvailabilityRestControllerTest {
                 .filter(se -> se.getSparqlEndpointStatuses().stream()
                         .anyMatch(SparqlEndpointStatus::isActive))
                 .collect(Collectors.toList()));
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/sparql-endpoint-availability/status/current/active");
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.
+                get("/sparql-endpoint-availability/status/current/active");
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> {
                     assertEquals(200, mvcResult.getResponse().getStatus());
