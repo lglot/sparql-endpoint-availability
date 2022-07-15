@@ -2,7 +2,7 @@ package it.unife.sparql_endpoint_availability.controller;
 
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
-import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusSummary;
+import it.unife.sparql_endpoint_availability.dto.SparqlEndpointStatusSummary;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
 import it.unife.sparql_endpoint_availability.config.AppConfig;
 import it.unife.sparql_endpoint_availability.config.SparqlEndpointStatusConfig;

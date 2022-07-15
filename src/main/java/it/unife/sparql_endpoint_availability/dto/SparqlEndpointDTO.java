@@ -1,5 +1,7 @@
-package it.unife.sparql_endpoint_availability.model.entity;
+package it.unife.sparql_endpoint_availability.dto;
 
+import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
+import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import lombok.*;
 
 import java.util.List;

@@ -2,7 +2,7 @@ package it.unife.sparql_endpoint_availability.controller;
 
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
-import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointDTO;
+import it.unife.sparql_endpoint_availability.dto.SparqlEndpointDTO;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
 
 import java.io.UnsupportedEncodingException;

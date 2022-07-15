@@ -2,7 +2,6 @@
 
 ### Requirements
 
-- Maven and jdk 8 or later (for development)
 - Docker (for deployment)
 
 ## Instruction for running develop enviroment
@@ -16,7 +15,8 @@
 - Run the application:
 
 ```console
-   mvn spring-boot:run 
+   export $(cat .env | xargs)
+   ./mvnw spring-boot:run 
 ```
 
 ## Viewing the running application

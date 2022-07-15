@@ -22,4 +22,16 @@ public class User {
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    //role
+    @Column(name = "role", nullable = false)
+    private String role;
+
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
+
+    @Column(name = "email", nullable = false)
+    private String email;
 }
