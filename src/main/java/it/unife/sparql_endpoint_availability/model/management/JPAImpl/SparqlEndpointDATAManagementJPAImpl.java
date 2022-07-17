@@ -13,19 +13,19 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAManagement {
 
     private final SparqlEndpointRepository sparqlEndpointRepository;
     private final SparqlEndpointStatusRepository sparqlEndpointStatusRepository;
 
     public SparqlEndpointDATAManagementJPAImpl(SparqlEndpointRepository sparqlEndpointRepository,
-            SparqlEndpointStatusRepository sparqlEndpointStatusRepository) {
+                                               SparqlEndpointStatusRepository sparqlEndpointStatusRepository) {
         this.sparqlEndpointRepository = sparqlEndpointRepository;
         this.sparqlEndpointStatusRepository = sparqlEndpointStatusRepository;
     }
 
     @Override
-    @Transactional
     /*
      * Metodo per aggiornare la lista degli sparql Endpoint sul DB,in input il
      * metodo riceve
@@ -51,15 +51,15 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
 
         //sparqlEndpointsToRemove.removeAll(Collections.singleton(null));
 
-        if (sparqlEndpointsToRemove.size() > 0) {
-            List<String> urls = sparqlEndpointsToRemove
-                    .stream()
-                    .map(SparqlEndpoint::getUrl)
-                    .collect(Collectors.toList());
-            for (String url : urls) {
-                sparqlEndpointRepository.deleteByUrl(url.trim());
-            }
-        }
+//        if (sparqlEndpointsToRemove.size() > 0) {
+//            List<String> urls = sparqlEndpointsToRemove
+//                    .stream()
+//                    .map(SparqlEndpoint::getUrl)
+//                    .collect(Collectors.toList());
+//            for (String url : urls) {
+//                sparqlEndpointRepository.deleteByUrl(url.trim());
+//            }
+//        }
 
         if (sparqlEndpointsToAdd.size() > 0) {
             sparqlEndpointRepository.saveAll(sparqlEndpointsToAdd);
@@ -68,14 +68,12 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
     }
 
     @Override
-    @Transactional
     public void saveStatuses(List<SparqlEndpointStatus> sparqlEndpointStatuses) {
         sparqlEndpointStatusRepository.saveAll(sparqlEndpointStatuses);
     }
 
 
     @Override
-    @Transactional(readOnly = true)
     public SparqlEndpoint getById(Long id) throws SparqlEndpointNotFoundException {
         Optional<SparqlEndpoint> se = sparqlEndpointRepository.findById(id);
         if (!se.isPresent()) {
@@ -85,20 +83,17 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<SparqlEndpoint> getAll() {
         return sparqlEndpointRepository.findAllByOrderById();
     }
 
     /* GET sparql URL with STATUS LIST */
     @Override
-    @Transactional(readOnly = true)
     public List<SparqlEndpoint> getSparqlEndpointsWithCurrentStatus() {
         return sparqlEndpointRepository.findAllWithCurrentStatus();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public SparqlEndpoint getSparqlEndpointWithCurrentStatusById(Long id) throws SparqlEndpointNotFoundException {
         Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByIdWithCurrentStatus(id));
         if (!se.isPresent()) {
@@ -108,13 +103,11 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<SparqlEndpoint> getSparqlEndpointsAfterQueryDate(Date queryDate) {
         return sparqlEndpointRepository.findAllAfterQueryDateStatus(queryDate);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public SparqlEndpoint getSparqlEndpointsAfterQueryDateById(Date queryDate, Long id) throws SparqlEndpointNotFoundException {
         Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByIdAfterQueryDateStatus(queryDate, id));
         if (!se.isPresent()) {
@@ -124,13 +117,11 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints() {
         return sparqlEndpointRepository.findOnlyCurrentlyActive();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Date findFirstQueryDate() {
 
         SparqlEndpointStatus s = sparqlEndpointStatusRepository.findTopByOrderByQueryDate();

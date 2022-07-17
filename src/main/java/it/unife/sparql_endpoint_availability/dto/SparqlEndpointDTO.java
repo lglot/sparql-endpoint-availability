@@ -38,7 +38,7 @@ public class SparqlEndpointDTO {
                 .url(sparqlEndpoint.getUrl())
                 .name(sparqlEndpoint.getName())
                 .status(getStatusString(
-                        sparqlEndpoint.getSparqlEndpointStatuses() != null ?
+                        sparqlEndpoint.getSparqlEndpointStatuses() != null && sparqlEndpoint.getSparqlEndpointStatuses().size() > 0?
                             sparqlEndpoint.getSparqlEndpointStatuses().get(0) : null))
                 .build();
     }

@@ -2,8 +2,8 @@ package it.unife.sparql_endpoint_availability.model.repository;
 
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -13,31 +13,32 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,Long> {
-    // This will be AUTO IMPLEMENTED by Spring into a Bean called sparqlEndpointRepository
-    // CRUD refers Create, Read, Update, Delete
+public interface SparqlEndpointRepository extends JpaRepository<SparqlEndpoint, Long> {
 
     List<SparqlEndpoint> findAllByOrderById();
+
+    //save
+
 
     @EntityGraph(value = "SparqlEndpoint.detail", type = EntityGraph.EntityGraphType.FETCH)
     @Query(" SELECT sparql " +
             "FROM SparqlEndpoint sparql " +
-            "LEFT JOIN FETCH sparql.sparqlEndpointStatuses as status " +
-            "where status.queryDate in (" +
+            "LEFT JOIN sparql.sparqlEndpointStatuses as status " +
+            "where (status.id is NULL OR status.queryDate in (" +
                 "SELECT max(s.queryDate) " +
                 "FROM SparqlEndpointStatus s " +
-                "group by s.sparqlEndpoint) " +
+                "group by s.sparqlEndpoint)) " +
             "order by sparql.id")
     List<SparqlEndpoint> findAllWithCurrentStatus();
 
     @EntityGraph(value = "SparqlEndpoint.detail", type = EntityGraph.EntityGraphType.FETCH)
     @Query(" SELECT sparql " +
             "FROM SparqlEndpoint sparql " +
-            "LEFT JOIN FETCH sparql.sparqlEndpointStatuses as status " +
-            "where status.queryDate in (" +
+            "LEFT JOIN sparql.sparqlEndpointStatuses as status " +
+            "where (status.id is NULL OR status.queryDate in (" +
                 "SELECT max(s.queryDate) " +
                 "FROM SparqlEndpointStatus s " +
-                "group by s.sparqlEndpoint) " +
+                "group by s.sparqlEndpoint)) " +
             "AND sparql.id=?1 " +
             "order by sparql.id")
     SparqlEndpoint findByIdWithCurrentStatus(@Param("id") Long id);
@@ -79,13 +80,12 @@ public interface SparqlEndpointRepository extends CrudRepository<SparqlEndpoint,
     @EntityGraph(value = "SparqlEndpoint.detail", type = EntityGraph.EntityGraphType.FETCH)
     @Query(" SELECT sparql " +
             "FROM SparqlEndpoint sparql " +
-            "LEFT JOIN FETCH sparql.sparqlEndpointStatuses as status " +
-            "where status.queryDate in (" +
+            "LEFT JOIN sparql.sparqlEndpointStatuses as status " +
+            "where (status.id is NULL OR status.queryDate in (" +
                 "SELECT max(s.queryDate) " +
                 "FROM SparqlEndpointStatus s " +
-                "group by s.sparqlEndpoint) " +
+                "group by s.sparqlEndpoint)) " +
             "AND sparql.url=?1 " +
             "order by sparql.url")
     SparqlEndpoint findByUrlWithCurrentStatus(String url);
-
 }

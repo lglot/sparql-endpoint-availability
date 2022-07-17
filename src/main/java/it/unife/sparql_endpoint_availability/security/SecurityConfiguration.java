@@ -34,7 +34,9 @@ public class SecurityConfiguration {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and()
+                .headers().frameOptions().disable();
         return http.build();
     }
 

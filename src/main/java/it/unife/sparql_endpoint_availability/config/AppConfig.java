@@ -1,17 +1,18 @@
 package it.unife.sparql_endpoint_availability.config;
 
-import it.unife.sparql_endpoint_availability.service.resourceManagement.FileImpl.SparqlEndpointListFileManagementImpl;
-import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagement;
+import it.unife.sparql_endpoint_availability.service.fileReader.impl.SparqlFileReaderImpl;
+import it.unife.sparql_endpoint_availability.service.fileReader.SparqlFileReader;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointCheckService;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueryMultiThreadImpl.SECheckServiceMultiThreadImpl;
-import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueyTestService.SparqlEndpointCheckServiceTestImpl;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan(basePackages = "it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueryMultiThreadImpl.thread")
+@EnableTransactionManagement
 public class AppConfig {
 
     /*
@@ -39,7 +40,7 @@ public class AppConfig {
     }
 
     @Bean
-    public SparqlEndpointListFileManagement getSparqlEndpointListFileManagement() {
-        return new SparqlEndpointListFileManagementImpl(SPARQL_ENDPOINTS_LIST_FILENAME);
+    public SparqlFileReader getSparqlFileReader() {
+        return new SparqlFileReaderImpl(SPARQL_ENDPOINTS_LIST_FILENAME);
     }
 }

@@ -7,6 +7,7 @@ import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundExc
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
+import it.unife.sparql_endpoint_availability.service.fileReader.SparqlFileReader;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

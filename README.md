@@ -33,7 +33,7 @@ Default ones are:
 
 - JDBC URL : `jdbc:h2:file:./data/h2_db`
 - User name : `root`
-- password : `root`
+- password : `develop`
 
 # Deploy application with docker-compose (MySQL databse)
 

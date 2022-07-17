@@ -8,9 +8,9 @@ import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATA
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
-import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,14 +26,12 @@ import org.springframework.web.server.ResponseStatusException;
 public class SparqlEndpointAvailabilityRestController {
 
     private final SparqlEndpointDATAManagement sparqlEndpointDATAManagement;
-    private final SparqlEndpointListFileManagement sparqlEndpointListFileManagement;
 
     private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointAvailabilityController.class);
 
-    public SparqlEndpointAvailabilityRestController(SparqlEndpointDATAManagement sparqlEndpointDATAManagement,
-                                                    SparqlEndpointListFileManagement sparqlEndpointListFileManagement) {
+    @Autowired
+    public SparqlEndpointAvailabilityRestController(SparqlEndpointDATAManagement sparqlEndpointDATAManagement) {
         this.sparqlEndpointDATAManagement = sparqlEndpointDATAManagement;
-        this.sparqlEndpointListFileManagement = sparqlEndpointListFileManagement;
     }
 
     @GetMapping(path = "")
@@ -68,8 +66,8 @@ public class SparqlEndpointAvailabilityRestController {
     //post: /sparql-endpoint-availability/
     @PostMapping(path = "")
     public SparqlEndpointDTO createSparqlEndpoint(@RequestBody @NotNull SparqlEndpoint sparqlEndpoint) {
-        sparqlEndpointListFileManagement.addSparqlEndpoint(sparqlEndpoint);
         SparqlEndpoint se = sparqlEndpointDATAManagement.createSparqlEndpoint(sparqlEndpoint);
+        logger.info("SparqlEndpoint created: {}", se);
         return SparqlEndpointDTO.fromSparqlEndpoint(se);
     }
 

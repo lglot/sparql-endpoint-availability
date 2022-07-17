@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.sql.Timestamp;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import it.unife.sparql_endpoint_availability.service.resourceManagement.SparqlEndpointListFileManagement;
+import it.unife.sparql_endpoint_availability.service.fileReader.SparqlFileReader;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -51,8 +51,8 @@ public class SparqlEndpointAvailabilityController {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 
         /* Get istance of class that provide access to sparql Endpoint file */
-        SparqlEndpointListFileManagement sparqlEndpointListFileManagament = ctx
-                .getBean(SparqlEndpointListFileManagement.class);
+        SparqlFileReader sparqlEndpointListFileManagament = ctx
+                .getBean(SparqlFileReader.class);
 
         /* Read spaql endpoint URL from resource and save them to DATA */
         sparqlEndpointDATAManagement.update(sparqlEndpointListFileManagament.getSparqlEndpoints());
