@@ -62,7 +62,6 @@ public class SparqlEndpointAvailabilityRestController {
         }
     }
 
-    //post: /sparql-endpoint-availability/
     @PostMapping(path = "")
     public ResponseEntity<SparqlEndpointDTO> createSparqlEndpoint(@RequestBody @NotNull SparqlEndpoint sparqlEndpoint) {
         try{

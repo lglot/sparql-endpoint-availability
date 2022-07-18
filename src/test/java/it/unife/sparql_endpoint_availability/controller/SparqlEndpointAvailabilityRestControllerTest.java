@@ -7,8 +7,12 @@ import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundExc
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
+import it.unife.sparql_endpoint_availability.security.ApplicationUserPermission;
+import it.unife.sparql_endpoint_availability.security.ApplicationUserRole;
+import it.unife.sparql_endpoint_availability.security.SecurityConfiguration;
 import it.unife.sparql_endpoint_availability.service.fileReader.SparqlFileReader;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,11 +21,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import javax.servlet.Filter;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
@@ -34,10 +45,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(SparqlEndpointAvailabilityRestController.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ContextConfiguration
 class SparqlEndpointAvailabilityRestControllerTest {
 
     @Autowired
@@ -49,6 +62,10 @@ class SparqlEndpointAvailabilityRestControllerTest {
     private List<SparqlEndpoint> sparqlEndpoints;
 
     private final String BASE_URL_API = "/api/endpoints";
+
+    @Autowired
+    private WebApplicationContext context;
+
 
     @BeforeAll
     void init() {
@@ -71,11 +88,12 @@ class SparqlEndpointAvailabilityRestControllerTest {
                     .build();
             se.setSparqlEndpointStatuses(Arrays.asList(status, statusOld));
             sparqlEndpoints.add(se);
+            mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
         }
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser(username = "luigi", password = "luigi", authorities = {"ROLE_ADMIN"})
     void getAllSparqlEndpoints() throws Exception {
         Mockito.when(sedm.getSparqlEndpointsWithCurrentStatus()).thenReturn(sparqlEndpoints);
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(BASE_URL_API);
@@ -239,4 +257,24 @@ class SparqlEndpointAvailabilityRestControllerTest {
                 });
         sparqlEndpoints.add(0, se);
     }
+
+    //post with no permission
+    @Disabled
+    @Test
+    @WithMockUser(authorities = {"ROLE_USER","sparql_endpoint:read"})
+    void createSparqlEndpointNoPermission() throws Exception {
+        SparqlEndpoint se = SparqlEndpoint.builder()
+                .url("new_url")
+                .name("new_name")
+                .build();
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post(BASE_URL_API)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(se))
+                .with(csrf());
+        mockMvc.perform(requestBuilder)
+                .andExpect(mvcResult -> {
+                    assertEquals(403, mvcResult.getResponse().getStatus());
+                });
+    }
+
 }
