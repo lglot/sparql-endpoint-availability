@@ -85,7 +85,7 @@ public class SparqlEndpointAvailabilityController {
      * lo stato indicante la disponibilià attuale,
      * giornaliera e settimanale
      */
-    @GetMapping(path = "")
+    @GetMapping(path = "/home")
     public String view(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang, Model model) {
 
         /* HTTP PARAMETERS */

@@ -21,7 +21,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/sparql-endpoint-availability", produces = "application/json")
+@RequestMapping(path = "sparql-endpoint-availability/api/endpoints", produces = "application/json")
 public class SparqlEndpointAvailabilityRestController {
 
     private final SparqlEndpointDATAManagement sparqlEndpointDATAManagement;

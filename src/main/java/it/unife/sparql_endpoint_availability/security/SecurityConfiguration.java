@@ -14,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static it.unife.sparql_endpoint_availability.security.ApplicationUserRole.*;
+
 
 @Configuration
 @EnableWebSecurity
@@ -50,9 +52,16 @@ public class SecurityConfiguration {
         UserDetails luigi = User.builder()
                 .username("luigi")
                 .password(passwordEncoder.encode("luigi"))
-                .roles("USER")
+                .roles(ADMIN.name())
                 .build();
-        return new InMemoryUserDetailsManager(luigi);
+
+        UserDetails mario = User.builder()
+                .username("mario")
+                .password(passwordEncoder.encode("mario"))
+                .roles(USER.name())
+                .build();
+
+        return new InMemoryUserDetailsManager(luigi, mario);
     }
 
 }

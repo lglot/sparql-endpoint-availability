@@ -48,6 +48,8 @@ class SparqlEndpointAvailabilityRestControllerTest {
 
     private List<SparqlEndpoint> sparqlEndpoints;
 
+    private final String BASE_URL_API = "/sparql-endpoint-availability/api/endpoints";
+
     @BeforeAll
     void init() {
         sparqlEndpoints = new ArrayList<>();
@@ -76,7 +78,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     void getAllSparqlEndpoints() throws Exception {
         Mockito.when(sedm.getSparqlEndpointsWithCurrentStatus()).thenReturn(sparqlEndpoints);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/sparql-endpoint-availability");
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(BASE_URL_API);
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> {
                     assertEquals(200, mvcResult.getResponse().getStatus());
@@ -90,7 +92,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
     @Test
     void getAllSparqlEndpointsNoPermission() throws Exception {
         Mockito.when(sedm.getSparqlEndpointsWithCurrentStatus()).thenReturn(sparqlEndpoints);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/sparql-endpoint-availability");
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(BASE_URL_API);
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> assertEquals(401, mvcResult.getResponse().getStatus()));
     }
@@ -109,7 +111,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
         });
         //random id between 1 and 5
         long id = (long) (Math.random() * 4) + 1;
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/sparql-endpoint-availability/"+id);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(BASE_URL_API+"/"+id);
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> {
                     assertEquals(200, mvcResult.getResponse().getStatus());
@@ -119,7 +121,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
                 });
         //id not found
         long id2 = (long) (Math.random() * 10) + 10;
-        requestBuilder = MockMvcRequestBuilders.get("/sparql-endpoint-availability/"+id2);
+        requestBuilder = MockMvcRequestBuilders.get(BASE_URL_API+"/"+id2);
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> assertEquals(404, mvcResult.getResponse().getStatus()));
     }
@@ -132,7 +134,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
                         .anyMatch(SparqlEndpointStatus::isActive))
                 .collect(Collectors.toList()));
         RequestBuilder requestBuilder = MockMvcRequestBuilders.
-                get("/sparql-endpoint-availability/status/current/active");
+                get(BASE_URL_API+"/status/current/active");
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> {
                     assertEquals(200, mvcResult.getResponse().getStatus());
@@ -160,7 +162,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
             return se;
         });
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/sparql-endpoint-availability")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post(BASE_URL_API)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(se))
                 .with(csrf());
@@ -198,7 +200,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
                 .url(se.getUrl())
                 .name("new name")
                 .build();
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/sparql-endpoint-availability/url/?url="+newSe.getUrl())
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put(BASE_URL_API+"/url/?url="+newSe.getUrl())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(newSe))
                 .with(csrf());
@@ -226,7 +228,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
         }).when(sedm).deleteSparqlEndpointByUrl(anyString());
 
         SparqlEndpoint se = sparqlEndpoints.get(0);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/sparql-endpoint-availability/url/?url="+se.getUrl())
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(BASE_URL_API+"/url/?url="+se.getUrl())
                 .with(csrf());
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> {
