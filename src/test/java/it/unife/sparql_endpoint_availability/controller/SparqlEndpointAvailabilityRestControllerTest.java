@@ -149,8 +149,8 @@ class SparqlEndpointAvailabilityRestControllerTest {
     void createSparqlEndpoint() throws Exception {
 
         SparqlEndpoint se = SparqlEndpoint.builder()
-                .url("url")
-                .name("name")
+                .url("new_url")
+                .name("new_name")
                 .build();
 
         Mockito.when(sedm.createSparqlEndpoint(se)).thenAnswer(invocation -> {
@@ -175,6 +175,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
                     assertTrue(sparqlEndpoints.stream()
                             .anyMatch(se3 -> se3.getUrl().equals(se.getUrl())));
                 });
+        sparqlEndpoints.removeIf(se3 -> se3.getUrl().equals(se.getUrl()));
     }
 
 
@@ -193,22 +194,26 @@ class SparqlEndpointAvailabilityRestControllerTest {
         });
 
         SparqlEndpoint se = sparqlEndpoints.get(0);
-        se.setName("new name");
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/sparql-endpoint-availability/url/?url="+se.getUrl())
+        SparqlEndpoint newSe = SparqlEndpoint.builder()
+                .url(se.getUrl())
+                .name("new name")
+                .build();
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/sparql-endpoint-availability/url/?url="+newSe.getUrl())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(se))
+                .content(new ObjectMapper().writeValueAsString(newSe))
                 .with(csrf());
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> {
                     assertEquals(200, mvcResult.getResponse().getStatus());
                     SparqlEndpointDTO seResponse = new ObjectMapper()
                             .readValue(mvcResult.getResponse().getContentAsString(),SparqlEndpointDTO.class);
-                    assertEquals(se.getUrl(), seResponse.getUrl());
-                    assertEquals(se.getName(), seResponse.getName());
+                    assertEquals(newSe.getUrl(), seResponse.getUrl());
+                    assertEquals(newSe.getName(), seResponse.getName());
                     //assert that new name is present in the list of sparqlEndpoints
                     assertTrue(sparqlEndpoints.stream()
-                            .anyMatch(se3 -> se3.getUrl().equals(se.getUrl()) && se3.getName().equals(se.getName())));
+                            .anyMatch(se3 -> se3.getUrl().equals(newSe.getUrl()) && se3.getName().equals(newSe.getName())));
                 });
+        sparqlEndpoints.set(0, se);
     }
 
     @Test
@@ -219,6 +224,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
             sparqlEndpoints.removeIf(se -> se.getUrl().equals(url));
             return true;
         }).when(sedm).deleteSparqlEndpointByUrl(anyString());
+
         SparqlEndpoint se = sparqlEndpoints.get(0);
         RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/sparql-endpoint-availability/url/?url="+se.getUrl())
                 .with(csrf());
@@ -229,5 +235,6 @@ class SparqlEndpointAvailabilityRestControllerTest {
                     assertFalse(sparqlEndpoints.stream()
                             .anyMatch(se3 -> se3.getUrl().equals(se.getUrl())));
                 });
+        sparqlEndpoints.add(0, se);
     }
 }
