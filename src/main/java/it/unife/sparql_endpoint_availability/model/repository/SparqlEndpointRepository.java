@@ -73,9 +73,6 @@ public interface SparqlEndpointRepository extends JpaRepository<SparqlEndpoint, 
     )
     List<SparqlEndpoint> findOnlyCurrentlyActive();
 
-    void deleteByUrlIn(Collection<@NotNull String> url);
-    
-    void deleteByUrl(String url);
 
     @EntityGraph(value = "SparqlEndpoint.detail", type = EntityGraph.EntityGraphType.FETCH)
     @Query(" SELECT sparql " +
@@ -88,4 +85,13 @@ public interface SparqlEndpointRepository extends JpaRepository<SparqlEndpoint, 
             "AND sparql.url=?1 " +
             "order by sparql.url")
     SparqlEndpoint findByUrlWithCurrentStatus(String url);
+
+
+    boolean existsByUrl(String url);
+
+    void deleteByUrlIn(Collection<@NotNull String> url);
+
+    void deleteByUrl(String url);
+
+    SparqlEndpoint findByUrl(String url);
 }

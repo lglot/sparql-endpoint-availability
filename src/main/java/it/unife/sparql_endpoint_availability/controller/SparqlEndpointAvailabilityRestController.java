@@ -1,6 +1,7 @@
 package it.unife.sparql_endpoint_availability.controller;
 
 import it.unife.sparql_endpoint_availability.dto.SparqlEndpointDTO;
+import it.unife.sparql_endpoint_availability.exception.SparqlEndpointAlreadyExistsException;
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -43,7 +45,7 @@ public class SparqlEndpointAvailabilityRestController {
           SparqlEndpoint se = sparqlEndpointDATAManagement.getSparqlEndpointWithCurrentStatusById(id);
           return SparqlEndpointDTO.fromSparqlEndpoint(se);
       } catch (SparqlEndpointNotFoundException e) {
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+          throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sparql Endpoint not found", e);
       }
     }
 
@@ -56,17 +58,50 @@ public class SparqlEndpointAvailabilityRestController {
         } catch (UnsupportedEncodingException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         } catch (SparqlEndpointNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "SparqlEndpoint not found");
         }
     }
 
     //post: /sparql-endpoint-availability/
     @PostMapping(path = "")
-    public SparqlEndpointDTO createSparqlEndpoint(@RequestBody @NotNull SparqlEndpoint sparqlEndpoint) {
-        SparqlEndpoint se = sparqlEndpointDATAManagement.createSparqlEndpoint(sparqlEndpoint);
-        logger.info("SparqlEndpoint created: {}", se);
-        return SparqlEndpointDTO.fromSparqlEndpoint(se);
+    public ResponseEntity<SparqlEndpointDTO> createSparqlEndpoint(@RequestBody @NotNull SparqlEndpoint sparqlEndpoint) {
+        try{
+            SparqlEndpoint se = sparqlEndpointDATAManagement.createSparqlEndpoint(sparqlEndpoint);
+            logger.info("SparqlEndpoint created: {}", se);
+            return new ResponseEntity<>(SparqlEndpointDTO.fromSparqlEndpoint(se), HttpStatus.CREATED);
+        } catch (SparqlEndpointAlreadyExistsException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "SparqlEndpoint already exists", e);
+        }
     }
+    @PutMapping(path = "/url")
+    public SparqlEndpointDTO updateSparqlEndpointByUrl(@RequestParam @NotNull String url, @RequestBody @NotNull SparqlEndpoint sparqlEndpoint) {
+        try {
+            url = URLDecoder.decode(url, Charsets.UTF_8.name());
+            SparqlEndpoint result = sparqlEndpointDATAManagement.updateSparqlEndpointByUrl(url, sparqlEndpoint);
+            logger.info("SparqlEndpoint updated: {}", result);
+            return SparqlEndpointDTO.fromSparqlEndpoint(result);
+        } catch (UnsupportedEncodingException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        } catch (SparqlEndpointNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "SparqlEndpoint not found");
+
+        }
+    }
+
+    @DeleteMapping(path = "/url")
+    public void deleteSparqlEndpointByUrl(@RequestParam @NotNull String url) {
+        try {
+            url = URLDecoder.decode(url, Charsets.UTF_8.name());
+            sparqlEndpointDATAManagement.deleteSparqlEndpointByUrl(url);
+            logger.info("SparqlEndpoint deleted: {}", url);
+        } catch (UnsupportedEncodingException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        } catch (SparqlEndpointNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "SparqlEndpoint not found");
+        }
+    }
+
+
 
     @GetMapping(path = "/status/current")
     public Iterable<SparqlEndpoint> getSparqlEndpointsWithCurrentStatus() {
@@ -119,7 +154,7 @@ public class SparqlEndpointAvailabilityRestController {
         try{
             return sparqlEndpointDATAManagement.getSparqlEndpointsAfterQueryDateById(previousDay.getTime(), id);
         } catch (SparqlEndpointNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "SparqlEndpoint not found");
         }
     }
 

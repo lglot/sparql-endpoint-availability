@@ -1,5 +1,6 @@
 package it.unife.sparql_endpoint_availability.model.management;
 
+import it.unife.sparql_endpoint_availability.exception.SparqlEndpointAlreadyExistsException;
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
@@ -72,5 +73,9 @@ public interface SparqlEndpointDATAManagement {
     /* ottiene la data della prima query sparql eseguita */
     Date findFirstQueryDate();
 
-    SparqlEndpoint createSparqlEndpoint(SparqlEndpoint se);
+    SparqlEndpoint createSparqlEndpoint(SparqlEndpoint se) throws SparqlEndpointAlreadyExistsException;
+
+    SparqlEndpoint updateSparqlEndpointByUrl(String url, SparqlEndpoint sparqlEndpoint) throws SparqlEndpointNotFoundException;
+
+    void deleteSparqlEndpointByUrl(String url) throws SparqlEndpointNotFoundException;
 }

@@ -1,5 +1,6 @@
 package it.unife.sparql_endpoint_availability.model.management.JPAImpl;
 
+import it.unife.sparql_endpoint_availability.exception.SparqlEndpointAlreadyExistsException;
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
@@ -109,8 +110,41 @@ public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAMa
     }
 
     @Override
-    public SparqlEndpoint createSparqlEndpoint(SparqlEndpoint se) {
-        return sparqlEndpointRepository.save(se);
+    public SparqlEndpoint createSparqlEndpoint(SparqlEndpoint se) throws SparqlEndpointAlreadyExistsException
+    {
+        if(sparqlEndpointRepository.existsByUrl(se.getUrl()))
+            throw new SparqlEndpointAlreadyExistsException(se.getUrl());
+        else
+            return sparqlEndpointRepository.save(se);
+    }
+
+    /**
+     * @param sparqlEndpoint the sparql endpoint to update
+     * @return SparqlEndpoint the updated sparql endpoint
+     * @throws SparqlEndpointNotFoundException if the sparql endpoint does not exist
+     */
+    @Override
+    public SparqlEndpoint updateSparqlEndpointByUrl(String url, SparqlEndpoint sparqlEndpoint) throws SparqlEndpointNotFoundException {
+        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByUrl(url));
+        if (!se.isPresent()) {
+            throw new SparqlEndpointNotFoundException(url);
+        }
+        sparqlEndpoint.setId(se.get().getId());
+        return sparqlEndpointRepository.save(sparqlEndpoint);
+    }
+
+    /**
+     * @param url
+     * delete the sparql endpoint with the given url
+     * @throws SparqlEndpointNotFoundException if the sparql endpoint does not exist
+     */
+    @Override
+     public void deleteSparqlEndpointByUrl(String url) throws SparqlEndpointNotFoundException {
+        if(sparqlEndpointRepository.existsByUrl(url)) {
+            sparqlEndpointRepository.deleteByUrl(url);
+        } else {
+            throw new SparqlEndpointNotFoundException(url);
+        }
     }
 
     @Override

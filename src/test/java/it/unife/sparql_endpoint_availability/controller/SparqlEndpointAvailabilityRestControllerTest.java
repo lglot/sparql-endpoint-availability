@@ -16,11 +16,16 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import static org.mockito.ArgumentMatchers.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,8 +33,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(SparqlEndpointAvailabilityRestController.class)
@@ -136,6 +140,94 @@ class SparqlEndpointAvailabilityRestControllerTest {
                             .readValue(mvcResult.getResponse().getContentAsString(),
                                     new TypeReference<List<SparqlEndpointDTO>>() {});
                     assertEquals(2, seResponse.size());
+                });
+    }
+
+
+    @Test
+    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    void createSparqlEndpoint() throws Exception {
+
+        SparqlEndpoint se = SparqlEndpoint.builder()
+                .url("url")
+                .name("name")
+                .build();
+
+        Mockito.when(sedm.createSparqlEndpoint(se)).thenAnswer(invocation -> {
+            SparqlEndpoint se2 = invocation.getArgument(0);
+            se2.setId((long) (sparqlEndpoints.size()+1));
+            sparqlEndpoints.add(se2);
+            return se;
+        });
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/sparql-endpoint-availability")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(se))
+                .with(csrf());
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(mvcResult -> {
+                    assertEquals(201, mvcResult.getResponse().getStatus());
+                    SparqlEndpointDTO seResponse = new ObjectMapper()
+                            .readValue(mvcResult.getResponse().getContentAsString(),SparqlEndpointDTO.class);
+                    assertEquals(se.getUrl(), seResponse.getUrl());
+                    //assert that sparqlEndpoint url is present in the list of sparqlEndpoints
+                    assertTrue(sparqlEndpoints.stream()
+                            .anyMatch(se3 -> se3.getUrl().equals(se.getUrl())));
+                });
+    }
+
+
+    @Test
+    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    void updateSparqlEndpointByUrl() throws Exception {
+
+        Mockito.when(sedm.updateSparqlEndpointByUrl(anyString(), any())).thenAnswer(invocation -> {
+            String url = invocation.getArgument(0);
+            SparqlEndpoint se = invocation.getArgument(1);
+            sparqlEndpoints.stream()
+                    .filter(se2 -> se2.getUrl().equals(url))
+                    .findFirst()
+                    .ifPresent(se2 -> se2.setName(se.getName()));
+            return se;
+        });
+
+        SparqlEndpoint se = sparqlEndpoints.get(0);
+        se.setName("new name");
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/sparql-endpoint-availability/url/?url="+se.getUrl())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(se))
+                .with(csrf());
+        mockMvc.perform(requestBuilder)
+                .andExpect(mvcResult -> {
+                    assertEquals(200, mvcResult.getResponse().getStatus());
+                    SparqlEndpointDTO seResponse = new ObjectMapper()
+                            .readValue(mvcResult.getResponse().getContentAsString(),SparqlEndpointDTO.class);
+                    assertEquals(se.getUrl(), seResponse.getUrl());
+                    assertEquals(se.getName(), seResponse.getName());
+                    //assert that new name is present in the list of sparqlEndpoints
+                    assertTrue(sparqlEndpoints.stream()
+                            .anyMatch(se3 -> se3.getUrl().equals(se.getUrl()) && se3.getName().equals(se.getName())));
+                });
+    }
+
+    @Test
+    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    void deleteSparqlEndpointByUrl() throws Exception {
+        Mockito.doAnswer(invocation -> {
+            String url = invocation.getArgument(0);
+            sparqlEndpoints.removeIf(se -> se.getUrl().equals(url));
+            return true;
+        }).when(sedm).deleteSparqlEndpointByUrl(anyString());
+        SparqlEndpoint se = sparqlEndpoints.get(0);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/sparql-endpoint-availability/url/?url="+se.getUrl())
+                .with(csrf());
+        mockMvc.perform(requestBuilder)
+                .andExpect(mvcResult -> {
+                    assertEquals(200, mvcResult.getResponse().getStatus());
+                    //assert that sparqlEndpoint url is not present in the list of sparqlEndpoints
+                    assertFalse(sparqlEndpoints.stream()
+                            .anyMatch(se3 -> se3.getUrl().equals(se.getUrl())));
                 });
     }
 }
