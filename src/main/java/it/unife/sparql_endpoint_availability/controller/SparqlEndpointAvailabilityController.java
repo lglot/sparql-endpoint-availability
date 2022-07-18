@@ -29,7 +29,7 @@ import java.time.format.DateTimeFormatter;
 
 //Classe controller che gestisce le richieste del client
 @Controller
-@RequestMapping(path = "/sparql-endpoint-availability", produces = "text/html")
+@RequestMapping(path = "", produces = "text/html")
 public class SparqlEndpointAvailabilityController {
 
     private final SparqlEndpointDATAManagement sparqlEndpointDATAManagement;
@@ -85,7 +85,7 @@ public class SparqlEndpointAvailabilityController {
      * lo stato indicante la disponibilià attuale,
      * giornaliera e settimanale
      */
-    @GetMapping(path = "/home")
+    @GetMapping(path = "")
     public String view(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang, Model model) {
 
         /* HTTP PARAMETERS */

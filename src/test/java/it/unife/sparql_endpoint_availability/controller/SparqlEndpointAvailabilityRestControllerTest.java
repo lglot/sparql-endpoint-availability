@@ -48,7 +48,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
 
     private List<SparqlEndpoint> sparqlEndpoints;
 
-    private final String BASE_URL_API = "/sparql-endpoint-availability/api/endpoints";
+    private final String BASE_URL_API = "/api/endpoints";
 
     @BeforeAll
     void init() {
