@@ -16,7 +16,7 @@ public interface SparqlEndpointDATAManagement {
      * metodo riceve
      * l'insieme degli endpoint letti da file.
      */
-    void update(Set<SparqlEndpoint> sparqlEndpoints);
+    void saveAllIfNotExists(Set<SparqlEndpoint> sparqlEndpoints);
 
     /*
      * Metodo per aggiornare gli stati degli sparql enpoint sul DB ottenuti dai

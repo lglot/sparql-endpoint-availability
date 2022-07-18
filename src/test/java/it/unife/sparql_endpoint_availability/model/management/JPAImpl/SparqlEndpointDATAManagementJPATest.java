@@ -35,24 +35,12 @@ class SparqlEndpointDATAManagementJPATest {
 
     @ParameterizedTest
     @MethodSource("dataProvider_getSparqlEndpoints")
-    void updateWithNonEmptyDB(Set<SparqlEndpoint> seInput, Set<SparqlEndpoint> seDB) {
+    void saveAllIfNotExists(Set<SparqlEndpoint> seInput, Set<SparqlEndpoint> seDB) {
 
         SparqlEndpointRepository ser = Mockito.mock(SparqlEndpointRepository.class);
         SparqlEndpointDATAManagement sedm = new SparqlEndpointDATAManagementJPAImpl(ser, null);
 
         Mockito.when(ser.findAllByOrderById()).thenReturn(new ArrayList<>(seDB));
-
-        // Mock deleteByUrl() method to delete element in list by url
-        Mockito.doAnswer(invocation -> {
-            String arg = invocation.getArgument(0);
-            for (SparqlEndpoint se : seDB) {
-                if (se.getUrl().equals(arg)) {
-                    seDB.remove(se);
-                    break;
-                }
-            }
-            return null;
-        }).when(ser).deleteByUrl(anyString());
 
         // Mock saveAll() method to save element in list
         Mockito.doAnswer(invocation -> {
@@ -61,9 +49,17 @@ class SparqlEndpointDATAManagementJPATest {
             return null;
         }).when(ser).saveAll(any());
 
-        sedm.update(seInput);
-        assertEquals(seInput, seDB);
+        sedm.saveAllIfNotExists(seInput);
+        //assert that the list of sparql endpoints in the database contains all elements of the input list
+        assertContainsAll(seDB, seInput);
 
+
+    }
+
+    private void assertContainsAll(Set<SparqlEndpoint> seDB, Set<SparqlEndpoint> seInput) {
+        for (SparqlEndpoint se : seInput) {
+            assertTrue(seDB.contains(se));
+        }
     }
 
     @Test

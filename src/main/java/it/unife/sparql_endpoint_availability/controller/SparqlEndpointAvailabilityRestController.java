@@ -1,25 +1,22 @@
 package it.unife.sparql_endpoint_availability.controller;
 
+import it.unife.sparql_endpoint_availability.dto.SparqlEndpointDTO;
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
-import it.unife.sparql_endpoint_availability.dto.SparqlEndpointDTO;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
+import org.apache.jena.ext.com.google.common.base.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.NotNull;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Calendar;
 import java.util.List;
-
-import org.apache.jena.ext.com.google.common.base.Charsets;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping(path = "/sparql-endpoint-availability", produces = "application/json")

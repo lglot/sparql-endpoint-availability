@@ -59,7 +59,7 @@ class SparqlEndpointCheckTask {
         if (iterator == 1) {
             logger.info("Updating Sparql Endpoint List from Resource File");
             Set<SparqlEndpoint> sparqlEndpoints = sparqlFileReader.getSparqlEndpoints();
-            sparqlEndpointDATAManagement.update(sparqlEndpoints);
+            sparqlEndpointDATAManagement.saveAllIfNotExists(sparqlEndpoints);
         }
 
         /* Recupera gli sparql endpoint presenti sul db */
