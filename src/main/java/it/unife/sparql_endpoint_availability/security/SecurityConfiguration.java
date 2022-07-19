@@ -23,7 +23,7 @@ import static it.unife.sparql_endpoint_availability.security.ApplicationUserRole
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfiguration {
+public class SecurityConfiguration  {
 
     PasswordEncoder passwordEncoder;
 
@@ -38,23 +38,19 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.DELETE, "/api/**").hasAuthority(SPARQL_ENDPOINT_WRITE.getPermission())
-                .antMatchers(HttpMethod.POST,"/api/**").hasAuthority(SPARQL_ENDPOINT_WRITE.getPermission())
-                .antMatchers(HttpMethod.PUT, "/api/**").hasAuthority(SPARQL_ENDPOINT_WRITE.getPermission())
-                .antMatchers(HttpMethod.GET, "/api/**").hasAnyRole(USER.name(), ADMIN.name())
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic()
-                .and()
-                .headers().frameOptions().disable();
+                .httpBasic();
+//                .and()
+//                .headers().frameOptions().disable();
         return http.build();
     }
 
 
 
     //user detail service
-    @Bean(name = "userDetailsService")
+    @Bean
     public UserDetailsService userDetailsService() {
         UserDetails luigi = User.builder()
                 .username("luigi")

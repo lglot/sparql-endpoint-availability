@@ -7,12 +7,9 @@ import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundExc
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
-import it.unife.sparql_endpoint_availability.security.ApplicationUserPermission;
-import it.unife.sparql_endpoint_availability.security.ApplicationUserRole;
+import it.unife.sparql_endpoint_availability.security.PasswordConfig;
 import it.unife.sparql_endpoint_availability.security.SecurityConfiguration;
-import it.unife.sparql_endpoint_availability.service.fileReader.SparqlFileReader;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,23 +17,13 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import javax.servlet.Filter;
-
-import static org.mockito.ArgumentMatchers.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
-
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,12 +32,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.mockito.ArgumentMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(SparqlEndpointAvailabilityRestController.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ContextConfiguration
+@WebMvcTest(SparqlEndpointAvailabilityRestController.class)
+@Import({SecurityConfiguration.class, PasswordConfig.class})
 class SparqlEndpointAvailabilityRestControllerTest {
 
     @Autowired
@@ -60,12 +47,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
     private SparqlEndpointDATAManagement sedm;
 
     private List<SparqlEndpoint> sparqlEndpoints;
-
     private final String BASE_URL_API = "/api/endpoints";
-
-    @Autowired
-    private WebApplicationContext context;
-
 
     @BeforeAll
     void init() {
@@ -88,12 +70,11 @@ class SparqlEndpointAvailabilityRestControllerTest {
                     .build();
             se.setSparqlEndpointStatuses(Arrays.asList(status, statusOld));
             sparqlEndpoints.add(se);
-            mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
         }
     }
 
     @Test
-    @WithMockUser(username = "luigi", password = "luigi", authorities = {"ROLE_ADMIN"})
+    @WithMockUser(roles = "USER")
     void getAllSparqlEndpoints() throws Exception {
         Mockito.when(sedm.getSparqlEndpointsWithCurrentStatus()).thenReturn(sparqlEndpoints);
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(BASE_URL_API);
@@ -117,7 +98,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
 
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser("ADMIN")
     void getSparqlEndpointById() throws Exception {
 
         Mockito.when(sedm.getSparqlEndpointWithCurrentStatusById(anyLong())).thenAnswer(invocation -> {
@@ -145,7 +126,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser(roles = "USER")
     void getCurrentlyActiveSparqlEndpoints() throws Exception {
         Mockito.when(sedm.getCurrentlyActiveSparqlEndpoints()).thenAnswer(invocation -> sparqlEndpoints.stream()
                 .filter(se -> se.getSparqlEndpointStatuses().stream()
@@ -165,7 +146,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
 
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser(roles = "ADMIN")
     void createSparqlEndpoint() throws Exception {
 
         SparqlEndpoint se = SparqlEndpoint.builder()
@@ -182,8 +163,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post(BASE_URL_API)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(se))
-                .with(csrf());
+                .content(new ObjectMapper().writeValueAsString(se));
 
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> {
@@ -200,7 +180,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
 
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser(roles = "ADMIN")
     void updateSparqlEndpointByUrl() throws Exception {
 
         Mockito.when(sedm.updateSparqlEndpointByUrl(anyString(), any())).thenAnswer(invocation -> {
@@ -218,10 +198,11 @@ class SparqlEndpointAvailabilityRestControllerTest {
                 .url(se.getUrl())
                 .name("new name")
                 .build();
+
         RequestBuilder requestBuilder = MockMvcRequestBuilders.put(BASE_URL_API+"/url/?url="+newSe.getUrl())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(newSe))
-                .with(csrf());
+                .content(new ObjectMapper().writeValueAsString(newSe));
+
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> {
                     assertEquals(200, mvcResult.getResponse().getStatus());
@@ -237,7 +218,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser(roles = "ADMIN")
     void deleteSparqlEndpointByUrl() throws Exception {
         Mockito.doAnswer(invocation -> {
             String url = invocation.getArgument(0);
@@ -246,8 +227,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
         }).when(sedm).deleteSparqlEndpointByUrl(anyString());
 
         SparqlEndpoint se = sparqlEndpoints.get(0);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(BASE_URL_API+"/url/?url="+se.getUrl())
-                .with(csrf());
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(BASE_URL_API+"/url/?url="+se.getUrl());
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> {
                     assertEquals(200, mvcResult.getResponse().getStatus());
@@ -259,22 +239,48 @@ class SparqlEndpointAvailabilityRestControllerTest {
     }
 
     //post with no permission
-    @Disabled
     @Test
-    @WithMockUser(authorities = {"ROLE_USER","sparql_endpoint:read"})
+    @WithMockUser(roles = "USER")
     void createSparqlEndpointNoPermission() throws Exception {
+
         SparqlEndpoint se = SparqlEndpoint.builder()
                 .url("new_url")
                 .name("new_name")
                 .build();
+
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post(BASE_URL_API)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(se))
-                .with(csrf());
+                .content(new ObjectMapper().writeValueAsString(se));
+
         mockMvc.perform(requestBuilder)
-                .andExpect(mvcResult -> {
-                    assertEquals(403, mvcResult.getResponse().getStatus());
-                });
+                .andExpect(mvcResult -> assertEquals(403, mvcResult.getResponse().getStatus()));
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void updateSparqlEndpointByUrlNoPermission() throws Exception {
+
+        SparqlEndpoint se = sparqlEndpoints.get(0);
+        SparqlEndpoint newSe = SparqlEndpoint.builder()
+                .url(se.getUrl())
+                .name("new name")
+                .build();
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put(BASE_URL_API+"/url/?url="+newSe.getUrl())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(newSe));
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(mvcResult -> assertEquals(403, mvcResult.getResponse().getStatus()));
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void deleteSparqlEndpointByUrlNoPermission() throws Exception {
+        SparqlEndpoint se = sparqlEndpoints.get(0);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(BASE_URL_API+"/url/?url="+se.getUrl());
+        mockMvc.perform(requestBuilder)
+                .andExpect(mvcResult -> assertEquals(403, mvcResult.getResponse().getStatus()));
     }
 
 }
