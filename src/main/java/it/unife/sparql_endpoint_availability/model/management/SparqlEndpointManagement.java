@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 //Componente che gestisce l'accesso alla persistenza e quindi al databasse
-public interface SparqlEndpointDATAManagement {
+public interface SparqlEndpointManagement {
 
     /*
      * Metodo per aggiornare la lista degli sparql Endpoint sul DB,in input il

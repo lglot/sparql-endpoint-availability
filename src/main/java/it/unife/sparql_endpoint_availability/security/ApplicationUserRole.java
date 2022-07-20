@@ -1,9 +1,8 @@
 package it.unife.sparql_endpoint_availability.security;
 
 import com.google.common.collect.Sets;
-import org.springframework.security.config.core.GrantedAuthorityDefaults;
+import it.unife.sparql_endpoint_availability.model.entity.AppGrantedAuthority;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,11 +24,11 @@ public enum ApplicationUserRole {
         return permissions;
     }
 
-    public Set<SimpleGrantedAuthority> getGrantedAuthorities() {
-        Set<SimpleGrantedAuthority> permissions= getPermissions().stream()
-                .map(p -> new SimpleGrantedAuthority(p.getPermission()))
+    public Set<AppGrantedAuthority> getGrantedAuthorities() {
+        Set<AppGrantedAuthority> permissions= getPermissions().stream()
+                .map(p -> new AppGrantedAuthority(p.getPermission()))
                 .collect(Collectors.toSet());
-        permissions.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
+        permissions.add(new AppGrantedAuthority("ROLE_" + this.name()));
         return permissions;
     }
 }

@@ -3,7 +3,7 @@ package it.unife.sparql_endpoint_availability.controller;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import it.unife.sparql_endpoint_availability.dto.SparqlEndpointStatusSummary;
-import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
+import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
 import it.unife.sparql_endpoint_availability.config.AppConfig;
 import it.unife.sparql_endpoint_availability.config.SparqlEndpointStatusConfig;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointCheckService;
@@ -32,14 +32,14 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping(path = "", produces = "text/html")
 public class SparqlEndpointAvailabilityController {
 
-    private final SparqlEndpointDATAManagement sparqlEndpointDATAManagement;
+    private final SparqlEndpointManagement sparqlEndpointManagement;
     private final SparqlEndpointStatusConfig statusConfig;
 
     private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointAvailabilityController.class);
 
-    public SparqlEndpointAvailabilityController(SparqlEndpointDATAManagement sparqlEndpointDATAManagement,
-            SparqlEndpointStatusConfig statusConfig) {
-        this.sparqlEndpointDATAManagement = sparqlEndpointDATAManagement;
+    public SparqlEndpointAvailabilityController(SparqlEndpointManagement sparqlEndpointManagement,
+                                                SparqlEndpointStatusConfig statusConfig) {
+        this.sparqlEndpointManagement = sparqlEndpointManagement;
         this.statusConfig = statusConfig;
     }
 
@@ -55,12 +55,12 @@ public class SparqlEndpointAvailabilityController {
                 .getBean(SparqlFileReader.class);
 
         /* Read spaql endpoint URL from resource and save them to DATA */
-        sparqlEndpointDATAManagement.saveAllIfNotExists(sparqlEndpointListFileManagament.getSparqlEndpoints());
+        sparqlEndpointManagement.saveAllIfNotExists(sparqlEndpointListFileManagament.getSparqlEndpoints());
 
-        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointDATAManagement.getAll();
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.getAll();
 
         SparqlEndpointCheckService sparqlEndpointCheckService = ctx.getBean(SparqlEndpointCheckService.class);
-        sparqlEndpointDATAManagement.saveStatuses(sparqlEndpointCheckService.executeCheck(sparqlEndpointList));
+        sparqlEndpointManagement.saveStatuses(sparqlEndpointCheckService.executeCheck(sparqlEndpointList));
 
         logger.info(
                 "Executed manually check terminated in date " + new Timestamp(System.currentTimeMillis()));
@@ -105,7 +105,7 @@ public class SparqlEndpointAvailabilityController {
 
         // Ottengo la lista degli sparql enpoint con risultati delle query sparql dal
         // database
-        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointDATAManagement
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement
                 .getSparqlEndpointsAfterQueryDate(previousWeek.getTime());
 
         // controllo se la lista non sia vuota e che sia stata almento eseguita una
@@ -114,7 +114,7 @@ public class SparqlEndpointAvailabilityController {
 
             // ottengo data della prima query eseguita dall'avvio del server collegandomi di
             // nuovo al database
-            firstUpdate = sparqlEndpointDATAManagement.findFirstQueryDate();
+            firstUpdate = sparqlEndpointManagement.findFirstQueryDate();
 
             List<SparqlEndpointStatus> statusTemp = sparqlEndpointList.get(0).getSparqlEndpointStatuses();
             // calcolo data dell'ultima query eseguita

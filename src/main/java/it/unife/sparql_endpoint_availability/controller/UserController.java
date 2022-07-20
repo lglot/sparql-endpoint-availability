@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("")
+@RequestMapping(value = "", produces = "text/html; charset=UTF-8")
 public class UserController {
 
     @GetMapping("login")

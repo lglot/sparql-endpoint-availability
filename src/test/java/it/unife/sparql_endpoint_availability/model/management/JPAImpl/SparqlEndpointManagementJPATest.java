@@ -2,7 +2,7 @@ package it.unife.sparql_endpoint_availability.model.management.JPAImpl;
 
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
-import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
+import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
 import it.unife.sparql_endpoint_availability.model.repository.SparqlEndpointRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 
-class SparqlEndpointDATAManagementJPATest {
+class SparqlEndpointManagementJPATest {
 
     public static Stream<Arguments> dataProvider_getSparqlEndpoints() {
         SparqlEndpoint se1 = new SparqlEndpoint("http://localhost:8080/se1", "se1");
@@ -38,7 +38,7 @@ class SparqlEndpointDATAManagementJPATest {
     void saveAllIfNotExists(Set<SparqlEndpoint> seInput, Set<SparqlEndpoint> seDB) {
 
         SparqlEndpointRepository ser = Mockito.mock(SparqlEndpointRepository.class);
-        SparqlEndpointDATAManagement sedm = new SparqlEndpointDATAManagementJPAImpl(ser, null);
+        SparqlEndpointManagement sedm = new SparqlEndpointManagementJPAImpl(ser, null);
 
         Mockito.when(ser.findAllByOrderById()).thenReturn(new ArrayList<>(seDB));
 
@@ -65,7 +65,7 @@ class SparqlEndpointDATAManagementJPATest {
     @Test
     void getSparqlEndpointById() throws SparqlEndpointNotFoundException {
         SparqlEndpointRepository ser = Mockito.mock(SparqlEndpointRepository.class);
-        SparqlEndpointDATAManagement sedm = new SparqlEndpointDATAManagementJPAImpl(ser, null);
+        SparqlEndpointManagement sedm = new SparqlEndpointManagementJPAImpl(ser, null);
         Mockito.when(ser.findById(anyLong())).thenReturn(Optional.of(new SparqlEndpoint("http://localhost:8080/se1", "se1")));
         SparqlEndpoint se = sedm.getById(1L);
 

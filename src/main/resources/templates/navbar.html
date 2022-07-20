@@ -1,9 +1,9 @@
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <a class="navbar-brand" href="#">
-        <img th:src="@{/image/sparql-icon.png}" src="../static/image/sparql-icon.png"
-             class="d-inline-block align-top rounded-circle"
-             height="10%" width="10%" alt=""/>
+<!--        <img th:src="@{/image/sparql-icon.png}" src="../static/image/sparql-icon.png"-->
+<!--             class="d-inline-block align-top rounded-circle"-->
+<!--             height="10%" width="10%" alt=""/>-->
         <span id="nav-title" class="col-md-3">SPARQL ENDPOINT AVAILABILITY</span>
     </a>
     <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -11,23 +11,37 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-        <div class="navbar-nav ml-auto">
-            <div class="dropdown nav-item">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        th:text="#{language.name}">
-                    Dropdown button
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a th:class="'dropdown-item ' + ${#strings.equals('en', #strings.toString(#locale)) ? 'active' : ''}"
-                       href="?lang=en">English</a>
-                    <a th:class="'dropdown-item ' + ${#strings.equals('it', #strings.toString(#locale)) ? 'active' : ''}"
-                       href="?lang=it">Italiano</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <span class="fa fa-language"></span>
+                    <span class="nav-link-text">Language</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" th:href="${@environment.getProperty('server.servlet.context-path')}+'/?lang=en'">English</a>
+                    <a class="dropdown-item" th:href="${@environment.getProperty('server.servlet.context-path')}+'/?lang=it'">Italian</a>
                 </div>
-            </div>
-        </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <span class="fa fa-user"></span>
+                    <span class="nav-link-text">Account</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="${@environment.getProperty('server.servlet.context-path')}+'/logout'">
+                    <span class="fa fa-sign-out"></span>
+                    <span class="nav-link-text">Logout</span>
+                </a>
+            </li>
+            <!-- language dropdown -->
+
+        </ul>
     </div>
 </nav>
 <!-- end navbar -->

@@ -4,24 +4,23 @@ import it.unife.sparql_endpoint_availability.exception.SparqlEndpointAlreadyExis
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
-import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
+import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
 import it.unife.sparql_endpoint_availability.model.repository.SparqlEndpointRepository;
 import it.unife.sparql_endpoint_availability.model.repository.SparqlEndpointStatusRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class SparqlEndpointDATAManagementJPAImpl implements SparqlEndpointDATAManagement {
+public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement {
 
     private final SparqlEndpointRepository sparqlEndpointRepository;
     private final SparqlEndpointStatusRepository sparqlEndpointStatusRepository;
 
-    public SparqlEndpointDATAManagementJPAImpl(SparqlEndpointRepository sparqlEndpointRepository,
-                                               SparqlEndpointStatusRepository sparqlEndpointStatusRepository) {
+    public SparqlEndpointManagementJPAImpl(SparqlEndpointRepository sparqlEndpointRepository,
+                                           SparqlEndpointStatusRepository sparqlEndpointStatusRepository) {
         this.sparqlEndpointRepository = sparqlEndpointRepository;
         this.sparqlEndpointStatusRepository = sparqlEndpointStatusRepository;
     }

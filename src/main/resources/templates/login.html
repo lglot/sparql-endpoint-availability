@@ -9,6 +9,14 @@
     <title>Sparql Endpoint login</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" href="../static/css/style.css" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script th:src="|${@environment.getProperty('server.servlet.context-path')}/js/bootstrap.js|"></script>
+
+
     <style>
         body{
             background-color: #3e3e3e;
@@ -21,6 +29,7 @@
 
 
 <div class="container">
+
     <form class="form-signin" method="post" action="/sparql-endpoint-availability/login">
         <h2 class="form-signin-heading" th:text="#{login.title}">Please login</h2>
         <div th:if="${errorMessage != null}">

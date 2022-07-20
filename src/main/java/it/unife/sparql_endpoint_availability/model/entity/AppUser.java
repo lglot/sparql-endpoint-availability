@@ -1,8 +1,12 @@
 package it.unife.sparql_endpoint_availability.model.entity;
 
 import lombok.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,26 +16,26 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "users")
-public class AppUser {
+@NamedEntityGraph(name = "User.detail", attributeNodes = @NamedAttributeNode("authorities"))
+public class AppUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(unique = true)
     private String username;
-//
-//    @Column(name = "password", nullable = false)
-//    private String password;
-//
-//    //role
-//    @Column(name = "role", nullable = false)
-//    private String role;
-//
-//    @Column(name = "enabled", nullable = false)
-//    private boolean enabled;
-//
-//    @Column(name = "email", nullable = false)
-//    private String email;
+    private String password;
+    private boolean enabled;
+    private boolean accountNonExpired;
+    private boolean credentialsNonExpired;
+    private boolean accountNonLocked;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<AppGrantedAuthority> authorities;
+
+
+
+
 }

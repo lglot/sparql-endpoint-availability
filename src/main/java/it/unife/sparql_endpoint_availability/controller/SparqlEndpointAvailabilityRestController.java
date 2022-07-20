@@ -4,7 +4,7 @@ import it.unife.sparql_endpoint_availability.dto.SparqlEndpointDTO;
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointAlreadyExistsException;
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
-import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointDATAManagement;
+import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
 import org.apache.jena.ext.com.google.common.base.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,27 +25,27 @@ import java.util.List;
 @RequestMapping(path = "/api/endpoints", produces = "application/json")
 public class SparqlEndpointAvailabilityRestController {
 
-    private final SparqlEndpointDATAManagement sparqlEndpointDATAManagement;
+    private final SparqlEndpointManagement sparqlEndpointManagement;
 
     private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointAvailabilityController.class);
 
     @Autowired
-    public SparqlEndpointAvailabilityRestController(SparqlEndpointDATAManagement sparqlEndpointDATAManagement) {
-        this.sparqlEndpointDATAManagement = sparqlEndpointDATAManagement;
+    public SparqlEndpointAvailabilityRestController(SparqlEndpointManagement sparqlEndpointManagement) {
+        this.sparqlEndpointManagement = sparqlEndpointManagement;
     }
 
     @GetMapping(path = "")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public Iterable<SparqlEndpointDTO> getAllSparqlEndpoints() {
-        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointDATAManagement.getSparqlEndpointsWithCurrentStatus();
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.getSparqlEndpointsWithCurrentStatus();
         return SparqlEndpointDTO.fromSparqlEndpointList(sparqlEndpointList);
     }
 
     @GetMapping(path = "/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public SparqlEndpointDTO getSparqlEndpointById(@PathVariable @NotNull Long id)  {
       try{
-          SparqlEndpoint se = sparqlEndpointDATAManagement.getSparqlEndpointWithCurrentStatusById(id);
+          SparqlEndpoint se = sparqlEndpointManagement.getSparqlEndpointWithCurrentStatusById(id);
           return SparqlEndpointDTO.fromSparqlEndpoint(se);
       } catch (SparqlEndpointNotFoundException e) {
           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sparql Endpoint not found", e);
@@ -57,7 +57,7 @@ public class SparqlEndpointAvailabilityRestController {
     public SparqlEndpointDTO getSparqlEndpointByUrl(@RequestParam @NotNull String url) {
         try {
             url = URLDecoder.decode(url, Charsets.UTF_8.name());
-            SparqlEndpoint se = sparqlEndpointDATAManagement.getSparqlEndpointByUrl(url);
+            SparqlEndpoint se = sparqlEndpointManagement.getSparqlEndpointByUrl(url);
             return SparqlEndpointDTO.fromSparqlEndpoint(se);
         } catch (UnsupportedEncodingException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
@@ -70,7 +70,7 @@ public class SparqlEndpointAvailabilityRestController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<SparqlEndpointDTO> createSparqlEndpoint(@RequestBody @NotNull SparqlEndpoint sparqlEndpoint) {
         try{
-            SparqlEndpoint se = sparqlEndpointDATAManagement.createSparqlEndpoint(sparqlEndpoint);
+            SparqlEndpoint se = sparqlEndpointManagement.createSparqlEndpoint(sparqlEndpoint);
             logger.info("SparqlEndpoint created: {}", se);
             return new ResponseEntity<>(SparqlEndpointDTO.fromSparqlEndpoint(se), HttpStatus.CREATED);
         } catch (SparqlEndpointAlreadyExistsException e) {
@@ -82,7 +82,7 @@ public class SparqlEndpointAvailabilityRestController {
     public SparqlEndpointDTO updateSparqlEndpointByUrl(@RequestParam @NotNull String url, @RequestBody @NotNull SparqlEndpoint sparqlEndpoint) {
         try {
             url = URLDecoder.decode(url, Charsets.UTF_8.name());
-            SparqlEndpoint result = sparqlEndpointDATAManagement.updateSparqlEndpointByUrl(url, sparqlEndpoint);
+            SparqlEndpoint result = sparqlEndpointManagement.updateSparqlEndpointByUrl(url, sparqlEndpoint);
             logger.info("SparqlEndpoint updated: {}", result);
             return SparqlEndpointDTO.fromSparqlEndpoint(result);
         } catch (UnsupportedEncodingException e) {
@@ -98,7 +98,7 @@ public class SparqlEndpointAvailabilityRestController {
     public void deleteSparqlEndpointByUrl(@RequestParam @NotNull String url) {
         try {
             url = URLDecoder.decode(url, Charsets.UTF_8.name());
-            sparqlEndpointDATAManagement.deleteSparqlEndpointByUrl(url);
+            sparqlEndpointManagement.deleteSparqlEndpointByUrl(url);
             logger.info("SparqlEndpoint deleted: {}", url);
         } catch (UnsupportedEncodingException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
@@ -112,13 +112,13 @@ public class SparqlEndpointAvailabilityRestController {
     @GetMapping(path = "/status/current")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public Iterable<SparqlEndpoint> getSparqlEndpointsWithCurrentStatus() {
-        return sparqlEndpointDATAManagement.getSparqlEndpointsWithCurrentStatus();
+        return sparqlEndpointManagement.getSparqlEndpointsWithCurrentStatus();
     }
 
     @GetMapping(path = "/status/current/active")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public Iterable<SparqlEndpointDTO> getCurrentlyActiveSparqlEndpoints() {
-        return SparqlEndpointDTO.fromSparqlEndpointList(sparqlEndpointDATAManagement.getCurrentlyActiveSparqlEndpoints());
+        return SparqlEndpointDTO.fromSparqlEndpointList(sparqlEndpointManagement.getCurrentlyActiveSparqlEndpoints());
     }
 
 
@@ -129,7 +129,7 @@ public class SparqlEndpointAvailabilityRestController {
         Calendar previousWeek = Calendar.getInstance();
         previousWeek.add(Calendar.WEEK_OF_YEAR, -1);
         logger.info("Requested sparql endopoint availabilty from previuos week " + previousWeek.getTime());
-        return sparqlEndpointDATAManagement.getSparqlEndpointsAfterQueryDate(previousWeek.getTime());
+        return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDate(previousWeek.getTime());
     }
 
     @GetMapping(path = "/status/weekly-history/{id}")
@@ -140,7 +140,7 @@ public class SparqlEndpointAvailabilityRestController {
         previousWeek.add(Calendar.WEEK_OF_YEAR, -1);
         logger.info("Requested sparql endopoint availabilty from previuos week " + previousWeek.getTime());
         try{
-            return sparqlEndpointDATAManagement.getSparqlEndpointsAfterQueryDateById(previousWeek.getTime(), id);
+            return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDateById(previousWeek.getTime(), id);
         } catch (SparqlEndpointNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
@@ -153,7 +153,7 @@ public class SparqlEndpointAvailabilityRestController {
         Calendar previousDay = Calendar.getInstance();
         previousDay.add(Calendar.DAY_OF_YEAR, -1);
         logger.info("Requested sparql endopoint availabilty from previuos day " + previousDay.getTime());
-        return sparqlEndpointDATAManagement.getSparqlEndpointsAfterQueryDate(previousDay.getTime());
+        return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDate(previousDay.getTime());
     }
 
     @GetMapping(path = "/status/daily-history/{id}")
@@ -164,7 +164,7 @@ public class SparqlEndpointAvailabilityRestController {
         previousDay.add(Calendar.DAY_OF_YEAR, -1);
         logger.info("Requested sparql endopoint availabilty from previuos day " + previousDay.getTime());
         try{
-            return sparqlEndpointDATAManagement.getSparqlEndpointsAfterQueryDateById(previousDay.getTime(), id);
+            return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDateById(previousDay.getTime(), id);
         } catch (SparqlEndpointNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "SparqlEndpoint not found");
         }
