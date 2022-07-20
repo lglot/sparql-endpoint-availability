@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${lang}">
+<head>
+    <base th:href="${@environment.getProperty('server.servlet.context-path')}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Sparql Endpoint login</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
+    <style>
+        body{
+            background-color: #3e3e3e;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+
+
+<div class="container">
+    <form class="form-signin" method="post" action="/sparql-endpoint-availability/login">
+        <h2 class="form-signin-heading" th:text="#{login.title}">Please login</h2>
+        <div th:if="${errorMessage != null}">
+            <div class="alert alert-danger" role="alert" th:text="#{error.bad.credentials}"></div>
+        </div>
+        <p>
+            <label for="username" class="sr-only">Username</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+        </p>
+        <p>
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+        </p>
+        <!-- remember me -->
+        <p>
+            <label for="remember-me" class="sr-only" th:text="#{remember.me}">Remember me</label>
+            <input type="checkbox" id="remember-me" name="remember-me">
+            <span class="text-muted" th:text="#{remember.me}">Remember me</span>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{login.button}">Login</button>
+    </form>
+</div>
+</body></html>

@@ -1,23 +1,24 @@
 package it.unife.sparql_endpoint_availability.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import static it.unife.sparql_endpoint_availability.security.ApplicationUserPermission.*;
-import static it.unife.sparql_endpoint_availability.security.ApplicationUserRole.*;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
+import static it.unife.sparql_endpoint_availability.security.ApplicationUserRole.ADMIN;
+import static it.unife.sparql_endpoint_availability.security.ApplicationUserRole.USER;
 
 
 @Configuration
@@ -41,7 +42,21 @@ public class SecurityConfiguration  {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                .formLogin()
+                    .loginPage("/login").permitAll()
+                    .loginProcessingUrl("/login?lang={lang}")
+                    .defaultSuccessUrl("/", true)
+                    .failureUrl("/login?error=true")
+                .and()
+                .rememberMe().tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(30))
+                .and()
+                .logout()
+                    .logoutUrl("/logout")
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                    .clearAuthentication(true)
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID", "remember-me")
+                    .logoutSuccessUrl("/login?logout");
 //                .and()
 //                .headers().frameOptions().disable();
         return http.build();

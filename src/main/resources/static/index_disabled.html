@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Page Redirection</title>
+    <base >
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="refresh" content="0; url=/home">
+    <script type="text/javascript">
+        function onLoadHandler() {
+            window.location.href = "/home";
+        }
+
+        window.addEventListener("load", onLoadHandler);
+    </script>
+</head>
+<body>
+<p>View Sparql Endpoint status <a href="/home">here</a></p>
+</body>
+</html>

@@ -98,7 +98,7 @@ class SparqlEndpointAvailabilityRestControllerTest {
 
 
     @Test
-    @WithMockUser("ADMIN")
+    @WithMockUser(roles = "ADMIN")
     void getSparqlEndpointById() throws Exception {
 
         Mockito.when(sedm.getSparqlEndpointWithCurrentStatusById(anyLong())).thenAnswer(invocation -> {
