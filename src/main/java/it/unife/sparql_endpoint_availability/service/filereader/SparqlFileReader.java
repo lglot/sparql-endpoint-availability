@@ -1,4 +1,4 @@
-package it.unife.sparql_endpoint_availability.service.fileReader;
+package it.unife.sparql_endpoint_availability.service.filereader;
 
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 

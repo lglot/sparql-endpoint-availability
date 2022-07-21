@@ -13,7 +13,7 @@ services:
     #build:
     #  context: .
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
       - db
     env_file:
@@ -21,10 +21,12 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/sparql_endpoint_availability?serverTimezone=Europe/Rome
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - SPRING_DATASOURCE_PASSWORD=${DATABASE_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SPRING_JPA_DATABASE-PLATFORM=org.hibernate.dialect.MySQL5InnoDBDialect
       - SPRING_DATASOURCE_DRIVER-CLASS-NAME=com.mysql.cj.jdbc.Driver
+      - JWT_TOKEN_SECRET=${JWT_TOKEN_SECRET}
+
   db:
     image: mysql:latest
     container_name: db

@@ -1,16 +1,15 @@
-package it.unife.sparql_endpoint_availability.service.fileReader.impl;
+package it.unife.sparql_endpoint_availability.service.filereader.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
-import it.unife.sparql_endpoint_availability.service.fileReader.SparqlFileReader;
+import it.unife.sparql_endpoint_availability.service.filereader.SparqlFileReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
 
 public class SparqlFileReaderImpl implements SparqlFileReader {

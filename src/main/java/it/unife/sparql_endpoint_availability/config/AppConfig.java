@@ -1,9 +1,9 @@
 package it.unife.sparql_endpoint_availability.config;
 
-import it.unife.sparql_endpoint_availability.service.fileReader.impl.SparqlFileReaderImpl;
-import it.unife.sparql_endpoint_availability.service.fileReader.SparqlFileReader;
-import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.SparqlEndpointCheckService;
-import it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueryMultiThreadImpl.SECheckServiceMultiThreadImpl;
+import it.unife.sparql_endpoint_availability.service.filereader.impl.SparqlFileReaderImpl;
+import it.unife.sparql_endpoint_availability.service.filereader.SparqlFileReader;
+import it.unife.sparql_endpoint_availability.service.sparqlEndpointCheck.SparqlEndpointCheckService;
+import it.unife.sparql_endpoint_availability.service.sparqlEndpointCheck.impl.multiThreadImpl.SparqlEndpointCheckMultiThreadImpl;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan(basePackages = "it.unife.sparql_endpoint_availability.service.sparqlEndpointQuery.sEQueryMultiThreadImpl.thread")
+@ComponentScan(basePackages = "it.unife.sparql_endpoint_availability.service.sparqlEndpointCheck")
 @EnableTransactionManagement
 public class AppConfig {
 
@@ -35,8 +35,7 @@ public class AppConfig {
     /* Iniettori delle dipendenze */
     @Bean
     public SparqlEndpointCheckService getSparqlEndpointCheckService() {
-        return new SECheckServiceMultiThreadImpl(QUERY_NUMBER_BY_THREAD);
-        // return new SparqlEndpointCheckServiceTestImpl();
+        return new SparqlEndpointCheckMultiThreadImpl(QUERY_NUMBER_BY_THREAD);
     }
 
     @Bean

@@ -2,14 +2,13 @@ package it.unife.sparql_endpoint_availability.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.unife.sparql_endpoint_availability.config.TestSecurityConfig;
 import it.unife.sparql_endpoint_availability.dto.SparqlEndpointDTO;
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
+import it.unife.sparql_endpoint_availability.model.management.AppUserManagement;
 import it.unife.sparql_endpoint_availability.model.management.JPAImpl.AppUserManagementJpaImpl;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
-import it.unife.sparql_endpoint_availability.security.PasswordConfig;
 import it.unife.sparql_endpoint_availability.security.SecurityConfiguration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -39,7 +38,7 @@ import static org.mockito.ArgumentMatchers.*;
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @WebMvcTest(SparqlEndpointAvailabilityRestController.class)
-@Import({TestSecurityConfig.class})
+@Import({SecurityConfiguration.ApiSecurityConfig.class})
 class SparqlEndpointAvailabilityRestControllerTest {
 
     @Autowired

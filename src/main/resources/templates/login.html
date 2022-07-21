@@ -30,7 +30,7 @@
 
 <div class="container">
 
-    <form class="form-signin" method="post" action="/sparql-endpoint-availability/login">
+    <form class="form-signin" method="post" th:action="|${@environment.getProperty('server.servlet.context-path')}/login|">
         <h2 class="form-signin-heading" th:text="#{login.title}">Please login</h2>
         <div th:if="${errorMessage != null}">
             <div class="alert alert-danger" role="alert" th:text="#{error.bad.credentials}"></div>
@@ -39,6 +39,7 @@
             <label for="username" class="sr-only">Username</label>
             <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
         </p>
+
         <p>
             <label for="password" class="sr-only">Password</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
