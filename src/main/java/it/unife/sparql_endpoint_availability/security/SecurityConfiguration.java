@@ -86,7 +86,7 @@ public class SecurityConfiguration  {
         }
 
         @Override
-        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        protected void configure(AuthenticationManagerBuilder auth) {
             auth.authenticationProvider(daoAuthenticationProvider());
         }
 
@@ -104,8 +104,9 @@ public class SecurityConfiguration  {
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .csrf().disable()
+                    .requestMatchers().antMatchers("/api/**").and()
                     .authorizeRequests()
-                    .antMatchers("api/**")
+                    .anyRequest()
                     .authenticated()
                     .and()
                     .httpBasic();
