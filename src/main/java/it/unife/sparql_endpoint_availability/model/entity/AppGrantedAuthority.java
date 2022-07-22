@@ -1,5 +1,6 @@
 package it.unife.sparql_endpoint_availability.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +22,7 @@ public class AppGrantedAuthority implements GrantedAuthority {
     private String role;
 
     @ManyToOne
+    @JsonBackReference // Omitted from serialization
     private AppUser user;
 
     public AppGrantedAuthority(String role) {

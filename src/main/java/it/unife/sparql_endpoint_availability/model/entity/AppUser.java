@@ -1,5 +1,6 @@
 package it.unife.sparql_endpoint_availability.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -32,6 +33,7 @@ public class AppUser implements UserDetails {
     private boolean credentialsNonExpired;
     private boolean accountNonLocked;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private Set<AppGrantedAuthority> authorities;
 
