@@ -34,12 +34,13 @@ jobs:
           cache: maven
       
       - name: Test with Maven
-        run: mvn -B test
+        run: mvn -B test -fae
         env:
            SPRING_DATASOURCE_PASSWORD: ${{ secrets.MYSQL_PASSWORD }} 
 
       # test result maven surefire report
       - name: Surefire Report
+        if: ${{always()}}
         uses: ScaCap/action-surefire-report@v1.0.5
 
 
@@ -47,7 +48,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: "surefire-reports/**/*.xml"
+          files: "**/surefire-reports/*.xml"
       
       - name: Log in to Docker Hub
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
