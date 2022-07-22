@@ -1,5 +1,6 @@
 package it.unife.sparql_endpoint_availability.security;
 
+import it.unife.sparql_endpoint_availability.jwt.JwtAuthenticationEntryPoint;
 import it.unife.sparql_endpoint_availability.jwt.JwtConfig;
 import it.unife.sparql_endpoint_availability.jwt.JwtTokenVerify;
 import it.unife.sparql_endpoint_availability.jwt.JwtUsernamePasswordAuthenticationFilter;
@@ -32,12 +33,14 @@ public class SecurityConfiguration  {
     private final AppUserManagement appUserManagement;
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
-    public SecurityConfiguration(AppUserManagement appUserManagement, JwtConfig jwtConfig, SecretKey secretKey) {
+    public SecurityConfiguration(AppUserManagement appUserManagement, JwtConfig jwtConfig, SecretKey secretKey, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
         this.appUserManagement = appUserManagement;
         this.jwtConfig = jwtConfig;
         this.secretKey = secretKey;
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
     }
 
     @Bean
@@ -53,8 +56,34 @@ public class SecurityConfiguration  {
         return authProvider;
     }
 
+    @EnableGlobalMethodSecurity(prePostEnabled=true)
     @Configuration
-    @Order(2)
+    @Order(1)
+    public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .csrf().disable()
+                    .antMatcher("/api/**").authorizeRequests().anyRequest().authenticated()
+                    .and()
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and()
+                    .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                    .and()
+                    .addFilter(new JwtUsernamePasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
+                    .addFilterAfter(new JwtTokenVerify(jwtConfig, secretKey), JwtUsernamePasswordAuthenticationFilter.class);
+
+        }
+
+//        @Override
+//        protected void configure(AuthenticationManagerBuilder auth) {
+//            auth.authenticationProvider(daoAuthenticationProvider());
+//        }
+    }
+
+
+
+    @Configuration
     public class GeneralSecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
@@ -84,38 +113,6 @@ public class SecurityConfiguration  {
 //                   .and()
 //                   .headers().frameOptions().disable();
 //          http.authenticationProvider(daoAuthenticationProvider());
-        }
-
-        @Override
-        protected void configure(AuthenticationManagerBuilder auth) {
-            auth.authenticationProvider(daoAuthenticationProvider());
-        }
-
-
-
-    }
-
-
-
-    @EnableGlobalMethodSecurity(prePostEnabled=true)
-    @Configuration
-    @Order(1)
-    public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-                    .csrf().disable()
-                    .antMatcher("/api/**")
-                    .authorizeRequests()
-                    .and()
-                    //.sessionManagement()
-                    //    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    //.and()
-                    .addFilter(new JwtUsernamePasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
-                    .addFilterAfter(new JwtTokenVerify(jwtConfig, secretKey), JwtUsernamePasswordAuthenticationFilter.class)
-                    .authorizeRequests()
-                    .anyRequest()
-                    .authenticated();
         }
 
         @Override

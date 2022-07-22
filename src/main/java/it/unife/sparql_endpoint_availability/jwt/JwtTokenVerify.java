@@ -1,11 +1,12 @@
 package it.unife.sparql_endpoint_availability.jwt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
+import it.unife.sparql_endpoint_availability.exception.JwtAuthenticationException;
 import it.unife.sparql_endpoint_availability.model.entity.AppGrantedAuthority;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,7 +38,7 @@ public class JwtTokenVerify extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+                                    FilterChain filterChain) throws ServletException, IOException  {
 
         String authHeader = request.getHeader("Authorization");
         if(Strings.isNullOrEmpty(authHeader) || !authHeader.startsWith(jwtConfig.getPrefix())) {
@@ -68,8 +70,13 @@ public class JwtTokenVerify extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         catch (JwtException e){
-            logger.error("JTK token is not valid");
-            throw new IllegalStateException(token + " is not a valid JWT token");
+            String message = "JWT token is invalid";
+            logger.error(message);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            byte[] body = new ObjectMapper()
+                    .writeValueAsBytes(Collections.singletonMap("error", message));
+            response.getOutputStream().write(body);
+            return;
         }
 
         filterChain.doFilter(request, response);
