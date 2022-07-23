@@ -8,9 +8,6 @@ import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundExc
 import it.unife.sparql_endpoint_availability.jwt.JwtAuthenticationEntryPoint;
 import it.unife.sparql_endpoint_availability.jwt.JwtConfig;
 import it.unife.sparql_endpoint_availability.jwt.JwtSecretKey;
-import it.unife.sparql_endpoint_availability.jwt.TokenManager;
-import it.unife.sparql_endpoint_availability.model.entity.AppGrantedAuthority;
-import it.unife.sparql_endpoint_availability.model.entity.AppUser;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import it.unife.sparql_endpoint_availability.model.management.AppUserManagement;
@@ -18,65 +15,57 @@ import it.unife.sparql_endpoint_availability.model.management.JPAImpl.AppUserMan
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
 import it.unife.sparql_endpoint_availability.security.SecurityConfiguration;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.data.repository.query.QueryLookupStrategy;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithSecurityContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-//@WebMvcTest(SparqlEndpointAvailabilityRestController.class)
-//@Import({SecurityConfiguration.ApiSecurityConfig.class})
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
-@Disabled
-class SparqlEndpointAvailabilityRestControllerTest {
+@WebMvcTest(SparqlEndpointAvailabilityRestController.class)
+@Import({SecurityConfiguration.class, JwtConfig.class, JwtAuthenticationEntryPoint.class, JwtSecretKey.class})
+class SparqlEndpointAvailabilityRestControllerUnitTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
+    @MockBean
     private SparqlEndpointManagement sedm;
 
-    @Autowired
-    JwtSecretKey jwtSecretKey;
-    @Autowired
-    JwtConfig jwtConfig;
+    @MockBean
+    private AppUserManagement appUserManagement;
 
 
     private List<SparqlEndpoint> sparqlEndpoints;
     private final String BASE_URL_API = "/api/endpoints";
 
     @BeforeAll
-    void init() throws SparqlEndpointAlreadyExistsException {
+    void init() {
         sparqlEndpoints = new ArrayList<>();
         for(int i = 1; i <= 5; i++) {
             SparqlEndpoint se = SparqlEndpoint.builder()
@@ -97,38 +86,22 @@ class SparqlEndpointAvailabilityRestControllerTest {
                     .build();
             se.setSparqlEndpointStatuses(Arrays.asList(status, statusOld));
             sparqlEndpoints.add(se);
-            sedm.createSparqlEndpoint(se);
         }
     }
 
     @Test
-    //@WithMockUser(roles = "USER")
+    @WithMockUser(roles = "USER")
     void getAllSparqlEndpoints() throws Exception {
-
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new AppGrantedAuthority("ROLE_USER"));
-
-        String token = TokenManager.createToken("user", authorities, 1, jwtSecretKey.secretKey());
-
-        assertNotNull(token);
-        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL_API)
-                .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
-                .andExpect(MockMvcResultMatchers.jsonPath("$").value(hasSize(sparqlEndpoints.size())));
-
-
-//        Mockito.when(sedm.getSparqlEndpointsWithCurrentStatus()).thenReturn(sparqlEndpoints);
-//        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(BASE_URL_API);
-//        mockMvc.perform(requestBuilder)
-//                .andExpect(mvcResult -> {
-//                    assertEquals(200, mvcResult.getResponse().getStatus());
-//                    List<SparqlEndpointDTO> seResponse = new ObjectMapper()
-//                            .readValue(mvcResult.getResponse().getContentAsString(),
-//                                    new TypeReference<List<SparqlEndpointDTO>>() {});
-//                    assertEquals(5, seResponse.size());
-//                });
+        Mockito.when(sedm.getSparqlEndpointsWithCurrentStatus()).thenReturn(sparqlEndpoints);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(BASE_URL_API);
+        mockMvc.perform(requestBuilder)
+                .andExpect(mvcResult -> {
+                    assertEquals(200, mvcResult.getResponse().getStatus());
+                    List<SparqlEndpointDTO> seResponse = new ObjectMapper()
+                            .readValue(mvcResult.getResponse().getContentAsString(),
+                                    new TypeReference<List<SparqlEndpointDTO>>() {});
+                    assertEquals(5, seResponse.size());
+                });
     }
 
     @Test

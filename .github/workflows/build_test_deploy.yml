@@ -36,7 +36,8 @@ jobs:
       - name: Test with Maven
         run: mvn -B test -fae
         env:
-           SPRING_DATASOURCE_PASSWORD: ${{ secrets.MYSQL_PASSWORD }} 
+           SPRING_DATASOURCE_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+           SPRING_PROFILES_ACTIVE: 'mysql'
 
       # test result maven surefire report
       - name: Surefire Report
