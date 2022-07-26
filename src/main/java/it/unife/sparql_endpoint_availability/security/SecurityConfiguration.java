@@ -17,8 +17,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -36,24 +34,21 @@ public class SecurityConfiguration  {
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SecurityConfiguration(AppUserManagement appUserManagement, JwtConfig jwtConfig, SecretKey secretKey, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
+    public SecurityConfiguration(AppUserManagement appUserManagement, JwtConfig jwtConfig, SecretKey secretKey, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, PasswordEncoder passwordEncoder) {
         this.appUserManagement = appUserManagement;
         this.jwtConfig = jwtConfig;
         this.secretKey = secretKey;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setPasswordEncoder(passwordEncoder());
+        authProvider.setPasswordEncoder(passwordEncoder);
         authProvider.setUserDetailsService(appUserManagement);
         return authProvider;
     }
