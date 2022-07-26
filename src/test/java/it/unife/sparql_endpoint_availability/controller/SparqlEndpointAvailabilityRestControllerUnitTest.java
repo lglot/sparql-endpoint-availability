@@ -13,6 +13,7 @@ import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import it.unife.sparql_endpoint_availability.model.management.AppUserManagement;
 import it.unife.sparql_endpoint_availability.model.management.JPAImpl.AppUserManagementJpaImpl;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
+import it.unife.sparql_endpoint_availability.security.PasswordConfiguration;
 import it.unife.sparql_endpoint_availability.security.SecurityConfiguration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -48,7 +50,10 @@ import static org.mockito.ArgumentMatchers.*;
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @WebMvcTest(SparqlEndpointAvailabilityRestController.class)
-@Import({SecurityConfiguration.class, JwtConfig.class, JwtAuthenticationEntryPoint.class, JwtSecretKey.class})
+@Import({SecurityConfiguration.class,
+        JwtConfig.class,
+        JwtAuthenticationEntryPoint.class,
+        JwtSecretKey.class, PasswordConfiguration.class})
 class SparqlEndpointAvailabilityRestControllerUnitTest {
 
     @Autowired

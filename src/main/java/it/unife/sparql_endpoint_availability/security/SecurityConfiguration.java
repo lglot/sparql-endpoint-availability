@@ -93,8 +93,8 @@ public class SecurityConfiguration  {
             http
                     .csrf().disable()
                     .authorizeRequests()
-                    .anyRequest()
-                    .authenticated()
+                    .antMatchers("/signup").permitAll()
+                    .anyRequest().authenticated()
                     .and()
                     .formLogin()
                         .loginPage("/login").permitAll()

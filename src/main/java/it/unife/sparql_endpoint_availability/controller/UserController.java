@@ -23,4 +23,14 @@ public class UserController {
 
         return "login";
     }
+
+    // Sign in page
+    @GetMapping("signup")
+    public String getSigninView(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
+                               @RequestParam(name = "error", required = false, defaultValue = "false") String error,
+                               Model model) {
+
+        model.addAttribute("lang", lang);
+        return "signup";
+    }
 }

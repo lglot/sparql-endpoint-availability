@@ -3,6 +3,7 @@ package it.unife.sparql_endpoint_availability.model.management.JPAImpl;
 import it.unife.sparql_endpoint_availability.model.entity.AppUser;
 import it.unife.sparql_endpoint_availability.model.management.AppUserManagement;
 import it.unife.sparql_endpoint_availability.model.repository.AppUserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +17,7 @@ import static it.unife.sparql_endpoint_availability.security.ApplicationUserRole
 
 @Service
 @Transactional
+@Slf4j
 public class AppUserManagementJpaImpl implements AppUserManagement {
 
     private final AppUserRepository appUserRepository;
@@ -65,6 +67,7 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
         if (appUserRepository.existsByUsername(username)) {
             throw new IllegalArgumentException("User already exists: " + username);
         }
+        log.info("Saving new user: {}", user);
         return appUserRepository.save(user);
     }
 
