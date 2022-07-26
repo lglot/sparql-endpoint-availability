@@ -92,8 +92,11 @@ public class SecurityConfiguration  {
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .csrf().disable()
+                    .headers().frameOptions().disable()
+                    .and()
                     .authorizeRequests()
-                    .antMatchers("/signup").permitAll()
+                    .antMatchers("/h2-console/**").permitAll()
+                    .antMatchers("/signup", "/login").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()
@@ -112,8 +115,7 @@ public class SecurityConfiguration  {
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID", "remember-me")
                         .logoutSuccessUrl("/login?logout");
-//                   .and()
-//                   .headers().frameOptions().disable();
+
 //          http.authenticationProvider(daoAuthenticationProvider());
         }
 
