@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 
+
 public class JwtUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
