@@ -11,7 +11,7 @@ import static it.unife.sparql_endpoint_availability.security.ApplicationUserPerm
 
 public enum ApplicationUserRole {
     USER(Sets.newHashSet(SPARQL_ENDPOINT_READ)),
-    ADMIN(Sets.newHashSet(SPARQL_ENDPOINT_READ, SPARQL_ENDPOINT_WRITE));
+    ADMIN(Sets.newHashSet(SPARQL_ENDPOINT_READ, SPARQL_ENDPOINT_WRITE, USER_READ, USER_WRITE));
 
     private final Set<ApplicationUserPermission> permissions;
 

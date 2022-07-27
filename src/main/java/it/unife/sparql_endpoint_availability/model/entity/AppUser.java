@@ -17,7 +17,6 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "users")
-@NamedEntityGraph(name = "User.detail", attributeNodes = @NamedAttributeNode("authorities"))
 public class AppUser implements UserDetails {
 
     @Id
@@ -34,7 +33,7 @@ public class AppUser implements UserDetails {
     private boolean accountNonLocked;
 
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<AppGrantedAuthority> authorities;
 
 

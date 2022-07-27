@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import static it.unife.sparql_endpoint_availability.security.ApplicationUserRole.ADMIN;
 import static it.unife.sparql_endpoint_availability.security.ApplicationUserRole.USER;
@@ -44,6 +43,7 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
 
     @Override
     public AppUser saveUser(String username, String password, String role) throws UserAlreadyExistsException {
+
         AppUser user = AppUser.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password))
@@ -52,6 +52,7 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
                 .credentialsNonExpired(true)
                 .accountNonLocked(true)
                 .build();
+
         if (role.equalsIgnoreCase("admin")) {
             user.setAuthorities(ADMIN.getGrantedAuthorities());
         } else if (role.equalsIgnoreCase("user")) {
@@ -60,7 +61,7 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
         else {
             throw new IllegalArgumentException("Invalid role: " + role);
         }
-        user.getAuthorities().forEach(ga -> ga.setUser(user));
+        user.getAuthorities().forEach(ga -> ga.getUsers().add(user));
         if (appUserRepository.existsByUsername(username)) {
             throw new UserAlreadyExistsException(username);
         }

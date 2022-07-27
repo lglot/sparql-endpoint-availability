@@ -28,7 +28,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" th:href="${@environment.getProperty('server.servlet.context-path')}+'/user'">
                     <span class="fa fa-user"></span>
                     <span class="nav-link-text">Account</span>
                 </a>

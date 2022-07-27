@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Getter
@@ -21,9 +23,9 @@ public class AppGrantedAuthority implements GrantedAuthority {
 
     private String role;
 
-    @ManyToOne
+    @ManyToMany
     @JsonBackReference // Omitted from serialization
-    private AppUser user;
+    private Set<AppUser> users = new HashSet<>();
 
     public AppGrantedAuthority(String role) {
         this.role = role;

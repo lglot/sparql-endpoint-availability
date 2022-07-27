@@ -1,5 +1,6 @@
 package it.unife.sparql_endpoint_availability.controller;
 
+import it.unife.sparql_endpoint_availability.exception.UserAlreadyExistsException;
 import it.unife.sparql_endpoint_availability.jwt.JwtConfig;
 import it.unife.sparql_endpoint_availability.model.entity.AppUser;
 import it.unife.sparql_endpoint_availability.model.management.AppUserManagement;
@@ -35,7 +36,7 @@ class JwtAuthenticationControllerTest {
     }
 
     @BeforeAll
-    public void createUser() {
+    public void createUser() throws UserAlreadyExistsException {
         appUserManagement.saveUser("test", "test", "user");
     }
 

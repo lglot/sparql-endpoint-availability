@@ -2,7 +2,9 @@ package it.unife.sparql_endpoint_availability.security;
 
 public enum ApplicationUserPermission {
     SPARQL_ENDPOINT_READ("sparql_endpoint:read"),
-    SPARQL_ENDPOINT_WRITE("sparql_endpoint:write");
+    SPARQL_ENDPOINT_WRITE("sparql_endpoint:write"),
+    USER_READ("user:read"),
+    USER_WRITE("user:write");
 
     private final String permission;
 
