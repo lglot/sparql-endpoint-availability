@@ -13,8 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-
 @Controller
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
@@ -40,8 +38,8 @@ public class UserController {
 
     // Sign in page
     @GetMapping("signup")
-    public String getSigninView(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
-                               Model model) {
+    public String getSignupView(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
+                                Model model) {
         model.addAttribute("lang", lang);
         return "signup";
     }

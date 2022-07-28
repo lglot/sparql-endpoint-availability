@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Sparql Endpoint login</title>
+    <title>Login</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../static/css/bootstrap.css" type="text/css" th:href="@{/css/bootstrap.css}"/>
@@ -59,7 +59,7 @@
             <label for="remember-me" class="sr-only" th:text="#{remember.me}">Remember me</label>
             <input type="checkbox" id="remember-me" name="remember-me">
             <span class="text-muted" th:text="#{remember.me}">Remember me</span>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{login.button}">Login</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="submit" th:text="#{login.button}">Login</button>
     </form>
 
     <div class="text-center">

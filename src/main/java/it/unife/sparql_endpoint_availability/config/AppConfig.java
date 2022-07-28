@@ -5,6 +5,8 @@ import it.unife.sparql_endpoint_availability.service.filereader.SparqlFileReader
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointCheck.SparqlEndpointCheckService;
 import it.unife.sparql_endpoint_availability.service.sparqlEndpointCheck.impl.multiThreadImpl.SparqlEndpointCheckMultiThreadImpl;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
