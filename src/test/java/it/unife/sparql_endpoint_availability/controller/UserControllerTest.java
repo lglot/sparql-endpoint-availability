@@ -1,8 +1,11 @@
 package it.unife.sparql_endpoint_availability.controller;
 
 
+import it.unife.sparql_endpoint_availability.SparqlEndpointAvailabilityApplication;
+import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import org.junit.jupiter.api.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -10,6 +13,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.servlet.ServletContext;
 
@@ -17,7 +21,8 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserControllerTest {
 

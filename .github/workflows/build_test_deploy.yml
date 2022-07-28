@@ -36,12 +36,6 @@ jobs:
       - name: Install Firefox
         uses: browser-actions/setup-firefox@latest
 
-      - name: Run application
-        run: mvn spring-boot:run
-        env:
-          SPRING_DATASOURCE_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          SPRING_PROFILES_ACTIVE: 'mysql'
-
       - name: Test with Maven
         run: mvn -B test -fae
         env:
