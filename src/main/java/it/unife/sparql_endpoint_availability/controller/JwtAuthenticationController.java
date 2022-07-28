@@ -50,6 +50,7 @@ public class JwtAuthenticationController {
             Authentication authResult = authenticationManager.authenticate(authentication);
             logger.info("Authentication successful for user: " + authenticationRequest.getUsername());
 
+
          String token = TokenManager.createToken(authResult.getName(),
                 authResult.getAuthorities(),
                 jwtConfig.getExpirationTimeAfertDays(),

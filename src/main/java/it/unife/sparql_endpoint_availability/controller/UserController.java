@@ -2,10 +2,12 @@ package it.unife.sparql_endpoint_availability.controller;
 
 import it.unife.sparql_endpoint_availability.dto.UserDto;
 import it.unife.sparql_endpoint_availability.exception.UserAlreadyExistsException;
+import it.unife.sparql_endpoint_availability.jwt.JwtConfig;
 import it.unife.sparql_endpoint_availability.model.entity.AppUser;
 import it.unife.sparql_endpoint_availability.model.management.AppUserManagement;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 @Controller
-@AllArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
 @RequestMapping(value = "", produces = "text/html; charset=UTF-8")
 public class UserController {
 
     AppUserManagement appUserManagement;
+    JwtConfig jwtConfig;
 
     @GetMapping("login")
     public String getLoginView(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
@@ -69,6 +72,7 @@ public class UserController {
 
         AppUser user = (AppUser) authentication.getPrincipal();
         UserDto userDto = UserDto.fromAppUser(user);
+        model.addAttribute("prefix_jwt", jwtConfig.getPrefix());
         model.addAttribute("user", userDto);
         model.addAttribute("lang", lang);
 

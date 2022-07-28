@@ -14,7 +14,11 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-
+            <li class="nav-item">
+                <a class="nav-link" th:href="${@environment.getProperty('server.servlet.context-path')}">
+                    <span class="fa fa-home"></span>
+                    <span class="text">Home</span>
+                </a>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
@@ -22,8 +26,8 @@
                     <span class="nav-link-text">Language</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" th:href="${@environment.getProperty('server.servlet.context-path')}+'/?lang=en'">English</a>
-                    <a class="dropdown-item" th:href="${@environment.getProperty('server.servlet.context-path')}+'/?lang=it'">Italian</a>
+                    <a class="dropdown-item" th:href="${@environment.getProperty('server.servlet.context-path')} + ${#request.getServletPath}+'?lang=en'">English</a>
+                    <a class="dropdown-item" th:href="${@environment.getProperty('server.servlet.context-path')} + ${#request.getServletPath}+'?lang=it'">Italian</a>
                 </div>
             </li>
 

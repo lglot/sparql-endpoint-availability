@@ -86,7 +86,7 @@ table.dataTable thead th.sorting_desc:after {
     bottom: 0.9em !important;
     right: 1em !important;
     display: block !important;
-    font-family: FontAwesome !important;
+    font-family: FontAwesome, serif !important;
 }
 table.dataTable thead th.sorting:after {
     content: "\f0dc" !important;
@@ -117,4 +117,42 @@ table.dataTable thead th.sorting_desc:after {
 
 #sparql-endpoint-table_filter input {
     width: 100%;
+}
+
+.mytooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.mytooltip .tooltiptext {
+    visibility: hidden;
+    width: 140px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.mytooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.mytooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }
