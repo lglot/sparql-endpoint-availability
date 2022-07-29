@@ -40,6 +40,7 @@ class UserControllerTest {
     void setupTest() {
         //driver = new ChromeDriver();
         FirefoxOptions options = new FirefoxOptions();
+        options.addArguments("--headless");
         driver = new FirefoxDriver(options);
     }
 
@@ -96,7 +97,7 @@ class UserControllerTest {
         driver.findElement(By.id("submit")).click();
         assertEquals("Sparql Endpoint availability", driver.getTitle());
 
-        driver.get("localhost:8080" + baseUrl + "/user");
+        driver.get("localhost:" + randomServerPort + baseUrl + "/user");
         assertEquals("User info", driver.getTitle());
     }
 }
