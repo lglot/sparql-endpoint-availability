@@ -1,8 +1,5 @@
 package it.unife.sparql_endpoint_availability.controller;
 
-
-import it.unife.sparql_endpoint_availability.SparqlEndpointAvailabilityApplication;
-import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import org.junit.jupiter.api.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,21 +10,23 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import javax.servlet.ServletContext;
 
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserControllerTest {
 
     @Value("${server.servlet.context-path}")
     private String baseUrl;
+
+    @LocalServerPort
+    int randomServerPort;
 
     WebDriver driver;
 
@@ -51,7 +50,7 @@ class UserControllerTest {
 
     @Test
     void login() {
-        driver.get("localhost:8080" + baseUrl + "/login");
+        driver.get("localhost:" + randomServerPort + baseUrl + "/login");
         assertEquals("Login", driver.getTitle());
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
@@ -64,7 +63,7 @@ class UserControllerTest {
 
     @Test
     void signup() {
-        driver.get("localhost:8080" + baseUrl + "/signup");
+        driver.get("localhost:" + randomServerPort + baseUrl + "/signup");
         assertEquals("Sign up", driver.getTitle());
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
@@ -87,7 +86,7 @@ class UserControllerTest {
 
     @Test
     void getUserView() {
-        driver.get("localhost:8080" + baseUrl + "/login");
+        driver.get("localhost:" + randomServerPort + baseUrl + "/login");
         assertEquals("Login", driver.getTitle());
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
