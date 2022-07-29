@@ -14,6 +14,12 @@ public interface AppUserManagement extends UserDetailsService {
     AppUser getUser(String username);
     List<AppUser> getAllUsers();
 
+    void deleteUser(String username);
+    void updateUser(String username, String password, String role);
+
+    // check if at least one user is present in the database
+    boolean isEmpty();
+
     boolean exists(String username);
 
 }

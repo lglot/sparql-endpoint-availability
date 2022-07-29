@@ -26,8 +26,8 @@
                     <span class="nav-link-text">Language</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" th:href="${@environment.getProperty('server.servlet.context-path')} + ${#request.getServletPath}+'?lang=en'">English</a>
-                    <a class="dropdown-item" th:href="${@environment.getProperty('server.servlet.context-path')} + ${#request.getServletPath}+'?lang=it'">Italian</a>
+                    <a id="en_item" class="dropdown-item" th:href="${@environment.getProperty('server.servlet.context-path')} + ${#request.getServletPath}+'?lang=en'">English</a>
+                    <a id="it_item" class="dropdown-item" th:href="${@environment.getProperty('server.servlet.context-path')} + ${#request.getServletPath}+'?lang=it'">Italian</a>
                 </div>
             </li>
 
@@ -38,7 +38,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="${@environment.getProperty('server.servlet.context-path')}+'/logout'">
+                <a id="logout" class="nav-link" th:href="${@environment.getProperty('server.servlet.context-path')}+'/logout'">
                     <span class="fa fa-sign-out"></span>
                     <span class="nav-link-text">Logout</span>
                 </a>

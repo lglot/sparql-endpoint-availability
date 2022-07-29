@@ -63,7 +63,7 @@
     <form class="form-signin" method="post" th:action="|${@environment.getProperty('server.servlet.context-path')}/signup|" th:modelAttribute="user">
         <h2 class="form-signin-heading" th:text="#{signup.title}">Register</h2>
         <div th:if="${errorMessage != null}">
-            <div class="alert alert-danger" role="alert" th:text="#{signup.error.username.taken}"></div>
+            <div id="error-message" class="alert alert-danger" role="alert" th:text="#{signup.error.username.taken}"></div>
         </div>
         <p>
             <label for="username" class="sr-only">Username</label>

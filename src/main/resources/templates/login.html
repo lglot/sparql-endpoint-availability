@@ -40,10 +40,10 @@
     <form class="form-signin" method="post" th:action="|${@environment.getProperty('server.servlet.context-path')}/login|">
         <h2 class="form-signin-heading" th:text="#{login.title}">Please login</h2>
         <div th:if="${errorMessage != null}">
-            <div class="alert alert-danger" role="alert" th:text="#{error.bad.credentials}"></div>
+            <div id="error-messagge" class="alert alert-danger" role="alert" th:text="#{error.bad.credentials}"></div>
         </div>
         <div th:if="${successMessage != null}">
-            <div class="alert alert-success" role="alert" th:text="#{success.signup}"></div>
+            <div id="success-message" class="alert alert-success" role="alert" th:text="#{success.signup}"></div>
         </div>
         <p>
             <label for="username" class="sr-only">Username</label>

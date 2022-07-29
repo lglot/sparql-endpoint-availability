@@ -1,5 +1,7 @@
 package it.unife.sparql_endpoint_availability.controller;
 
+import it.unife.sparql_endpoint_availability.config.AppConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Duration;
@@ -20,8 +23,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Slf4j
 class UserControllerTest {
 
+    private final AppConfig appConfig;
+    private String adminUsername;
+    private String adminPassword;
     @Value("${server.servlet.context-path}")
     private String baseUrl;
 
@@ -30,10 +37,19 @@ class UserControllerTest {
 
     WebDriver driver;
 
+    @Autowired
+    public UserControllerTest(AppConfig appConfig) {
+        this.appConfig = appConfig;
+    }
+
     @BeforeAll
     void setupClass() {
         //WebDriverManager.chromedriver().setup();
         WebDriverManager.firefoxdriver().setup();
+        adminUsername = appConfig.getAdminUsername();
+        adminPassword = appConfig.getAdminPassword();
+        log.info("adminUsername: {}", adminUsername);
+        log.info("adminPassword: {}", adminPassword);
     }
 
     @BeforeEach
@@ -50,16 +66,19 @@ class UserControllerTest {
     }
 
     @Test
-    void login() {
+    void login_and_logout() {
         driver.get("localhost:" + randomServerPort + baseUrl + "/login");
         assertEquals("Login", driver.getTitle());
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
-        driver.findElement(By.id("username")).sendKeys("luigi");
-        driver.findElement(By.id("password")).sendKeys("luigi");
+        driver.findElement(By.id("username")).sendKeys(adminUsername);
+        driver.findElement(By.id("password")).sendKeys(adminPassword);
         driver.findElement(By.id("submit")).click();
         assertEquals("Sparql Endpoint availability", driver.getTitle());
+
+        driver.findElement(By.id("logout")).click();
+        assertEquals("Login", driver.getTitle());
     }
 
     @Test
@@ -75,15 +94,28 @@ class UserControllerTest {
 
         driver.findElement(By.id("submit")).click();
         assertEquals("Login", driver.getTitle());
+        assertTrue(driver.findElement(By.id("success-message")).isDisplayed());
+    }
 
-        driver.findElement(By.id("username")).sendKeys("test");
-        driver.findElement(By.id("password")).sendKeys("test");
+    @Test
+    void signup_with_username_already_taken() {
+        driver.get("localhost:" + randomServerPort + baseUrl + "/signup");
+        assertEquals("Sign up", driver.getTitle());
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
+
+        driver.findElement(By.id("username")).sendKeys(adminUsername);
+        driver.findElement(By.id("password")).sendKeys(adminPassword);
+        driver.findElement(By.id("confirmPassword")).sendKeys(adminPassword);
+
         driver.findElement(By.id("submit")).click();
 
-        assertEquals("Sparql Endpoint availability", driver.getTitle());
+        assertEquals("Sign up", driver.getTitle());
+        assertTrue(driver.findElement(By.id("error-message")).isDisplayed());
 
 
     }
+
 
     @Test
     void getUserView() {
@@ -92,12 +124,14 @@ class UserControllerTest {
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
-        driver.findElement(By.id("username")).sendKeys("luigi");
-        driver.findElement(By.id("password")).sendKeys("luigi");
+        driver.findElement(By.id("username")).sendKeys(adminUsername);
+        driver.findElement(By.id("password")).sendKeys(adminPassword);
         driver.findElement(By.id("submit")).click();
         assertEquals("Sparql Endpoint availability", driver.getTitle());
 
         driver.get("localhost:" + randomServerPort + baseUrl + "/user");
         assertEquals("User info", driver.getTitle());
+
+
     }
 }

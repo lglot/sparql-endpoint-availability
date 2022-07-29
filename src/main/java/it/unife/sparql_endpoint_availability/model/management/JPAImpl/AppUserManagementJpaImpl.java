@@ -49,22 +49,13 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
 
         AppUser user = AppUser.builder()
                 .username(username)
-                .password(passwordEncoder.encode(password))
                 .enabled(true)
                 .accountNonExpired(true)
                 .credentialsNonExpired(true)
                 .accountNonLocked(true)
                 .build();
 
-        if (role.equalsIgnoreCase("admin")) {
-            user.setAuthorities(ADMIN.getGrantedAuthorities());
-        } else if (role.equalsIgnoreCase("user")) {
-            user.setAuthorities(USER.getGrantedAuthorities());
-        }
-        else {
-            throw new IllegalArgumentException("Invalid role: " + role);
-        }
-        user.getAuthorities().forEach(ga -> ga.getUsers().add(user));
+        AppUser userRes = setPasswordAndRole(user, password, role);
         if (appUserRepository.existsByUsername(username)) {
             throw new UserAlreadyExistsException(username);
         }
@@ -87,7 +78,41 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
     }
 
     @Override
+    public void deleteUser(String username) {
+        appUserRepository.deleteByUsername(username);
+    }
+    @Override
+    public void updateUser(String username, String password, String role) {
+        appUserRepository.findByUsername(username)
+                .ifPresent(user -> {
+                    AppUser userRes = setPasswordAndRole(user, password, role);
+                    appUserRepository.save(userRes);
+                });
+    }
+
+
+    @Override
+    public boolean isEmpty() {
+        return appUserRepository.count() == 0;
+    }
+
+    @Override
     public boolean exists(String username) {
         return appUserRepository.existsByUsername(username);
+    }
+
+
+    private AppUser setPasswordAndRole(AppUser user, String password, String role) {
+        user.setPassword(passwordEncoder.encode(password));
+        if (role.equalsIgnoreCase("admin")) {
+            user.setAuthorities(ADMIN.getGrantedAuthorities());
+        } else if (role.equalsIgnoreCase("user")) {
+            user.setAuthorities(USER.getGrantedAuthorities());
+        }
+        else {
+            throw new IllegalArgumentException("Invalid role: " + role);
+        }
+        user.getAuthorities().forEach(ga -> ga.getUsers().add(user));
+        return user;
     }
 }

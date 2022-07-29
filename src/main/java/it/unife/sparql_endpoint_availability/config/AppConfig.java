@@ -15,14 +15,28 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ComponentScan(basePackages = "it.unife.sparql_endpoint_availability.service.sparqlEndpointCheck")
 @EnableTransactionManagement
+@ConfigurationProperties(prefix = "app")
 public class AppConfig {
 
-    /*
-     * Nome del file che contiene la lista degli URL degli sparql endpoint da
-     * controllare
-     */
-    // private static final String SPARQL_ENDPOINTS_LIST_FILENAME =
-    // "sparqlEndpoints_list.txt";
+    private String adminPassword;
+    private String adminUsername;
+
+    public String getAdminPassword() {
+        return adminPassword;
+    }
+
+    public void setAdminPassword(String adminPassword) {
+        this.adminPassword = adminPassword;
+    }
+
+    public String getAdminUsername() {
+        return adminUsername;
+    }
+
+    public void setAdminUsername(String adminUsername) {
+        this.adminUsername = adminUsername;
+    }
+
     /* Nome del file che contiene la lista degli sparql endpoint da controllare */
     private static final String SPARQL_ENDPOINTS_LIST_FILENAME = "sparql_endpoints.json";
 

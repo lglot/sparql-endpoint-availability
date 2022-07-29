@@ -40,6 +40,7 @@ jobs:
         run: mvn -B test -fae
         env:
            SPRING_DATASOURCE_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+           APP_ADMIN_PASSWORD: ${{secrets.APPLICATION_ADMIN_PASSWORD}}
            SPRING_PROFILES_ACTIVE: 'mysql'
 
       # test result maven surefire report
