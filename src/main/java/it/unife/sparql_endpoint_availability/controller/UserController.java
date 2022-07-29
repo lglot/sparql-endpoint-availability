@@ -8,10 +8,13 @@ import it.unife.sparql_endpoint_availability.model.management.AppUserManagement;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -75,5 +78,59 @@ public class UserController {
         model.addAttribute("lang", lang);
 
         return "user_view";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("user/management")
+    public String getUserManagementView(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
+                              Model model,
+                              Authentication authentication) {
+
+        model.addAttribute("lang", lang);
+
+        List<AppUser> allUsers = appUserManagement.getAllUsers();
+        model.addAttribute("users", UserDto.fromAppUsers(allUsers));
+
+        return "user_management";
+    }
+
+    //delete user by username parameter
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("user/management/delete")
+    public String deleteUser(@RequestParam(name = "u", required = true) String username,
+                             @RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
+                             Model model) {
+        model.addAttribute("lang", lang);
+
+        try{
+            appUserManagement.deleteUser(username);
+        } catch (Exception e) {
+            log.error("Error deleting user: {}", username);
+            model.addAttribute("errorMessage", "Error deleting user");
+        }
+        model.addAttribute("successMessage", "User deleted successfully");
+        List<AppUser> allUsers = appUserManagement.getAllUsers();
+        model.addAttribute("users", UserDto.fromAppUsers(allUsers));
+        return "user_management";
+    }
+
+    //disable user by username parameter
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("user/management/disable")
+    public String disableUser(@RequestParam(name = "u", required = true) String username,
+                             @RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
+                             Model model) {
+        model.addAttribute("lang", lang);
+
+        try{
+            appUserManagement.disableUser(username);
+        } catch (Exception e) {
+            log.error("Error disabling user: {}", username);
+            model.addAttribute("errorMessage", "Error disabling user");
+        }
+        model.addAttribute("successMessage", "User disabled successfully");
+        List<AppUser> allUsers = appUserManagement.getAllUsers();
+        model.addAttribute("users", UserDto.fromAppUsers(allUsers));
+        return "user_management";
     }
 }

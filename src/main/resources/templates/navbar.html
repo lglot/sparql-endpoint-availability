@@ -37,6 +37,26 @@
                     <span class="nav-link-text">Account</span>
                 </a>
             </li>
+
+
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="${@environment.getProperty('server.servlet.context-path')}+'/user/management'">
+                        <span class="fa fa-user-plus"></span>
+                        <span class="nav-link-text">User Management</span>
+                    </a>
+                </li>
+            </div>
+
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="${@environment.getProperty('server.servlet.context-path')}+'/sparql/management'">
+                        <span class="fa fa-database"></span>
+                        <span class="nav-link-text">Sparql Management</span>
+                    </a>
+                </li>
+            </div>
+
             <li class="nav-item">
                 <a id="logout" class="nav-link" th:href="${@environment.getProperty('server.servlet.context-path')}+'/logout'">
                     <span class="fa fa-sign-out"></span>

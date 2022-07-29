@@ -6,7 +6,9 @@ import org.checkerframework.checker.signature.qual.ClassGetSimpleName;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Builder
@@ -17,6 +19,7 @@ public class UserDto implements Serializable {
     private String username;
     private String role;
     private String jwtToken;
+    private boolean enabled;
 
     public static UserDto fromAppUser(AppUser appUser) {
         return UserDto.builder()
@@ -27,8 +30,13 @@ public class UserDto implements Serializable {
                         .findFirst()
                         .orElse("USER"))
                 .jwtToken(appUser.getJwtToken())
+                .enabled(appUser.isEnabled())
                 .build();
     }
 
-
+    public static List<UserDto> fromAppUsers(List<AppUser> appUsers) {
+        return appUsers.stream()
+                .map(UserDto::fromAppUser)
+                .collect(Collectors.toList());
+    }
 }

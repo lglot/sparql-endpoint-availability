@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${lang}" lang="">
+<head>
+  <meta charset="UTF-8">
+  <title>Sparql Endpoint management</title>
+  <base th:href="${@environment.getProperty('server.servlet.context-path')}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" th:href="@{/image/sparql-icon.png}"/>
+  <link rel="stylesheet" href="../static/css/bootstrap.css" type="text/css" th:href="@{/css/bootstrap.css}"/>
+  <link rel="stylesheet" href="../static/css/style.css" type="text/css" th:href="@{/css/style.css}"/>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <script th:src="|${@environment.getProperty('server.servlet.context-path')}/js/bootstrap.js|"></script>
+  <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js">
+  </script>
+</head>
+<body>
+<!-- include navbar -->
+<div th:include="'navbar'"></div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Sparql Endpoint management</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table-responsive">
+                <table class="table table-striped table-bordered" id="sparql_endpoints_table">
+                  <thead>
+                    <tr>
+                      <th>Endpoint</th>
+                      <th>Description</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="endpoint : ${endpoints}">
+                      <td>${endpoint.endpoint}</td>
+                      <td>${endpoint.description}</td>
+                      <td>
+                        <a th:href="${@environment.getProperty('server.servlet.context-path')}/sparql/endpoint/edit/${endpoint.endpoint}" class="btn btn-primary">Edit</a>
+                        <a th:href="${@environment.getProperty('server.servlet.context-path')}/sparql/endpoint/delete/${endpoint.endpoint}" class="btn btn-danger">Delete</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

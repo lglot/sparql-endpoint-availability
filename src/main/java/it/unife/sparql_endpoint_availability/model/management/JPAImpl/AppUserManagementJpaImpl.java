@@ -79,12 +79,16 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
     }
 
     @Override
-    public void deleteUser(String username) throws UserNotFoundException {
-        if(appUserRepository.existsByUsername(username)) {
-            appUserRepository.deleteByUsername(username);
-        } else {
-            throw new UserNotFoundException(username);
-        }
+    public void deleteUser(String username) throws UsernameNotFoundException {
+        AppUser user = loadUserByUsername(username);
+        appUserRepository.delete(user);
+    }
+
+    @Override
+    public void disableUser(String username) throws UsernameNotFoundException {
+        AppUser user = loadUserByUsername(username);
+        user.setEnabled(false);
+        appUserRepository.save(user);
     }
 
     @Override
@@ -121,4 +125,6 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
         user.getAuthorities().forEach(ga -> ga.getUsers().add(user));
         return user;
     }
+
+
 }
