@@ -1,6 +1,7 @@
 package it.unife.sparql_endpoint_availability.model.management.JPAImpl;
 
 import it.unife.sparql_endpoint_availability.exception.UserAlreadyExistsException;
+import it.unife.sparql_endpoint_availability.exception.UserNotFoundException;
 import it.unife.sparql_endpoint_availability.jwt.JwtConfig;
 import it.unife.sparql_endpoint_availability.jwt.TokenManager;
 import it.unife.sparql_endpoint_availability.model.entity.AppUser;
@@ -78,9 +79,14 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
     }
 
     @Override
-    public void deleteUser(String username) {
-        appUserRepository.deleteByUsername(username);
+    public void deleteUser(String username) throws UserNotFoundException {
+        if(appUserRepository.existsByUsername(username)) {
+            appUserRepository.deleteByUsername(username);
+        } else {
+            throw new UserNotFoundException(username);
+        }
     }
+
     @Override
     public void updateUser(String username, String password, String role) {
         appUserRepository.findByUsername(username)

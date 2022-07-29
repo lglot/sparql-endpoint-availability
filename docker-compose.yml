@@ -26,6 +26,7 @@ services:
       - SPRING_JPA_DATABASE-PLATFORM=org.hibernate.dialect.MySQL5InnoDBDialect
       - SPRING_DATASOURCE_DRIVER-CLASS-NAME=com.mysql.cj.jdbc.Driver
       - JWT_TOKEN_SECRET=${JWT_TOKEN_SECRET}
+      - APP_ADMIN_PASSWORD=${APPLICATION_ADMIN_PASSWORD}
 
   db:
     image: mysql:latest

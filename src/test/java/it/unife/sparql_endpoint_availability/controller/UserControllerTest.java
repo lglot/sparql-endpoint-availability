@@ -1,6 +1,8 @@
 package it.unife.sparql_endpoint_availability.controller;
 
 import it.unife.sparql_endpoint_availability.config.AppConfig;
+import it.unife.sparql_endpoint_availability.exception.UserNotFoundException;
+import it.unife.sparql_endpoint_availability.model.management.AppUserManagement;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -13,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Duration;
@@ -27,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserControllerTest {
 
     private final AppConfig appConfig;
+    private final AppUserManagement appUserManagement;
     private String adminUsername;
     private String adminPassword;
     @Value("${server.servlet.context-path}")
@@ -38,8 +40,9 @@ class UserControllerTest {
     WebDriver driver;
 
     @Autowired
-    public UserControllerTest(AppConfig appConfig) {
+    public UserControllerTest(AppConfig appConfig, AppUserManagement appUserManagement) {
         this.appConfig = appConfig;
+        this.appUserManagement = appUserManagement;
     }
 
     @BeforeAll
@@ -48,8 +51,6 @@ class UserControllerTest {
         WebDriverManager.firefoxdriver().setup();
         adminUsername = appConfig.getAdminUsername();
         adminPassword = appConfig.getAdminPassword();
-        log.info("adminUsername: {}", adminUsername);
-        log.info("adminPassword: {}", adminPassword);
     }
 
     @BeforeEach
@@ -63,6 +64,12 @@ class UserControllerTest {
     @AfterEach
     void teardown() {
         driver.quit();
+        try{
+            appUserManagement.deleteUser("test");
+        }
+        catch (UserNotFoundException e){
+            return;
+        }
     }
 
     @Test
@@ -95,6 +102,7 @@ class UserControllerTest {
         driver.findElement(By.id("submit")).click();
         assertEquals("Login", driver.getTitle());
         assertTrue(driver.findElement(By.id("success-message")).isDisplayed());
+
     }
 
     @Test
