@@ -7,6 +7,7 @@ import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
 import it.unife.sparql_endpoint_availability.model.repository.SparqlEndpointRepository;
 import it.unife.sparql_endpoint_availability.model.repository.SparqlEndpointStatusRepository;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -103,7 +104,6 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
 
     @Override
     public Date findFirstQueryDate() {
-
         SparqlEndpointStatus s = sparqlEndpointStatusRepository.findTopByOrderByQueryDate();
         return s.getQueryDate();
     }
@@ -153,5 +153,12 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
             throw new SparqlEndpointNotFoundException(url);
         }
         return sparqlEndpointRepository.findByUrlWithCurrentStatus(url);
+    }
+
+    //get sparql endpoint after last week
+
+    public List<SparqlEndpoint> getSparqlEndpointsAfterLastWeek() {
+        Date lastWeek = DateUtils.addDays(new Date(), -7);
+        return sparqlEndpointRepository.findAllAfterQueryDateStatus(lastWeek);
     }
 }

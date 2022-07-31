@@ -1,7 +1,6 @@
 package it.unife.sparql_endpoint_availability.model.management.JPAImpl;
 
 import it.unife.sparql_endpoint_availability.exception.UserAlreadyExistsException;
-import it.unife.sparql_endpoint_availability.exception.UserNotFoundException;
 import it.unife.sparql_endpoint_availability.jwt.JwtConfig;
 import it.unife.sparql_endpoint_availability.jwt.TokenManager;
 import it.unife.sparql_endpoint_availability.model.entity.AppUser;
@@ -88,6 +87,13 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
     public void disableUser(String username) throws UsernameNotFoundException {
         AppUser user = loadUserByUsername(username);
         user.setEnabled(false);
+        appUserRepository.save(user);
+    }
+
+    @Override
+    public void enableUser(String username) throws UsernameNotFoundException {
+        AppUser user = loadUserByUsername(username);
+        user.setEnabled(true);
         appUserRepository.save(user);
     }
 

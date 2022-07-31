@@ -1,11 +1,9 @@
 package it.unife.sparql_endpoint_availability.config;
 
-import it.unife.sparql_endpoint_availability.service.filereader.impl.SparqlFileReaderImpl;
-import it.unife.sparql_endpoint_availability.service.filereader.SparqlFileReader;
-import it.unife.sparql_endpoint_availability.service.sparqlEndpointCheck.SparqlEndpointCheckService;
-import it.unife.sparql_endpoint_availability.service.sparqlEndpointCheck.impl.multiThreadImpl.SparqlEndpointCheckMultiThreadImpl;
-
-import org.springframework.beans.factory.annotation.Value;
+import it.unife.sparql_endpoint_availability.service.SparqlEndpointCheckService;
+import it.unife.sparql_endpoint_availability.service.SparqlEndpointsFileService;
+import it.unife.sparql_endpoint_availability.service.impl.SparqlEndpointsFileServiceImpl;
+import it.unife.sparql_endpoint_availability.service.impl.sparqlEndpointsMultiThreadCheck.SparqlEndpointMultiThreadCheckService;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,10 +11,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan(basePackages = "it.unife.sparql_endpoint_availability.service.sparqlEndpointCheck")
+@ComponentScan(basePackages = "it.unife.sparql_endpoint_availability.service.impl")
 @EnableTransactionManagement
 @ConfigurationProperties(prefix = "app")
 public class AppConfig {
+
 
     private String adminPassword;
     private String adminUsername;
@@ -51,11 +50,11 @@ public class AppConfig {
     /* Iniettori delle dipendenze */
     @Bean
     public SparqlEndpointCheckService getSparqlEndpointCheckService() {
-        return new SparqlEndpointCheckMultiThreadImpl(QUERY_NUMBER_BY_THREAD);
+        return new SparqlEndpointMultiThreadCheckService(QUERY_NUMBER_BY_THREAD);
     }
 
     @Bean
-    public SparqlFileReader getSparqlFileReader() {
-        return new SparqlFileReaderImpl(SPARQL_ENDPOINTS_LIST_FILENAME);
+    public SparqlEndpointsFileService getSparqlFileReader() {
+        return new SparqlEndpointsFileServiceImpl(SPARQL_ENDPOINTS_LIST_FILENAME);
     }
 }

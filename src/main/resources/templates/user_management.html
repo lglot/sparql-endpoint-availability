@@ -22,29 +22,31 @@
     <!-- include navbar -->
     <div th:include="'navbar'"></div>
 
-    <!-- message -->
-    <div th:if="${errorMessage != null}">
-        <div id="error-messagge" class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
-    </div>
-    <div th:if="${successMessage != null}">
-        <div id="success-message" class="alert alert-success" role="alert" th:text="${successMessage}"></div>
-    </div>
+
 
     <div class="container">
+        <br>
+        <!-- message -->
+        <div th:if="${errorMessage != null}">
+            <div id="error-messagge" class="alert alert-danger" role="alert" th:text="#{__${errorMessage}__}"></div>
+        </div>
+        <div th:if="${successMessage != null}">
+            <div id="success-message" class="alert alert-success" role="alert" th:text="#{__${successMessage}__}"></div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">User Management</h3>
+                        <h3 class="card-title" th:text="#{user.management.title}">User Management</h3>
                     </div>
                     <div class="card-body">
                         <table id="user-table" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Role</th>
-                                <th>Enabled</th>
-                                <th>Actions</th>
+                                <th th:text="#{user.management.table.username}">Username</th>
+                                <th th:text="#{user.management.table.role}">Role</th>
+                                <th th:text="#{user.management.table.enabled}">Enabled</th>
+                                <th th:text="#{user.management.table.actions}">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -53,10 +55,18 @@
                                 <td th:text="${user.role}"></td>
                                 <td th:text="${user.enabled}"></td>
                                 <td>
+                                    <a th:if="${#authentication.name != user.username && user.enabled == true}"
+                                        th:href="@{/user/management(action='disable',u=${user.username})}" class="btn btn-primary"
+                                        th:text="#{user.management.disable.button}">Disable</a>
+
+                                    <a th:if="${#authentication.name != user.username && user.enabled == false}"
+                                        th:href="@{/user/management(action='enable',u=${user.username})}" class="btn btn-success"
+                                       th:text="#{user.management.enable.button}">Enable</a>
+
                                     <a th:if="${#authentication.name != user.username}"
-                                       th:href="@{/user/management/disable(u=${user.username})}" class="btn btn-primary">Disable</a>
-                                    <a th:if="${#authentication.name != user.username}"
-                                       th:href="@{/user/management/delete(u=${user.username})}" class="btn btn-danger">Delete</a>
+                                       th:href="@{/user/management(action='delete',u=${user.username})}" class="btn btn-danger"
+                                       th:text="#{delete.button}">Delete</a>
+
                                 </td>
                             </tr>
                             </tbody>

@@ -1,7 +1,6 @@
 package it.unife.sparql_endpoint_availability.controller;
 
 import it.unife.sparql_endpoint_availability.exception.UserAlreadyExistsException;
-import it.unife.sparql_endpoint_availability.exception.UserNotFoundException;
 import it.unife.sparql_endpoint_availability.jwt.JwtConfig;
 import it.unife.sparql_endpoint_availability.model.management.AppUserManagement;
 import org.junit.jupiter.api.AfterAll;
@@ -11,11 +10,10 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.web.servlet.MockMvc;
 
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,7 +42,7 @@ class JwtAuthenticationControllerTest {
     }
 
     @AfterAll
-    public void deleteUser() throws UserNotFoundException {
+    public void deleteUser() throws UsernameNotFoundException {
         appUserManagement.deleteUser("test");
     }
 

@@ -47,7 +47,7 @@ public interface SparqlEndpointRepository extends JpaRepository<SparqlEndpoint, 
     @Query(" SELECT sparql " +
             "FROM SparqlEndpoint sparql " +
             "LEFT JOIN FETCH sparql.sparqlEndpointStatuses as status " +
-            "where status.queryDate > ?1 " +
+            "where status.id is NULL OR status.queryDate > ?1 " +
             "order by sparql.id asc,status.queryDate desc")
     List<SparqlEndpoint> findAllAfterQueryDateStatus(Date queryDate);
 
@@ -55,7 +55,7 @@ public interface SparqlEndpointRepository extends JpaRepository<SparqlEndpoint, 
     @Query(" SELECT sparql " +
             "FROM SparqlEndpoint sparql " +
             "LEFT JOIN FETCH sparql.sparqlEndpointStatuses as status" +
-            " where status.queryDate > ?1 " +
+            " where status.id is NULL OR status.queryDate > ?1 " +
             "and sparql.id=?2 " +
             "order by sparql.id asc,status.queryDate desc")
     SparqlEndpoint findByIdAfterQueryDateStatus(Date queryDate,Long id);

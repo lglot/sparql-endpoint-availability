@@ -47,14 +47,13 @@
         <!--jumbotron-->
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
-                <h1 class="display-4" th:text="#{service.title}">Title</h1>
+                <h1 class="display-6" th:text="#{service.title}">Title</h1>
                 <p class="lead"
                    th:utext="#{service.description1}+'<br><code>ASK {?s ?p ?o}</code><br>'+#{service.description2}">
                     Description</p>
                 <hr>
                 <div class="lead">
                     <p th:text="#{last.update(${lastUpdateLocal})}">Last Update (local time):</p>
-                    <p th:text="#{service.weeks.passed(${daysPassed})}">Days Passed</p>
                     <p th:text="#{number.available(${numberActive},${sparqlStatusMap.size()})}">Endpoints Available</p>
                 </div>
                 <hr>
@@ -67,27 +66,66 @@
             </div>
         </div>
 
-        <fieldset th:if="${not #maps.isEmpty(sparqlStatusMap)}" class="border p-2 container">
-            <legend th:text="#{legend}" class="w-auto">Legend</legend>
-            <div class="row container">
-                <div class="col-sm-2 media">
-                    <img class="float-left mr-3" th:src="@{/image/green.png}" src="../static/image/green.png" alt="">
-                    <span class="media-body" th:text="#{status.active}"></span>
-                </div>
-                <div class="col-sm-3 media">
-                    <img class="float-left mr-3" th:src="@{/image/orange.png}" src="../static/image/orange.png" alt="">
-                    <span class="media-body" th:text="#{status.inactive.lessday}"></span>
-                </div>
-                <div class="col-sm-3 media">
-                    <img class="float-left mr-3" th:src="@{/image/red.png}" src="../static/image/red.png" alt="">
-                    <span class="media-body" th:text="#{status.inactive.lessweek}"></span>
-                </div>
-                <div class="col-sm-4 media">
-                    <img class="float-left mr-3" th:src="@{/image/gray.png}" src="../static/image/gray.png" alt="">
-                    <span class="media-body" th:text="#{status.inactive.moreweek}"></span>
+
+
+
+
+        <div class="container">
+
+            <div th:if="${errorMessage != null}">
+                <div id="error-messagge" class="alert alert-danger" role="alert" th:text="#{__${errorMessage}__}"></div>
+            </div>
+            <div th:if="${successMessage != null}">
+                <div id="success-message" class="alert alert-success" role="alert" th:text="#{__${successMessage}__}"></div>
+            </div>
+
+            <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-info" data-toggle="collapse" href="#multiCollapseExample1"
+               role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="fa fa-plus"> Add SPARQL Endpoint</i></a>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="collapse" id="multiCollapseExample1">
+                        <div class="card card-body">
+                            <form th:action="@{/}" method="post" th:modelAttribute="sparqlEndpoint">
+                                <div class="form-group">
+                                    <label for="url">SPARQL Endpoint URL</label>
+                                    <input type="text" class="form-control" id="url" name="url"
+                                           placeholder="http://example.com/sparql">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">SPARQL Endpoint Name</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                           placeholder="Example">
+                                </div>
+                                <button type="submit" class="btn btn-info">Add</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </fieldset>
+
+            <br>
+
+            <fieldset th:if="${not #maps.isEmpty(sparqlStatusMap)}" class="border p-2 container">
+                <legend th:text="#{legend}" class="w-auto">Legend</legend>
+                <div class="row container">
+                    <div class="col-sm-2 media">
+                        <img class="float-left mr-3" th:src="@{/image/green.png}" src="../static/image/green.png" alt="">
+                        <span class="media-body" th:text="#{status.active}"></span>
+                    </div>
+                    <div class="col-sm-3 media">
+                        <img class="float-left mr-3" th:src="@{/image/orange.png}" src="../static/image/orange.png" alt="">
+                        <span class="media-body" th:text="#{status.inactive.lessday}"></span>
+                    </div>
+                    <div class="col-sm-3 media">
+                        <img class="float-left mr-3" th:src="@{/image/red.png}" src="../static/image/red.png" alt="">
+                        <span class="media-body" th:text="#{status.inactive.lessweek}"></span>
+                    </div>
+                    <div class="col-sm-4 media">
+                        <img class="float-left mr-3" th:src="@{/image/gray.png}" src="../static/image/gray.png" alt="">
+                        <span class="media-body" th:text="#{status.inactive.moreweek}"></span>
+                    </div>
+                </div>
+            </fieldset>
 
         <!--table-->
         <div th:if="${not #maps.isEmpty(sparqlStatusMap)}" class="container table-responsive">
@@ -101,39 +139,43 @@
                         <th class="sparql-status" scope="col" th:text="#{col.name3}">STATUS</th>
                         <th class="sparql-uptime" scope="col" th:text="#{col.name4}">Uptime last 24h</th>
                         <th class="sparql-uptime" scope="col" th:text="#{col.name5}">Uptime last 7days</th>
+                        <th scope="col" th:text="#{col.action}" sec:authorize="hasRole('ROLE_ADMIN')">Action</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr th:scope="row" th:each="service : ${sparqlStatusMap}">
-                        <!--<td th:text="${service.key}"></td>-->
                         <td class="sparql-name" th:text="${service.value.name}">SPARQL Endpoint</td>
                         <td class="sparql-url text-break"><a th:text="${service.value.url}"
                                                              th:href="${service.value.url}">Service</a></td>
                         <td class="sparql-status lead" th:switch="${service.value.status}">
-                            <div th:case="${@environment.getProperty('sparql.endpoint.status.active')}">
+                            <div th:case="${T(it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusLabel).ACTIVE.getLabel()}">
                                 <img th:src="@{/image/green.png}" src="../static/image/green.png" alt="active"/>
                                 <span style="display:none;">active</span>
                             </div>
 
-                            <div th:case="${@environment.getProperty('sparql.endpoint.status.inactive_lessday')}">
+                            <div th:case="${T(it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusLabel).INACTIVE_LESSDAY.getLabel()}">
                                 <img th:case="${@environment.getProperty('sparql.endpoint.status.inactive_lessday')}"
                                      th:src="@{/image/orange.png}" src="../static/image/orange.png" alt="inactive_lessday"/>
                                 <span style="display:none;">inactive_lessday</span>
                             </div>
 
-                            <div th:case="${@environment.getProperty('sparql.endpoint.status.inactive_lessweek')}"> 
+                            <div th:case="${T(it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusLabel).INACTIVE_LESSWEEK.getLabel()}">
                                 <img th:src="@{/image/red.png}" src="../static/image/red.png" alt="inactive_lessweek"/>
                             </div>
 
-                            <div th:case="${@environment.getProperty('sparql.endpoint.status.general_inactive')}">
+                            <div th:case="${T(it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusLabel).GENERAL_INACTIVE.getLabel()}">
                                 <img th:src="@{/image/red.png}" src="../static/image/red.png" alt="general_inactive"/>
                                 <span style="display:none;">inactive</span>
                             </div>
 
-                            <div th:case="${@environment.getProperty('sparql.endpoint.status.inactive_moreweek')}">
+                            <div th:case="${T(it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusLabel).INACTIVE_MOREWEEK.getLabel()}">
                                 <img th:src="@{/image/gray.png}" src="../static/image/gray.png" alt="inactive_moreweek"/>
                                 <span style="display:none;">inactive_moreweek</span>
+                            </div>
+
+                            <div th:case="${T(it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusLabel).UNKNOWN.getLabel()}">
+                                <i class="fa fa-question-circle" aria-hidden="true"></i>
                             </div>
 
                         </td>
@@ -143,13 +185,19 @@
                         <td class="sparql-uptime" th:if="${service.value.uptimelast7d >= 0}"
                             th:text="${#numbers.formatPercent(service.value.uptimelast7d,1,2)}">Uptime last 7d</td>
                         <td class="sparql-uptime" th:if="${service.value.uptimelast7d < 0}" >N/A</td>
+                        <td class="sparql-uptime" sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a th:href="@{/management/(action='delete',url=${service.value.url})}" class="btn btn-danger"
+                               th:text="#{delete.button}">Delete</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+    </div>
+
 
         <div class="container">
-            <p class="lead display-4" th:if="${#maps.isEmpty(sparqlStatusMap)}" th:text="#{nodata}">No data found</p>
+            <p class="lead display-7" th:if="${#maps.isEmpty(sparqlStatusMap)}" th:text="#{nodata}">No data found</p>
         </div>
 
     </body>

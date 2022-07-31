@@ -12,10 +12,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.List;
-import it.unife.sparql_endpoint_availability.service.filereader.SparqlFileReader;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -26,18 +25,18 @@ class ApplicationScheduledTaskService {
     private int iterator;
 
     private final SparqlEndpointManagement sparqlEndpointManagement;
-    private final SparqlFileReader sparqlFileReader;
-    private final it.unife.sparql_endpoint_availability.service.sparqlEndpointCheck.SparqlEndpointCheckService sparqlEndpointCheckService;
+    private final SparqlEndpointsFileService sparqlEndpointsFileService;
+    private final SparqlEndpointCheckService sparqlEndpointCheckService;
     private final SparqlEndpointStatusRepository sparqlEndpointStatusRepository;
 
     @Autowired
     public ApplicationScheduledTaskService(SparqlEndpointManagement sparqlEndpointManagement,
-                                           SparqlFileReader sparqlFileReader,
-                                           it.unife.sparql_endpoint_availability.service.sparqlEndpointCheck.SparqlEndpointCheckService sparqlEndpointCheckService,
+                                           SparqlEndpointsFileService sparqlEndpointsFileService,
+                                           SparqlEndpointCheckService sparqlEndpointCheckService,
                                            SparqlEndpointStatusRepository sparqlEndpointStatusRepository) {
 
         this.sparqlEndpointManagement = sparqlEndpointManagement;
-        this.sparqlFileReader = sparqlFileReader;
+        this.sparqlEndpointsFileService = sparqlEndpointsFileService;
         this.sparqlEndpointCheckService = sparqlEndpointCheckService;
         this.sparqlEndpointStatusRepository = sparqlEndpointStatusRepository;
         iterator = 1;
@@ -49,7 +48,7 @@ class ApplicationScheduledTaskService {
      * che effettua il controllo della disponibilità degli sparql enpoint e
      * memorizza il risultato sul db
      */
-    @Scheduled(fixedRate = 1000 * 60 * 60)
+    @Scheduled(fixedRate = 1000 * 60 * 60, initialDelay = 1000 * 10)
     public synchronized void applicationTask() {
 
         List<SparqlEndpoint> sparqlEndpointList;
@@ -57,7 +56,7 @@ class ApplicationScheduledTaskService {
         /* Reads sparql endpoint URL from resource and save them to DATA */
         if (iterator == 1) {
             logger.info("Updating Sparql Endpoint List from Resource File");
-            Set<SparqlEndpoint> sparqlEndpoints = sparqlFileReader.getSparqlEndpoints();
+            Set<SparqlEndpoint> sparqlEndpoints = sparqlEndpointsFileService.getSparqlEndpoints();
             sparqlEndpointManagement.saveAllIfNotExists(sparqlEndpoints);
         }
 

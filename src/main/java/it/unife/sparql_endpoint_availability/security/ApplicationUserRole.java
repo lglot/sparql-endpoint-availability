@@ -2,7 +2,6 @@ package it.unife.sparql_endpoint_availability.security;
 
 import com.google.common.collect.Sets;
 import it.unife.sparql_endpoint_availability.model.entity.AppGrantedAuthority;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Set;
 import java.util.stream.Collectors;

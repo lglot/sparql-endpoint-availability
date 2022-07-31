@@ -2,12 +2,9 @@ package it.unife.sparql_endpoint_availability.dto;
 
 import it.unife.sparql_endpoint_availability.model.entity.AppUser;
 import lombok.*;
-import org.checkerframework.checker.signature.qual.ClassGetSimpleName;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor

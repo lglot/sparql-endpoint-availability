@@ -82,55 +82,40 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("user/management")
-    public String getUserManagementView(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
+    public String manageUser(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
+                              @RequestParam(name = "action", required = false) String action,
+                              @RequestParam(name = "u", required = false) String username,
                               Model model,
                               Authentication authentication) {
 
-        model.addAttribute("lang", lang);
-
-        List<AppUser> allUsers = appUserManagement.getAllUsers();
-        model.addAttribute("users", UserDto.fromAppUsers(allUsers));
-
-        return "user_management";
-    }
-
-    //delete user by username parameter
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("user/management/delete")
-    public String deleteUser(@RequestParam(name = "u", required = true) String username,
-                             @RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
-                             Model model) {
-        model.addAttribute("lang", lang);
-
-        try{
-            appUserManagement.deleteUser(username);
-        } catch (Exception e) {
-            log.error("Error deleting user: {}", username);
-            model.addAttribute("errorMessage", "Error deleting user");
+        if (action != null) {
+            try{
+                AppUser loggedAdmin = (AppUser) authentication.getPrincipal();
+                if (loggedAdmin.getUsername().equals(username)) {
+                    model.addAttribute("errorMessage", "You cannot "+action+" yourself");
+                }
+                else{
+                    switch (action) {
+                        case "delete":
+                            appUserManagement.deleteUser(username);
+                            break;
+                        case "disable":
+                            appUserManagement.disableUser(username);
+                            break;
+                        case "enable":
+                            appUserManagement.enableUser(username);
+                            break;
+                    }
+                    model.addAttribute("successMessage", "user.management."+action+".success");
+                }
+            } catch (Exception e) {
+                log.error("Error action "+action+" user: {}", username);
+                model.addAttribute("errorMessage", "user.management."+action+".error");
+            }
         }
-        model.addAttribute("successMessage", "User deleted successfully");
         List<AppUser> allUsers = appUserManagement.getAllUsers();
         model.addAttribute("users", UserDto.fromAppUsers(allUsers));
-        return "user_management";
-    }
-
-    //disable user by username parameter
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("user/management/disable")
-    public String disableUser(@RequestParam(name = "u", required = true) String username,
-                             @RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
-                             Model model) {
         model.addAttribute("lang", lang);
-
-        try{
-            appUserManagement.disableUser(username);
-        } catch (Exception e) {
-            log.error("Error disabling user: {}", username);
-            model.addAttribute("errorMessage", "Error disabling user");
-        }
-        model.addAttribute("successMessage", "User disabled successfully");
-        List<AppUser> allUsers = appUserManagement.getAllUsers();
-        model.addAttribute("users", UserDto.fromAppUsers(allUsers));
         return "user_management";
     }
 }

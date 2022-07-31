@@ -5,8 +5,6 @@ import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 @AllArgsConstructor

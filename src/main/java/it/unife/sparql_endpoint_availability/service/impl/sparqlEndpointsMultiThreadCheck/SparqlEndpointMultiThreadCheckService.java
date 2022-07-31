@@ -1,20 +1,20 @@
-package it.unife.sparql_endpoint_availability.service.sparqlEndpointCheck.impl.multiThreadImpl;
+package it.unife.sparql_endpoint_availability.service.impl.sparqlEndpointsMultiThreadCheck;
 
+import it.unife.sparql_endpoint_availability.config.AppConfig;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
-import it.unife.sparql_endpoint_availability.config.AppConfig;
-import it.unife.sparql_endpoint_availability.service.sparqlEndpointCheck.SparqlEndpointCheckService;
+import it.unife.sparql_endpoint_availability.service.SparqlEndpointCheckService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SparqlEndpointCheckMultiThreadImpl implements SparqlEndpointCheckService {
+public class SparqlEndpointMultiThreadCheckService implements SparqlEndpointCheckService {
 
     private final int queryNumberByThread;
 
-    public SparqlEndpointCheckMultiThreadImpl(int queryNumberByThread){
+    public SparqlEndpointMultiThreadCheckService(int queryNumberByThread){
         this.queryNumberByThread=queryNumberByThread;
     }
 

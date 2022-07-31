@@ -6,8 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 @ToString
@@ -66,5 +65,29 @@ public class SparqlEndpoint {
         hash = 53 * hash + Objects.hashCode(this.name);
         return hash;
     }
+
+    //get last check date of the endpoint by sorting the list of statuses by date and taking the first element
+    public Date getLastCheckDate() {
+        if (sparqlEndpointStatuses == null || sparqlEndpointStatuses.isEmpty()) {
+            return null;
+        }
+        sparqlEndpointStatuses.sort(Comparator.comparing(SparqlEndpointStatus::getQueryDate));
+        return sparqlEndpointStatuses.get(0).getQueryDate();
+    }
+
+    //get last check date of the endpoint when sorted by date
+    public Date getLastCheckDate(boolean descending) {
+        if (sparqlEndpointStatuses.isEmpty()) {
+            return null;
+        }
+        if (descending) {
+            return sparqlEndpointStatuses.get(0).getCheckDate();
+        } else {
+            return sparqlEndpointStatuses.get(sparqlEndpointStatuses.size() - 1).getCheckDate();
+        }
+    }
+
+
+
 
 }

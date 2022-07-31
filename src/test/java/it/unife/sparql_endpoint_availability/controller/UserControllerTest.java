@@ -1,11 +1,10 @@
 package it.unife.sparql_endpoint_availability.controller;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import it.unife.sparql_endpoint_availability.config.AppConfig;
-import it.unife.sparql_endpoint_availability.exception.UserNotFoundException;
 import it.unife.sparql_endpoint_availability.model.management.AppUserManagement;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith(SpringExtension.class)
@@ -67,7 +68,7 @@ class UserControllerTest {
         try{
             appUserManagement.deleteUser("test");
         }
-        catch (UserNotFoundException e){
+        catch (UsernameNotFoundException e){
             return;
         }
     }

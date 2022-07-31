@@ -33,4 +33,9 @@ public class SparqlEndpointStatus {
     private Date queryDate;
 
     private boolean active;
+
+    public Date getCheckDate() {
+        return queryDate;
+    }
+    
 }
