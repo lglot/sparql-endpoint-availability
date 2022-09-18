@@ -60,11 +60,10 @@ public class SparqlEndpointsCheckThread extends Thread {
             QueryExecution qexec = QueryExecution.service(sparqlEndpoint.getUrl(), sparqlQueryString);
 
             ExecutorService executor = Executors.newCachedThreadPool();
-            Callable<Boolean> task = new Callable<Boolean>() {
-                public Boolean call() {
-                    return qexec.execAsk();
-                }
-            };
+
+            //interfaccia funzionale
+            Callable<Boolean> task = qexec::execAsk;
+
             Future<Boolean> future = executor.submit(task);
             try {
                 logger.debug("Send query to: " + sparqlEndpoint.getUrl());

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,22 +27,23 @@ class AppUserRepositoryTest {
     }
 
     @Test
-    public void getUserTest() {
+    public void should_find_user_by_username() {
         AppUser appUser = AppUser.builder().username("username").build();
         userRepository.save(appUser);
-        Optional<AppUser> user2 = userRepository.findById(appUser.getId());
+        Optional<AppUser> user2 = userRepository.findByUsername("username");
         assertTrue(user2.isPresent());
         assertEquals(appUser.getId(), user2.get().getId());
     }
 
     @Test
-    public void getUserListTest() {
+    public void should_find_all_users() {
         AppUser appUser = AppUser.builder().username("username").build();
         userRepository.save(appUser);
         AppUser appUser2 = AppUser.builder().username("username2").build();
         userRepository.save(appUser2);
-        Iterable<AppUser> userList = userRepository.findAll();
+        List<AppUser> userList = userRepository.findAll();
         assertTrue(userList.iterator().hasNext());
+        assertTrue(userList.size() > 1);
     }
 
 }
