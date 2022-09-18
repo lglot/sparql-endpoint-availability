@@ -10,10 +10,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("it.unife.sparql_endpoint_availability.model.repository")
 public class DbConfig {
 
-
-
-
-
 }
 
 @Configuration

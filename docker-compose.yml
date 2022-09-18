@@ -19,14 +19,14 @@ services:
     env_file:
       - .env
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/sparql_endpoint_availability?serverTimezone=Europe/Rome
+      - SPRING_PROFILES_ACTIVE=mysql
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/sparql_endpoint_availability
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=${DATABASE_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - SPRING_JPA_DATABASE-PLATFORM=org.hibernate.dialect.MySQL5InnoDBDialect
-      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=com.mysql.cj.jdbc.Driver
       - JWT_TOKEN_SECRET=${JWT_TOKEN_SECRET}
       - APP_ADMIN_PASSWORD=${APPLICATION_ADMIN_PASSWORD}
+      - SERVER_SERVLET_CONTEXT_PATH=/sparql
 
   db:
     image: mysql:latest
@@ -37,6 +37,7 @@ services:
       - local
     environment:
       MYSQL_DATABASE: sparql_endpoint_availability
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
     volumes:
       - db_volume:/var/lib/mysql
     restart: unless-stopped
