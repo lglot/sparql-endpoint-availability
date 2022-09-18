@@ -33,4 +33,11 @@ class H2MemoryConfig {
 class MysqlConfig {
 }
 
+//postgres
+@Configuration
+@Profile("postgres")
+@PropertySource("classpath:persistence-postgres.properties")
+class PostgresConfig {
+}
+
 
