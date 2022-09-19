@@ -8,6 +8,11 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.chromium.ChromiumOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +44,7 @@ class UserControllerTest {
     int randomServerPort;
 
     WebDriver driver;
+    String browser;
 
     @Autowired
     public UserControllerTest(AppConfig appConfig, AppUserManagement appUserManagement) {
@@ -48,18 +54,51 @@ class UserControllerTest {
 
     @BeforeAll
     void setupClass() {
-        //WebDriverManager.chromedriver().setup();
-        WebDriverManager.firefoxdriver().setup();
+        browser = System.getProperty("browser");
+        if (browser == null) {
+            browser = "firefox";
+        }
+        switch (browser) {
+            case "chrome":
+                WebDriverManager.chromedriver().setup();
+                break;
+            case "firefox":
+                WebDriverManager.firefoxdriver().setup();
+                break;
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                break;
+            default:
+                throw new IllegalArgumentException("Browser not supported");
+        }
+
         adminUsername = appConfig.getAdminUsername();
         adminPassword = appConfig.getAdminPassword();
     }
 
     @BeforeEach
     void setupTest() {
-        //driver = new ChromeDriver();
-        FirefoxOptions options = new FirefoxOptions();
-        options.addArguments("--headless");
-        driver = new FirefoxDriver(options);
+        switch (browser) {
+            case "chrome": {
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--headless");
+                driver = new ChromeDriver(options);
+                break;
+            }
+            case "firefox": {
+                FirefoxOptions options = new FirefoxOptions();
+                options.addArguments("--headless");
+                driver = new FirefoxDriver(options);
+                break;
+            }
+            case "edge": {
+                EdgeOptions options = new EdgeOptions();
+                options.addArguments("--headless");
+                driver = new EdgeDriver(options);
+                break;
+            }
+        }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
     @AfterEach

@@ -21,8 +21,8 @@ class H2FileConfig {
 
 
 @Configuration
-@Profile("h2_memory")
-@PropertySource("classpath:persistence-h2_memory.properties")
+@Profile("h2")
+@PropertySource("classpath:persistence-h2.properties")
 class H2MemoryConfig {
 
 }
@@ -35,8 +35,8 @@ class MysqlConfig {
 
 //postgres
 @Configuration
-@Profile("postgres")
-@PropertySource("classpath:persistence-postgres.properties")
+@Profile("postgresql")
+@PropertySource("classpath:persistence-postgresql.properties")
 class PostgresConfig {
 }
 

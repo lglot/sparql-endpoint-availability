@@ -255,6 +255,15 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M6</version>
+                <configuration>
+                    <systemProperties>
+                        <property>
+                            <name>browser</name>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <value>${browser}</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
             </plugin>
 
             <plugin>
