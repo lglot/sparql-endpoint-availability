@@ -10,7 +10,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.chromium.ChromiumOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -55,7 +54,7 @@ class UserControllerTest {
     @BeforeAll
     void setupClass() {
         browser = System.getProperty("browser");
-        if (browser == null) {
+        if (browser == null || browser.isEmpty()) {
             browser = "firefox";
         }
         switch (browser) {
