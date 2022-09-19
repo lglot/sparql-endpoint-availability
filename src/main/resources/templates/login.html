@@ -37,7 +37,7 @@
 
 <div class="container mt-5 mb-5" style="width: 30%">
 
-    <form class="form-signin" method="post" th:action="|${@environment.getProperty('server.servlet.context-path')}/login|">
+    <form class="form-signin" method="post" th:action="|${@environment.getProperty('server.servlet.context-path')}|+'/login'">
         <h2 class="form-signin-heading" th:text="#{login.title}">Please login</h2>
         <div th:if="${errorMessage != null}">
             <div id="error-messagge" class="alert alert-danger" role="alert" th:text="#{error.bad.credentials}"></div>
@@ -64,7 +64,7 @@
 
     <div class="text-center">
         <p th:text="#{signup.text}"> </p>
-        <a th:href="|${@environment.getProperty('server.servlet.context-path')}/signup|" class="btn btn-light" th:text="#{signup.button}">Register</a>
+        <a th:href="|${@environment.getProperty('server.servlet.context-path')}|+'/signup'" class="btn btn-light" th:text="#{signup.button}">Register</a>
 
     </div>
 

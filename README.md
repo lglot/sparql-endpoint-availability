@@ -20,7 +20,109 @@ If the SPARQL endpoint gives a response then it is active, otherwise it's not.
 - FirefoxDriver (for selenium testing)
 - Docker and docker-compose (for deployment)
 
-## Installation
+## Running locally with Maven
+
+Sparql endpoint availability is a Spring Boot application built using Maven.
+
+Clone repo:
+
+```bash
+   git clone https://github.com/lglot/sparql-endpoint-availability.git
+   cd sparql-endpoint-availability
+```
+
+- Run the application:
+
+```console
+   ./mvnw spring-boot:run 
+```
+
+### Viewing the running application
+
+To view the running application, visit [http://localhost:8080](http://localhost:8080) in your browser
+
+### Accessing the application with admin privileges
+
+The application by default has a admin user with the following credentials: <br>
+- username: admin <br>
+- password: admin <br>
+
+You can change the credentials in the `application.properties` file.
+
+### Accessing the H2 database
+
+The application by default uses H2 database (in memory database). <br>
+H2 has an embedded GUI console for browsing the contents of a database.  
+After starting the application, we can navigate to [http://localhost:8080/h2-console](http://localhost:8080/h2-console).  
+On the login page, we'll insert the same credential that we used in the `application.properties`.  
+Default ones are:
+
+- JDBC URL : `jdbc:h2:mem:devdb`
+- username : `root`
+- password : `root`
+
+
+
+
+## Installation with Docker
+
+The application image is available on [Docker Hub](https://hub.docker.com/repository/docker/lglot/sparql-endpoint-availability) with the latest updates. <br>
+
+The application requires a running database. <br>
+Actually, the application is configured to use a **PostgreSQL**, **MySQL** or H2 **databases**. <br>
+The easiest way to install the stack is to use docker-compose. <br>
+
+Example of docker-compose file for MySQL database:
+
+```yaml
+version: '3.0'
+
+services:
+  app:
+    image: lglot/sparql_endpoint_availability:v0.1
+    container_name: app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_PROFILES_ACTIVE=mysql
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/sparql_endpoint_availability
+      - SPRING_DATASOURCE_USERNAME=sparql
+      - SPRING_DATASOURCE_PASSWORD=sparql
+      - APP_ADMIN_PASSWORD=admin              # if you want to change the default admin password
+      - SERVER_SERVLET_CONTEXT_PATH=/sparql   # required for reverse proxy
+      
+      - SERVER_PORT=8080                      # optional, if you want to change the default port
+                                              # but remember to change the port in the ports section
+      - JWT_TOKEN_SECRET=a_very_long_secret   # secret for JWT token 
+
+  db:
+    image: mysql:latest
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: sparql
+      MYSQL_PASSWORD: sparql
+      MYSQL_DATABASE: sparql_endpoint_availability   #is the same as SPRING_DATASOURCE_URL
+    volumes:
+      - db_volume:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  db_volume:
+    external: false
+
+```
+
+
+
+
+
+
+
+
+
 
 ### Local
 
@@ -55,9 +157,7 @@ If the SPARQL endpoint gives a response then it is active, otherwise it's not.
    ./mvnw spring-boot:run 
 ```
 
-## Viewing the running application
 
-To view the running application, visit [http://localhost:8080](http://localhost:8080) in your browser
 
 ## Accessing the H2 database
 
