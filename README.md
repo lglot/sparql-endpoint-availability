@@ -1,12 +1,12 @@
 # Sparql Enpdoint Availability
+![Build Status](https://github.com/lglot/sparql-endpoint-availability/actions/workflows/build_test_deploy.yml/badge.svg)
+
 This service checks the availability of a list of public SPARQL endpoints. 
 
 For this purpose, using the <a href="https://jena.apache.org/">Jena library</a> this query is sent to each endpoint every hour: <br>
 `ASK {?s ?p ?o}` <br>
 If the SPARQL endpoint gives a response then it is active, otherwise it's not.
 
-![Build Status](https://github.com/lglot/sparql-endpoint-availability/actions/workflows/build_test_deploy.yml/badge.svg)
-<br>
 ![Spring](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)
 ![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=Selenium&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
@@ -15,7 +15,30 @@ If the SPARQL endpoint gives a response then it is active, otherwise it's not.
 
 ### Requirements
 
-- Docker (for deployment)
+- Java 8 or higher
+- Maven (optional)
+- FirefoxDriver (for selenium testing)
+- Docker and docker-compose (for deployment)
+
+## Installation
+
+### Local
+
+1. Clone the repository
+2. Run `mvn clean install` to build the project
+3. Run `java -jar target/sparql-endpoint-availability-0.0.1-SNAPSHOT.jar` to start the application
+4. Open `http://localhost:8080/` in your browser
+5. Run `mvn test` to run the selenium tests
+6. Run `mvn clean install -Pprod` to build the project for production
+7. Run `java -jar target/sparql-endpoint-availability-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod` to start the application in production mode
+8. Open `http://localhost:8080/` in your browser
+9. Run `mvn clean install -Pprod -DskipTests` to build the project for production without running the tests
+
+### Docker
+
+1. Clone the repository
+2. Run `docker-compose up` to start the application
+3. Open `http://localhost:8080/` in your browser
 
 ## Instruction for running develop enviroment
 
