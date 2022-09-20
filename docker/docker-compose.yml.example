@@ -1,0 +1,56 @@
+version: "3"
+
+services:
+  app:
+    image: lglot/sparql_endpoint_availability:v0.1
+    container_name: app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - APP_ADMIN_USERNAME=admin
+      - APP_ADMIN_PASSWORD=admin
+      - SPRING_DATASOURCE_USERNAME=sparql   # database username
+      - SPRING_DATASOURCE_PASSWORD=sparql   # database password
+      # mysql
+      - SPRING_PROFILES_ACTIVE=mysql
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/sparql_endpoint_availability
+      # postresql
+#     - SPRING_PROFILES_ACTIVE=postgres
+#     - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/sparql_endpoint_availability
+
+#     - SERVER_SERVLET_CONTEXT_PATH=/sparql  # required for reverse proxy
+#     - SERVER_PORT=8080                      # optional, if you want to change the default port
+                                              # but remember to change the port in the ports section
+#     - JWT_TOKEN_SECRET=a_very_long_secret   # secret for JWT token
+
+# mysql
+  db:
+    image: mysql:latest
+    container_name: db
+    environment:
+      MYSQL_DATABASE: sparql_endpoint_availability
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: sparql
+      MYSQL_PASSWORD: sparql
+    volumes:
+      - db_volume:/var/lib/mysql
+    restart: unless-stopped
+
+# postgresql
+#  db:
+#    image: postgres:latest
+#    container_name: db
+#    environment:
+#      POSTGRES_DB: sparql_endpoint_availability
+#      POSTGRES_USER: sparql
+#      POSTGRES_PASSWORD: sparql
+#    volumes:
+#      - db_volume:/var/lib/postgresql/data
+#    restart: unless-stopped
+
+
+volumes:
+  db_volume:
+    external: false

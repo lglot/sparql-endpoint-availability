@@ -15,7 +15,7 @@ If the SPARQL endpoint gives a response then it is active, otherwise it's not.
 
 
 
-## Running locally with Maven
+## Running develop enviroment with Maven
 
 Sparql endpoint availability is a Spring Boot application built using Maven.
 
@@ -25,12 +25,12 @@ Clone repo:
    git clone https://github.com/lglot/sparql-endpoint-availability.git
    cd sparql-endpoint-availability
 ```
-
-- Run the application:
+- Run the application: <br>
 
 ```console
    ./mvnw spring-boot:run 
 ```
+
 
 ### Viewing the running application
 
@@ -42,14 +42,14 @@ The application by default has a admin user with the following credentials: <br>
 - username: admin <br>
 - password: admin <br>
 
-You can change the credentials in the `application.properties` file.
+You can change the credentials in the `src/main/resources/application.properties` file <br>
 
 ### Accessing the H2 database
 
 The application by default uses H2 database (in memory database). <br>
 H2 has an embedded GUI console for browsing the contents of a database.  
 After starting the application, we can navigate to [http://localhost:8080/h2-console](http://localhost:8080/h2-console).  
-On the login page, we'll insert the same credential that we used in the `application.properties`.  
+On the login page, we'll insert the same credential that we used in the `src/main/resources/application.properties`.  
 Default ones are:
 
 - JDBC URL : `jdbc:h2:mem:devdb`
@@ -67,15 +67,13 @@ The application requires a running database. <br>
 Actually, the application is configured to use a **PostgreSQL**, **MySQL** or H2 **databases**. <br>
 The easiest way to install the stack is to use docker-compose. <br>
 
-You can use the `docker-compose.yml` file from the repository and update as needed. <br>
+Copy `docker-compose.yml.example` in `docker` folder to `docker-compose.yml` <br>
 The default configuration is for MySQL database. <br>
 Run the following command to start the application:
 
 ```bash
-   docker-compose up -d
+   docker-compose -f docker/docker-compose.yml up -d
 ```
-
-
 Example of docker-compose file for MySQL database:
 
 ```yaml
@@ -94,7 +92,8 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/sparql_endpoint_availability
       - SPRING_DATASOURCE_USERNAME=sparql     # database username
       - SPRING_DATASOURCE_PASSWORD=sparql     # database password
-      - APP_ADMIN_PASSWORD=admin              # change the default admin password
+      - APP_ADMIN_USERNAME=admin              # admin username
+      - APP_ADMIN_PASSWORD=admin              # admin password
       - SERVER_SERVLET_CONTEXT_PATH=/sparql   # required for reverse proxy
       
       - SERVER_PORT=8080                      # optional, if you want to change the default port
@@ -126,6 +125,7 @@ volumes:
 | `SPRING_DATASOURCE_URL`       | jdbc:h2:mem:db     | `jdbc:{dbms}:{database_url}`  | Set database URL, as: <br> `jdbc:mysql://localhost:3306/db` for MySQL database with hostname `localhost` and port `3306` and database name `db` <br> `jdbc:postgresql://db:5432/sparql_db` for PostgreSQL database with hostname `db` and port `5432` and database name `sparql_db` |
  | `SPRING_DATASOURCE_USERNAME`  | root               | `<Database username>`         | Set database username                                                                                                                                                                                                                                                               |
 | `SPRING_DATASOURCE_PASSWORD`  | root               | `<Database password>`         | Set database password                                                                                                                                                                                                                                                               |
+| `APP_ADMIN_USERNAME`          | admin              | `<Admin username>`            | Set admin username                                                                                                                                                                                                                                                                  |
 | `APP_ADMIN_PASSWORD`          | admin              | `<Admin password>`            | Set admin password, it's recommended to change the default one                                                                                                                                                                                                                      |
 
 ### Optional Variables
@@ -142,6 +142,8 @@ volumes:
 
 The test suite includes UI tests with Selenium. <br>
 Browser support is limited to **Chrome, Firefox and Edge**. <br>
+
+Default configuration is for **Firefox** browser. <br>
 
   
 ```console
