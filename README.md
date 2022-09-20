@@ -22,13 +22,13 @@ Sparql endpoint availability is a Spring Boot application built using Maven.
 Clone repo:
 
 ```bash
-   git clone https://github.com/lglot/sparql-endpoint-availability.git
-   cd sparql-endpoint-availability
+git clone https://github.com/lglot/sparql-endpoint-availability.git
+cd sparql-endpoint-availability
 ```
 - Run the application: <br>
 
 ```console
-   ./mvnw spring-boot:run 
+./mvnw spring-boot:run 
 ```
 
 
@@ -72,7 +72,7 @@ The default configuration is for MySQL database. <br>
 Run the following command to start the application:
 
 ```bash
-   docker-compose -f docker/docker-compose.yml up -d
+docker-compose -f docker/docker-compose.yml up -d
 ```
 Example of docker-compose file for MySQL database:
 
@@ -147,7 +147,7 @@ Default configuration is for **Firefox** browser. <br>
 
   
 ```console
-    ./mvnw clean package -Dbrowser=your_browser    
+ ./mvnw clean package -Dbrowser=your_browser    
 ```
 
 ## CI/CD
