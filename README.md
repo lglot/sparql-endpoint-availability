@@ -52,7 +52,7 @@ After starting the application, we can navigate to [http://localhost:8080/h2-con
 On the login page, we'll insert the same credential that we used in the `src/main/resources/application.properties`.  
 Default ones are:
 
-- JDBC URL : `jdbc:h2:mem:devdb`
+- JDBC URL : `jdbc:h2:mem:db`
 - username : `root`
 - password : `root`
 
