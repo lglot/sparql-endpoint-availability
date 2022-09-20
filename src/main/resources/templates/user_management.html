@@ -50,10 +50,10 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="user: ${users}">
-                                <td th:text="${user.username}"></td>
-                                <td th:text="${user.role}"></td>
-                                <td th:text="${user.enabled}"></td>
+                            <tr th:each="user, i: ${users}" th:id="'user-'+${user.username}">
+                                <td th:text="${user.username}" class="username-row"></td>
+                                <td th:text="${user.role}" class="role-row"></td>
+                                <td th:text="${user.enabled}" class="enabled-row"></td>
                                 <td>
                                     <a th:if="${#authentication.name != user.username && user.enabled == true}"
                                         th:href="@{/user/management(action='disable',u=${user.username})}" class="btn btn-primary"

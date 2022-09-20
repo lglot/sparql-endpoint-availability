@@ -45,7 +45,7 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
     }
 
     @Override
-    public AppUser saveUser(String username, String password, String role) throws UserAlreadyExistsException {
+    public void saveUser(String username, String password, String role) throws UserAlreadyExistsException {
 
         AppUser user = AppUser.builder()
                 .username(username)
@@ -63,7 +63,7 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
         String token = TokenManager.createToken(username, user.getAuthorities(), jwtConfig.getExpirationTimeAfertDays(), secretKey);
         user.setJwtToken(token);
         log.info("Saving new user: {}", user);
-        return appUserRepository.save(user);
+        appUserRepository.save(user);
     }
 
     @Override
