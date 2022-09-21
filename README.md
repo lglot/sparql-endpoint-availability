@@ -44,21 +44,6 @@ The application by default has a admin user with the following credentials: <br>
 
 You can change the credentials in the `src/main/resources/application.properties` file <br>
 
-### Accessing the H2 database
-
-The application by default uses H2 database (in memory database). <br>
-H2 has an embedded GUI console for browsing the contents of a database.  
-After starting the application, we can navigate to [http://localhost:8080/h2-console](http://localhost:8080/h2-console).  
-On the login page, we'll insert the same credential that we used in the `src/main/resources/application.properties`.  
-Default ones are:
-
-- JDBC URL : `jdbc:h2:mem:db`
-- username : `root`
-- password : `root`
-
-
-
-
 ## Installation with Docker
 
 The application image is available on [Docker Hub](https://hub.docker.com/r/lglot/sparql_endpoint_availability) with the latest updates. <br>
