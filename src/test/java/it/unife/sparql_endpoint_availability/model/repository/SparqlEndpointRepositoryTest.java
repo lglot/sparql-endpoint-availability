@@ -10,10 +10,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -67,6 +64,8 @@ class SparqlEndpointRepositoryTest {
             }
         }
     }
+
+
     @Test
     void findAllWithCurrentStatus() {
         List<SparqlEndpoint> sparqlEndpoints = sparqlEndpointRepository.findAllWithCurrentStatus();
@@ -125,6 +124,27 @@ class SparqlEndpointRepositoryTest {
         assertEquals("url1",sparqlEndpoint.getUrl());
         assertNotNull(sparqlEndpoint.getSparqlEndpointStatuses().get(0).getId());
         assertNotNull(sparqlEndpoint.getSparqlEndpointStatuses().get(1).getId());
+    }
+
+    @Test
+    void findAfterLastWeekStatus_should_return_168_max() {
+        Date lastWeek = new Date(System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 7);
+        SparqlEndpoint sparqlEndpoint = SparqlEndpoint.builder().url("test_week").name("test_week")
+                .sparqlEndpointStatuses(new ArrayList<>())
+                .build();
+        for(int i = 0; i < 200; i++) {
+            Date date = new Date(System.currentTimeMillis() - 1000L * 60 * 60 * i);
+            SparqlEndpointStatus status = SparqlEndpointStatus.builder()
+                    .sparqlEndpoint(sparqlEndpoint)
+                    .queryDate(date)
+                    .active(i%2==0)
+                    .build();
+            sparqlEndpoint.getSparqlEndpointStatuses().add(status);
+        }
+        sparqlEndpointRepository.save(sparqlEndpoint);
+        assertTrue(sparqlEndpoint.getId() > 0);
+        List<SparqlEndpointStatus> sparqlEndpointStatuses = sparqlEndpointRepository.findByIdAfterQueryDateStatus(lastWeek, sparqlEndpoint.getId()).getSparqlEndpointStatuses();
+        assertEquals(168, sparqlEndpointStatuses.size());
     }
 
 

@@ -3,7 +3,7 @@ package it.unife.sparql_endpoint_availability.model.entity;
 public enum SparqlEndpointStatusLabel {
     ACTIVE("Active"),
     INACTIVE_LESSDAY("Inactive less than a day"),
-    INACTIVE_LESSWEEK("Inactive less than a week"),
+    INACTIVE_MOREDAY("Inactive more than a day"),
     INACTIVE_MOREWEEK("Inactive more than a week"),
     GENERAL_INACTIVE("General inactive"),
     UNKNOWN("Unknown");

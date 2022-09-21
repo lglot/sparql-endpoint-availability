@@ -4,10 +4,13 @@ import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import lombok.*;
 import org.apache.commons.lang3.time.DateUtils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
 import static it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusLabel.*;
+import static java.lang.Math.round;
 
 //Classe DTO, serve per trasferire informazioni degli sparrql enpoint al client
 @ToString
@@ -52,8 +55,8 @@ public class SparqlEndpointStatusDTO {
             sparqlEndpointStatusDTO.setStatus(ACTIVE.getLabel());
             labelFound = true;
         }
-        //se non è passata ancora una settimana, lo stato è generalmente inattivo
-        else if(oldestStatus.getQueryDate().getTime() > DateUtils.addDays(new Date(), -7).getTime()) {
+        //se non è passata ancora un giorno, lo stato è generalmente inattivo
+        else if(sparqlEndpointStatuses.size() < 24) {
             sparqlEndpointStatusDTO.setStatus(GENERAL_INACTIVE.getLabel());
             labelFound = true;
         }
@@ -69,14 +72,14 @@ public class SparqlEndpointStatusDTO {
 
                 if (status.getQueryDate().getTime() > DateUtils.addDays(new Date(), -1).getTime()) {
                     uptimeLast24h += 1;
-                    if(!labelFound || sparqlEndpointStatusDTO.getStatus().equals(INACTIVE_LESSWEEK.getLabel())) {
+                    if(!labelFound || sparqlEndpointStatusDTO.getStatus().equals(INACTIVE_MOREDAY.getLabel())) {
                         sparqlEndpointStatusDTO.setStatus(INACTIVE_LESSDAY.getLabel());
                         labelFound = true;
                     }
                 }
                 else {
                     if (!labelFound) {
-                        sparqlEndpointStatusDTO.setStatus(INACTIVE_LESSWEEK.getLabel());
+                        sparqlEndpointStatusDTO.setStatus(INACTIVE_MOREDAY.getLabel());
                         labelFound = true;
                     }
                 }
@@ -85,8 +88,27 @@ public class SparqlEndpointStatusDTO {
         if(!labelFound) {
             sparqlEndpointStatusDTO.setStatus(INACTIVE_MOREWEEK.getLabel());
         }
-        sparqlEndpointStatusDTO.setUptimeLast24h(uptimeLast24h/(Math.min(sparqlEndpointStatuses.size(), 24)));
-        sparqlEndpointStatusDTO.setUptimelast7d(uptimeLast7d/sparqlEndpointStatuses.size());
+
+        //se non è passato almeno un giorno l'uptime delle ultime 24 ore viene settato a -1
+        if(sparqlEndpointStatuses.size() < 24) {
+            sparqlEndpointStatusDTO.setUptimeLast24h(-1);
+        }
+        else {
+            BigDecimal uptimeLast24hBD = new BigDecimal(uptimeLast24h);
+            BigDecimal d = new BigDecimal(24);
+            BigDecimal uptimeLast24hBDdivided = uptimeLast24hBD.divide(d, 2, RoundingMode.HALF_UP);
+            sparqlEndpointStatusDTO.setUptimeLast24h(uptimeLast24hBDdivided.doubleValue());
+        }
+        //se non è passato almeno una settimana l'uptime delle ultime 7 giorni viene settato a -1
+        if(sparqlEndpointStatuses.size() < 168) {
+            sparqlEndpointStatusDTO.setUptimelast7d(-1);
+        }
+        else {
+            BigDecimal uptimeLast7dBD = new BigDecimal(uptimeLast7d);
+            BigDecimal w = new BigDecimal(168);
+            BigDecimal uptimeLast7dBDdivided = uptimeLast7dBD.divide(w, 2, RoundingMode.HALF_UP);
+            sparqlEndpointStatusDTO.setUptimelast7d(uptimeLast7dBDdivided.doubleValue());
+        }
 
         return sparqlEndpointStatusDTO;
     }

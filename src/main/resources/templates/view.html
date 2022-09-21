@@ -118,7 +118,7 @@
                     </div>
                     <div class="col-sm-3 media">
                         <img class="float-left mr-3" th:src="@{/image/red.png}" src="../static/image/red.png" alt="">
-                        <span class="media-body" th:text="#{status.inactive.lessweek}"></span>
+                        <span class="media-body" th:text="#{status.inactive.moreday}"></span>
                     </div>
                     <div class="col-sm-4 media">
                         <img class="float-left mr-3" th:src="@{/image/gray.png}" src="../static/image/gray.png" alt="">
@@ -126,6 +126,7 @@
                     </div>
                 </div>
             </fieldset>
+            <p th:if="${not #maps.isEmpty(sparqlStatusMap)}" th:text="#{general_inactive.message}"></p>
 
         <!--table-->
         <div th:if="${not #maps.isEmpty(sparqlStatusMap)}" class="container table-responsive">
@@ -160,13 +161,13 @@
                                 <span style="display:none;">inactive_lessday</span>
                             </div>
 
-                            <div th:case="${T(it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusLabel).INACTIVE_LESSWEEK.getLabel()}">
-                                <img th:src="@{/image/red.png}" src="../static/image/red.png" alt="inactive_lessweek"/>
+                            <div th:case="${T(it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusLabel).INACTIVE_MOREDAY.getLabel()}">
+                                <img th:src="@{/image/red.png}" src="../static/image/red.png" alt="inactive_moreday"/>
                             </div>
 
                             <div th:case="${T(it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusLabel).GENERAL_INACTIVE.getLabel()}">
                                 <img th:src="@{/image/red.png}" src="../static/image/red.png" alt="general_inactive"/>
-                                <span style="display:none;">inactive</span>
+                                <span style="display:none;">inactive</span>*
                             </div>
 
                             <div th:case="${T(it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusLabel).INACTIVE_MOREWEEK.getLabel()}">
