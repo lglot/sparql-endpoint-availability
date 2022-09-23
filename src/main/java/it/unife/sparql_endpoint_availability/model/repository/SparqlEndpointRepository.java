@@ -15,9 +15,10 @@ import java.util.List;
 @Repository
 public interface SparqlEndpointRepository extends JpaRepository<SparqlEndpoint, Long> {
 
+    SparqlEndpoint findByUrl(String url);
     List<SparqlEndpoint> findAllByOrderById();
-
-    //save
+    boolean existsByUrl(String url);
+    void deleteByUrl(String url);
 
 
     @EntityGraph(value = "SparqlEndpoint.detail", type = EntityGraph.EntityGraphType.FETCH)
@@ -39,9 +40,9 @@ public interface SparqlEndpointRepository extends JpaRepository<SparqlEndpoint, 
                 "SELECT max(s.queryDate) " +
                 "FROM SparqlEndpointStatus s " +
                 "group by s.sparqlEndpoint)) " +
-            "AND sparql.id=?1 " +
+            "AND sparql.url=?1 " +
             "order by sparql.id")
-    SparqlEndpoint findByIdWithCurrentStatus(@Param("id") Long id);
+    SparqlEndpoint findByUrlWithCurrentStatus(@Param("url") String url);
 
     @EntityGraph(value = "SparqlEndpoint.detail", type = EntityGraph.EntityGraphType.FETCH)
     @Query(" SELECT sparql " +
@@ -56,9 +57,9 @@ public interface SparqlEndpointRepository extends JpaRepository<SparqlEndpoint, 
             "FROM SparqlEndpoint sparql " +
             "LEFT JOIN FETCH sparql.sparqlEndpointStatuses as status" +
             " where status.id is NULL OR status.queryDate > ?1 " +
-            "and sparql.id=?2 " +
+            "and sparql.url=?2 " +
             "order by sparql.id asc,status.queryDate desc")
-    SparqlEndpoint findByIdAfterQueryDateStatus(Date queryDate,Long id);
+    SparqlEndpoint findByUrlAfterQueryDateStatus(Date queryDate,String url);
 
 
     @Query("SELECT s " +
@@ -74,24 +75,5 @@ public interface SparqlEndpointRepository extends JpaRepository<SparqlEndpoint, 
     List<SparqlEndpoint> findOnlyCurrentlyActive();
 
 
-    @EntityGraph(value = "SparqlEndpoint.detail", type = EntityGraph.EntityGraphType.FETCH)
-    @Query(" SELECT sparql " +
-            "FROM SparqlEndpoint sparql " +
-            "LEFT JOIN sparql.sparqlEndpointStatuses as status " +
-            "where (status.id is NULL OR status.queryDate in (" +
-                "SELECT max(s.queryDate) " +
-                "FROM SparqlEndpointStatus s " +
-                "group by s.sparqlEndpoint)) " +
-            "AND sparql.url=?1 " +
-            "order by sparql.url")
-    SparqlEndpoint findByUrlWithCurrentStatus(String url);
 
-
-    boolean existsByUrl(String url);
-
-    void deleteByUrlIn(Collection<@NotNull String> url);
-
-    void deleteByUrl(String url);
-
-    SparqlEndpoint findByUrl(String url);
 }

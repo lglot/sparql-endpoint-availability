@@ -97,6 +97,18 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
         appUserRepository.save(user);
     }
 
+    /**
+     * @param username 
+     * @return
+     * @throws UsernameNotFoundException
+     */
+    @Override
+    public boolean isUserEnabled(String username) throws UsernameNotFoundException {
+        AppUser user = loadUserByUsername(username);
+        return user.isEnabled();
+    }
+
+
     @Override
     public void updateUser(String username, String password, String role) {
         appUserRepository.findByUsername(username)

@@ -55,13 +55,23 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
 
 
     @Override
-    public SparqlEndpoint getById(Long id) throws SparqlEndpointNotFoundException {
+    public SparqlEndpoint getSparqlEndpointById(Long id) throws SparqlEndpointNotFoundException {
         Optional<SparqlEndpoint> se = sparqlEndpointRepository.findById(id);
         if (!se.isPresent()) {
             throw new SparqlEndpointNotFoundException(id);
         }
         return se.get();
     }
+
+    @Override
+    public SparqlEndpoint getSparqlEndpointByUrl(String url) throws SparqlEndpointNotFoundException {
+        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByUrl(url));
+        if (!se.isPresent()) {
+            throw new SparqlEndpointNotFoundException(url);
+        }
+        return se.get();
+    }
+
 
     @Override
     public List<SparqlEndpoint> getAll() {
@@ -75,10 +85,10 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
     }
 
     @Override
-    public SparqlEndpoint getSparqlEndpointWithCurrentStatusById(Long id) throws SparqlEndpointNotFoundException {
-        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByIdWithCurrentStatus(id));
+    public SparqlEndpoint getSparqlEndpointWithCurrentStatusByUrl(String url) throws SparqlEndpointNotFoundException {
+        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByUrlWithCurrentStatus(url));
         if (!se.isPresent()) {
-            throw new SparqlEndpointNotFoundException(id);
+            throw new SparqlEndpointNotFoundException(url);
         }
         return se.get();
     }
@@ -89,10 +99,10 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
     }
 
     @Override
-    public SparqlEndpoint getSparqlEndpointsAfterQueryDateById(Date queryDate, Long id) throws SparqlEndpointNotFoundException {
-        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByIdAfterQueryDateStatus(queryDate, id));
+    public SparqlEndpoint getSparqlEndpointsAfterQueryDateByUrl(Date queryDate, String url) throws SparqlEndpointNotFoundException {
+        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByUrlAfterQueryDateStatus(queryDate, url));
         if (!se.isPresent()) {
-            throw new SparqlEndpointNotFoundException(id);
+            throw new SparqlEndpointNotFoundException(url);
         }
         return se.get();
     }
@@ -144,15 +154,6 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
         } else {
             throw new SparqlEndpointNotFoundException(url);
         }
-    }
-
-    @Override
-    public SparqlEndpoint getSparqlEndpointByUrl(String url) throws SparqlEndpointNotFoundException {
-        Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByUrlWithCurrentStatus(url));
-        if (!se.isPresent()) {
-            throw new SparqlEndpointNotFoundException(url);
-        }
-        return sparqlEndpointRepository.findByUrlWithCurrentStatus(url);
     }
 
     //get sparql endpoint after last week

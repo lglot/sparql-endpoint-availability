@@ -15,6 +15,8 @@ public interface AppUserManagement extends UserDetailsService {
     void deleteUser(String username) throws UsernameNotFoundException;
     void disableUser(String username) throws UsernameNotFoundException;
     void enableUser(String username) throws UsernameNotFoundException;
+
+    boolean isUserEnabled(String username) throws UsernameNotFoundException;
     void updateUser(String username, String password, String role);
     // check if at least one user is present in the database
     boolean isEmpty();

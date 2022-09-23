@@ -90,7 +90,7 @@ public class SparqlEndpointRestControllerSystemTest {
     }
 
     @Test
-    void getSparqlENdpointByUrl() throws Exception {
+    void getSparqlEndpointByUrl() throws Exception {
         String url = sparqlEndpoints.get(0).getUrl();
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new AppGrantedAuthority("ROLE_USER"));
@@ -235,6 +235,7 @@ public class SparqlEndpointRestControllerSystemTest {
         // ripristino dati
         sedm.createSparqlEndpoint(sparqlEndpoints.get(0));
     }
+
 
 
 

@@ -2,7 +2,7 @@ package it.unife.sparql_endpoint_availability.exception;
 
 import javax.validation.constraints.NotNull;
 
-public class SparqlEndpointNotFoundException extends Exception {
+public class SparqlEndpointNotFoundException extends RuntimeException {
 
     public SparqlEndpointNotFoundException() {
         super();

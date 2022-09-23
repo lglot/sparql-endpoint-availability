@@ -18,7 +18,10 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.constraints.NotNull;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -45,7 +48,7 @@ public class SparqlEndpointAvailabilityRestController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public SparqlEndpointDTO getSparqlEndpointById(@PathVariable @NotNull Long id)  {
       try{
-          SparqlEndpoint se = sparqlEndpointManagement.getSparqlEndpointWithCurrentStatusById(id);
+          SparqlEndpoint se = sparqlEndpointManagement.getSparqlEndpointById(id);
           return SparqlEndpointDTO.fromSparqlEndpoint(se);
       } catch (SparqlEndpointNotFoundException e) {
           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sparql Endpoint not found", e);
@@ -122,51 +125,30 @@ public class SparqlEndpointAvailabilityRestController {
     }
 
 
-    @GetMapping(path = "/status/weekly-history")
+    @GetMapping(path = "/status/{days}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    public Iterable<SparqlEndpoint> getWeeklyHistoryStatusSparqlEndpoints() {
-
-        Calendar previousWeek = Calendar.getInstance();
-        previousWeek.add(Calendar.WEEK_OF_YEAR, -1);
-        logger.info("Requested sparql endopoint availabilty from previuos week " + previousWeek.getTime());
-        return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDate(previousWeek.getTime());
+    public Iterable<SparqlEndpoint> getHistoryStatusSparqlEndpoints(@PathVariable @NotNull Integer days) {
+        Date daysAgo = Date.from(Instant.now().minus(days, ChronoUnit.DAYS));
+        return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDate(daysAgo);
     }
 
-    @GetMapping(path = "/status/weekly-history/{id}")
+    @GetMapping(path = "/status/{days}/{url}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    public SparqlEndpoint getWeeklyHistoryStatusSparqlEndpointById(@PathVariable @NotNull Long id) {
+    public SparqlEndpoint getHistoryStatusSparqlEndpointsByUrl(@PathVariable @NotNull Integer days, @PathVariable @NotNull String url) {
 
-        Calendar previousWeek = Calendar.getInstance();
-        previousWeek.add(Calendar.WEEK_OF_YEAR, -1);
-        logger.info("Requested sparql endopoint availabilty from previuos week " + previousWeek.getTime());
+        try {
+            url = URLDecoder.decode(url, Charsets.UTF_8.name());
+            sparqlEndpointManagement.deleteSparqlEndpointByUrl(url);
+            logger.info("SparqlEndpoint deleted: {}", url);
+        } catch (UnsupportedEncodingException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
+
+        Date daysAgo = Date.from(Instant.now().minus(days, ChronoUnit.DAYS));
         try{
-            return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDateById(previousWeek.getTime(), id);
+            return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDateByUrl(daysAgo, url);
         } catch (SparqlEndpointNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
-        }
-    }
-
-    @GetMapping(path = "/status/daily-history")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    public Iterable<SparqlEndpoint> getDailyHistoryStatusSparqlEndpoints() {
-
-        Calendar previousDay = Calendar.getInstance();
-        previousDay.add(Calendar.DAY_OF_YEAR, -1);
-        logger.info("Requested sparql endopoint availabilty from previuos day " + previousDay.getTime());
-        return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDate(previousDay.getTime());
-    }
-
-    @GetMapping(path = "/status/daily-history/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-    public SparqlEndpoint getDailyHistoryStatusSparqlEndpointById(@PathVariable @NotNull Long id) {
-
-        Calendar previousDay = Calendar.getInstance();
-        previousDay.add(Calendar.DAY_OF_YEAR, -1);
-        logger.info("Requested sparql endopoint availabilty from previuos day " + previousDay.getTime());
-        try{
-            return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDateById(previousDay.getTime(), id);
-        } catch (SparqlEndpointNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "SparqlEndpoint not found");
         }
     }
 

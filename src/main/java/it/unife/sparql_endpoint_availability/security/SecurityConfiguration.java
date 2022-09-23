@@ -72,7 +72,7 @@ public class SecurityConfiguration  {
                     .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                     .and()
                     .addFilter(new JwtUsernamePasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
-                    .addFilterAfter(new JwtTokenVerify(jwtConfig, secretKey), JwtUsernamePasswordAuthenticationFilter.class);
+                    .addFilterAfter(new JwtTokenVerify(jwtConfig, secretKey, appUserManagement), JwtUsernamePasswordAuthenticationFilter.class);
 
         }
 

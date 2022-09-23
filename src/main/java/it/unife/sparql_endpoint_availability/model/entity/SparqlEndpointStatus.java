@@ -24,6 +24,7 @@ public class SparqlEndpointStatus {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference // Omitted from serialization
+    @ToString.Exclude
     private SparqlEndpoint sparqlEndpoint;
 
     @Basic(optional = false)
@@ -33,9 +34,5 @@ public class SparqlEndpointStatus {
     private Date queryDate;
 
     private boolean active;
-
-    public Date getCheckDate() {
-        return queryDate;
-    }
     
 }

@@ -43,7 +43,11 @@ class AppUserRepositoryTest {
         userRepository.save(appUser2);
         List<AppUser> userList = userRepository.findAll();
         assertTrue(userList.iterator().hasNext());
-        assertTrue(userList.size() > 1);
+        assertEquals(2, userList.size());
+
+        //verifico che gli username siano in lista
+        assertTrue(userList.stream().anyMatch(user -> user.getUsername().equals("username")));
+        assertTrue(userList.stream().anyMatch(user -> user.getUsername().equals("username2")));
     }
 
 }

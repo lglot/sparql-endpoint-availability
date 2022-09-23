@@ -69,8 +69,9 @@ class SparqlEndpointManagementJPATest {
         SparqlEndpointRepository ser = Mockito.mock(SparqlEndpointRepository.class);
         SparqlEndpointManagement sedm = new SparqlEndpointManagementJPAImpl(ser, null);
         Mockito.when(ser.findById(anyLong())).thenReturn(Optional.of(new SparqlEndpoint("http://localhost:8080/se1", "se1")));
-        SparqlEndpoint se = sedm.getById(1L);
+        SparqlEndpoint se = sedm.getSparqlEndpointById(1L);
 
         assertEquals("se1", se.getName());
     }
+
 }

@@ -29,7 +29,7 @@ public interface SparqlEndpointManagement {
     /*
      * Ottiene uno sparql endpoint in base all'id specificato (ritorna solo l'URL)
      */
-    SparqlEndpoint getById(Long id) throws SparqlEndpointNotFoundException;
+    SparqlEndpoint getSparqlEndpointById(Long id) throws SparqlEndpointNotFoundException;
 
     /**
      * Return the SPARQL endpoint identified by the URL
@@ -52,7 +52,7 @@ public interface SparqlEndpointManagement {
     List<SparqlEndpoint> getSparqlEndpointsWithCurrentStatus();
 
     /* ottiene uno sparql enpoint con lo stato attuale in base all'id specificato */
-    SparqlEndpoint getSparqlEndpointWithCurrentStatusById(Long id) throws SparqlEndpointNotFoundException;
+    SparqlEndpoint getSparqlEndpointWithCurrentStatusByUrl(String url) throws SparqlEndpointNotFoundException;
 
     /*
      * recupera tutti gli sparql enpoint con i risultati delle query sparql eseguite
@@ -65,7 +65,7 @@ public interface SparqlEndpointManagement {
      * delle query sparql eseguite dopo
      * la data specificata
      */
-    SparqlEndpoint getSparqlEndpointsAfterQueryDateById(Date queryDate, Long id) throws SparqlEndpointNotFoundException;
+    SparqlEndpoint getSparqlEndpointsAfterQueryDateByUrl(Date queryDate, String url) throws SparqlEndpointNotFoundException;
 
     /* recupera gli sparql enpoint attualemete attivi */
     List<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints();

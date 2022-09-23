@@ -7,6 +7,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import it.unife.sparql_endpoint_availability.model.entity.AppGrantedAuthority;
+import it.unife.sparql_endpoint_availability.model.management.AppUserManagement;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,9 +30,12 @@ public class JwtTokenVerify extends OncePerRequestFilter {
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
 
-    public JwtTokenVerify(JwtConfig jwtConfig, SecretKey secretKey) {
+    private final AppUserManagement appUserManagement;
+
+    public JwtTokenVerify(JwtConfig jwtConfig, SecretKey secretKey, AppUserManagement appUserManagement) {
         this.jwtConfig = jwtConfig;
         this.secretKey = secretKey;
+        this.appUserManagement = appUserManagement;
     }
 
     @Override
@@ -55,6 +59,13 @@ public class JwtTokenVerify extends OncePerRequestFilter {
 
             String username = body.getSubject();
 
+            //verify if the user is still present in the database
+            if(!appUserManagement.exists(username) || !appUserManagement.isUserEnabled(username)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+
             List<Map<String,String>> authorities = (List<Map<String,String>>) body.get("authorities");
 
             Set<AppGrantedAuthority> appGrantedAuthorities = authorities.stream()
@@ -65,6 +76,7 @@ public class JwtTokenVerify extends OncePerRequestFilter {
                     username,
                     null,
                     appGrantedAuthorities);
+
             logger.info("Authentication successful for user: " + username + " with authorities: " + appGrantedAuthorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

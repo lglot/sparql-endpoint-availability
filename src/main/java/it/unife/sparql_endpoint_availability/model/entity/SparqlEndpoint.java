@@ -31,8 +31,7 @@ public class SparqlEndpoint {
     private String name;
 
     @JsonManagedReference // Inclued in serialization
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sparqlEndpoint", cascade = CascadeType.ALL)
-    @ToString.Exclude
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sparqlEndpoint", cascade = CascadeType.ALL)
     private List<SparqlEndpointStatus> sparqlEndpointStatuses;
 
     public SparqlEndpoint(Long id ,String url, String name) {
@@ -81,9 +80,9 @@ public class SparqlEndpoint {
             return null;
         }
         if (descending) {
-            return sparqlEndpointStatuses.get(0).getCheckDate();
+            return sparqlEndpointStatuses.get(0).getQueryDate();
         } else {
-            return sparqlEndpointStatuses.get(sparqlEndpointStatuses.size() - 1).getCheckDate();
+            return sparqlEndpointStatuses.get(sparqlEndpointStatuses.size() - 1).getQueryDate();
         }
     }
 

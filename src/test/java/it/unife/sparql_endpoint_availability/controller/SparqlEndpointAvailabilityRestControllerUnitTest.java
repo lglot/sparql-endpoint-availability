@@ -111,28 +111,28 @@ class SparqlEndpointAvailabilityRestControllerUnitTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    void getSparqlEndpointById() throws Exception {
+    void getSparqlEndpointByUrl() throws Exception {
 
-        Mockito.when(sedm.getSparqlEndpointWithCurrentStatusById(anyLong())).thenAnswer(invocation -> {
-            Long id = invocation.getArgument(0);
+        Mockito.when(sedm.getSparqlEndpointByUrl(anyString())).thenAnswer(invocation -> {
+            String url = invocation.getArgument(0);
             return sparqlEndpoints.stream()
-                    .filter(se -> se.getId().equals(id))
+                    .filter(se -> se.getUrl().equals(url))
                     .findFirst()
                     .orElseThrow(SparqlEndpointNotFoundException::new);
         });
-        //random id between 1 and 5
-        long id = (long) (Math.random() * 4) + 1;
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(BASE_URL_API+"/"+id);
+        //random id between 0 and 4
+        long id = (long) (Math.random() * 4);
+        SparqlEndpoint se = sparqlEndpoints.get((int) id);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(BASE_URL_API+"/url?url="+se.getUrl());
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> {
                     assertEquals(200, mvcResult.getResponse().getStatus());
                     SparqlEndpointDTO seResponse = new ObjectMapper()
                             .readValue(mvcResult.getResponse().getContentAsString(),SparqlEndpointDTO.class);
-                    assertEquals(sparqlEndpoints.get((int) id-1).getUrl(), seResponse.getUrl());
+                    assertEquals(se.getUrl(), seResponse.getUrl());
                 });
-        //id not found
-        long id2 = (long) (Math.random() * 10) + 10;
-        requestBuilder = MockMvcRequestBuilders.get(BASE_URL_API+"/"+id2);
+        // test not found
+        requestBuilder = MockMvcRequestBuilders.get(BASE_URL_API+"/url?url=notfound");
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> assertEquals(404, mvcResult.getResponse().getStatus()));
     }
@@ -290,7 +290,7 @@ class SparqlEndpointAvailabilityRestControllerUnitTest {
     @WithMockUser(roles = "USER")
     void deleteSparqlEndpointByUrlNoPermission() throws Exception {
         SparqlEndpoint se = sparqlEndpoints.get(0);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(BASE_URL_API+"/url/?url="+se.getUrl());
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(BASE_URL_API + "/url/?url=" + se.getUrl());
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> assertEquals(403, mvcResult.getResponse().getStatus()));
     }
