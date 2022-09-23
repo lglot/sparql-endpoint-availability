@@ -34,7 +34,7 @@ public class AppUser implements UserDetails {
     private String jwtToken;
 
     @JsonManagedReference
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<AppGrantedAuthority> authorities;
 
 

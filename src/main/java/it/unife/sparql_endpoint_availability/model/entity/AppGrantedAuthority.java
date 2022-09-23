@@ -1,8 +1,7 @@
 package it.unife.sparql_endpoint_availability.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -13,6 +12,9 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "authorities")
 public class AppGrantedAuthority implements GrantedAuthority {
 
@@ -23,16 +25,12 @@ public class AppGrantedAuthority implements GrantedAuthority {
 
     private String role;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "authorities")
     @JsonBackReference // Omitted from serialization
     private Set<AppUser> users = new HashSet<>();
 
     public AppGrantedAuthority(String role) {
         this.role = role;
-    }
-
-    public AppGrantedAuthority() {
-
     }
 
     @Override

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.TestInstance;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,20 +22,26 @@ class SparqlEndpointStatusDTOTest {
     List<SparqlEndpointStatus> statuses;
     List<SparqlEndpointStatus> inverted_statuses;
     long hourInAWeek = 24 * 7;
+    long hourInADay = 24;
+    long countStatusinAWeek;
+    long countStatusinADay;
 
     @BeforeAll
     void setUp() {
         SparqlEndpoint se = SparqlEndpoint.builder().url("http://example.org").name("Example").build();
         statuses = new ArrayList<>();
         inverted_statuses = new ArrayList<>();
-        for(int i = 0; i < hourInAWeek; i++) {
+        for(int i = 0; i < hourInAWeek+hourInADay; i++) {
             SparqlEndpointStatus s = SparqlEndpointStatus.builder()
                             .sparqlEndpoint(se)
-                            .queryDate(new Date(System.currentTimeMillis() - (long) i * 3600 * 1000))
+                            .queryDate(LocalDateTime.now().minusHours(i))
                             .build();
             statuses.add(s);
             inverted_statuses.add(0, s);
+
         }
+        countStatusinADay =  statuses.stream().filter(s -> s.getQueryDate().isAfter(LocalDateTime.now().minusDays(1))).count();
+        countStatusinAWeek = statuses.stream().filter(s -> s.getQueryDate().isAfter(LocalDateTime.now().minusDays(7))).count();
     }
     //se tutti gli stati sono attivi, allora lo sparql endpoint è attivo
     // e gli uptime sono al 100%
@@ -88,12 +95,12 @@ class SparqlEndpointStatusDTOTest {
         SparqlEndpointStatusDTO dto = SparqlEndpointStatusDTO.fromSparqlEndpointStatusList(statuses, true);
         assertEquals(ACTIVE.getLabel(), dto.getStatus());
         assertEquals(1, dto.getUptimeLast24h());
-        assertEquals(bigDecimalDivision(24,(double) hourInAWeek), dto.getUptimelast7d());
+        assertEquals(bigDecimalDivision(24, countStatusinAWeek), dto.getUptimelast7d());
 
         dto = SparqlEndpointStatusDTO.fromSparqlEndpointStatusList(inverted_statuses, false);
         assertEquals(ACTIVE.getLabel(), dto.getStatus());
         assertEquals(1, dto.getUptimeLast24h());
-        assertEquals(bigDecimalDivision(24,(double) hourInAWeek), dto.getUptimelast7d());
+        assertEquals(bigDecimalDivision(24, countStatusinAWeek), dto.getUptimelast7d());
     }
 
     //se gli stati sono inattivi solo nelle ultime 24 ore, allora lo sparql endpoint è inattivo da più di un giorno (e meno di una settimana)
@@ -112,12 +119,12 @@ class SparqlEndpointStatusDTOTest {
         SparqlEndpointStatusDTO dto = SparqlEndpointStatusDTO.fromSparqlEndpointStatusList(statuses, true);
         assertEquals(INACTIVE_MOREDAY.getLabel(), dto.getStatus());
         assertEquals(0, dto.getUptimeLast24h());
-        assertEquals(bigDecimalDivision(statuses.size()-24, statuses.size()), dto.getUptimelast7d());
+        assertEquals(bigDecimalDivision(countStatusinAWeek-24, countStatusinAWeek), dto.getUptimelast7d());
 
         dto = SparqlEndpointStatusDTO.fromSparqlEndpointStatusList(inverted_statuses, false);
         assertEquals(INACTIVE_MOREDAY.getLabel(), dto.getStatus());
         assertEquals(0, dto.getUptimeLast24h());
-        assertEquals(bigDecimalDivision((statuses.size()-24), statuses.size()), dto.getUptimelast7d());
+        assertEquals(bigDecimalDivision((countStatusinAWeek-24), countStatusinAWeek), dto.getUptimelast7d());
     }
 
     //se gli stati sono inattivi nelle ultime 12 ore e attivi nelle altre, allora lo sparql endpoint è inattivo da meno di un giorno
@@ -136,12 +143,12 @@ class SparqlEndpointStatusDTOTest {
         SparqlEndpointStatusDTO dto = SparqlEndpointStatusDTO.fromSparqlEndpointStatusList(statuses, true);
         assertEquals(INACTIVE_LESSDAY.getLabel(), dto.getStatus());
         assertEquals(0.5, dto.getUptimeLast24h());
-        assertEquals(bigDecimalDivision(statuses.size()-12, statuses.size()), dto.getUptimelast7d());
+        assertEquals(bigDecimalDivision(countStatusinAWeek-12, countStatusinAWeek), dto.getUptimelast7d());
 
         dto = SparqlEndpointStatusDTO.fromSparqlEndpointStatusList(inverted_statuses, false);
         assertEquals(INACTIVE_LESSDAY.getLabel(), dto.getStatus());
         assertEquals(0.5, dto.getUptimeLast24h());
-        assertEquals(bigDecimalDivision((statuses.size()-12), statuses.size()), dto.getUptimelast7d());
+        assertEquals(bigDecimalDivision((countStatusinAWeek-12), countStatusinAWeek), dto.getUptimelast7d());
     }
 
     //se la lista degli stati non contiene almeno i controlli di un giorno intero e lo stato è inattivo, ritorna GENREAL_INACTIVE

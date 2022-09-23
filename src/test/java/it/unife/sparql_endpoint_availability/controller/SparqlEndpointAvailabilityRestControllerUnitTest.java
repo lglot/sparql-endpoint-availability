@@ -29,6 +29,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -71,13 +72,13 @@ class SparqlEndpointAvailabilityRestControllerUnitTest {
                     .build();
             SparqlEndpointStatus status = SparqlEndpointStatus.builder()
                     .sparqlEndpoint(se)
-                    .queryDate(new Date())
+                    .queryDate(LocalDateTime.now())
                     .active(i%2==0)
                     .build();
 
             SparqlEndpointStatus statusOld = SparqlEndpointStatus.builder()
                     .sparqlEndpoint(se)
-                    .queryDate(new Date(System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 7))
+                    .queryDate(LocalDateTime.now().minusWeeks(1))
                     .active(i%2==0)
                     .build();
             se.setSparqlEndpointStatuses(Arrays.asList(status, statusOld));

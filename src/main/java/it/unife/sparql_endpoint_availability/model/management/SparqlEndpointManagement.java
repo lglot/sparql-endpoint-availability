@@ -5,6 +5,7 @@ import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundExc
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +14,7 @@ import java.util.Set;
 public interface SparqlEndpointManagement {
 
     /*
-     * Metodo per aggiornare la lista degli sparql Endpoint sul DB,in input il
+     * Metodo per aggiornare la lista degli sparql Endpoint sul DB, in input il
      * metodo riceve
      * l'insieme degli endpoint letti da file.
      */
@@ -58,20 +59,20 @@ public interface SparqlEndpointManagement {
      * recupera tutti gli sparql enpoint con i risultati delle query sparql eseguite
      * dopo la data specificata
      */
-    List<SparqlEndpoint> getSparqlEndpointsAfterQueryDate(Date queryDate);
+    List<SparqlEndpoint> getSparqlEndpointsAfterQueryDate(LocalDateTime queryDate);
 
     /*
      * recupera uno sparql enpoint in base all'id specificato e con i risultati
      * delle query sparql eseguite dopo
      * la data specificata
      */
-    SparqlEndpoint getSparqlEndpointsAfterQueryDateByUrl(Date queryDate, String url) throws SparqlEndpointNotFoundException;
+    SparqlEndpoint getSparqlEndpointsAfterQueryDateByUrl(LocalDateTime queryDate, String url) throws SparqlEndpointNotFoundException;
 
     /* recupera gli sparql enpoint attualemete attivi */
     List<SparqlEndpoint> getCurrentlyActiveSparqlEndpoints();
 
     /* ottiene la data della prima query sparql eseguita */
-    Date findFirstQueryDate();
+    LocalDateTime findFirstQueryDate();
 
     SparqlEndpoint createSparqlEndpoint(SparqlEndpoint se) throws SparqlEndpointAlreadyExistsException;
 

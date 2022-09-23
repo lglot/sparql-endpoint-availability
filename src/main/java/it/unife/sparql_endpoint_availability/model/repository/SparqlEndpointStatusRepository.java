@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -21,9 +21,9 @@ public interface SparqlEndpointStatusRepository extends JpaRepository<SparqlEndp
             "   group by s.sparqlEndpoint)")
     List<SparqlEndpointStatus> findLastSparqlEnpointStatus();
 
-    List<SparqlEndpointStatus> findSparqlEndpointStatusByQueryDateAfter(Date queryDate);
+    List<SparqlEndpointStatus> findSparqlEndpointStatusByQueryDateAfter(LocalDateTime queryDate);
 
     SparqlEndpointStatus findTopByOrderByQueryDate();
     
-    void deleteSparqlEndpointStatusByQueryDateBefore(Date queryDate);
+    void deleteSparqlEndpointStatusByQueryDateBefore(LocalDateTime queryDate);
 }

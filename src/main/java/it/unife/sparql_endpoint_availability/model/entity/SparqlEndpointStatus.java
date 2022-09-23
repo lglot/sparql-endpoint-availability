@@ -6,6 +6,7 @@ import it.unife.sparql_endpoint_availability.config.AppConfig;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @ToString
@@ -28,10 +29,10 @@ public class SparqlEndpointStatus {
     private SparqlEndpoint sparqlEndpoint;
 
     @Basic(optional = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.TIMESTAMP)
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @JsonFormat(timezone = AppConfig.LOCAL_TIMEZONE)
-    private Date queryDate;
+    private LocalDateTime queryDate;
 
     private boolean active;
     

@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -66,7 +67,7 @@ public class SparqlEndpoint {
     }
 
     //get last check date of the endpoint by sorting the list of statuses by date and taking the first element
-    public Date getLastCheckDate() {
+    public LocalDateTime getLastCheckDate() {
         if (sparqlEndpointStatuses == null || sparqlEndpointStatuses.isEmpty()) {
             return null;
         }
@@ -75,7 +76,7 @@ public class SparqlEndpoint {
     }
 
     //get last check date of the endpoint when sorted by date
-    public Date getLastCheckDate(boolean descending) {
+    public LocalDateTime getLastCheckDate(boolean descending) {
         if (sparqlEndpointStatuses.isEmpty()) {
             return null;
         }

@@ -11,6 +11,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -94,12 +95,12 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
     }
 
     @Override
-    public List<SparqlEndpoint> getSparqlEndpointsAfterQueryDate(Date queryDate) {
+    public List<SparqlEndpoint> getSparqlEndpointsAfterQueryDate(LocalDateTime queryDate) {
         return sparqlEndpointRepository.findAllAfterQueryDateStatus(queryDate);
     }
 
     @Override
-    public SparqlEndpoint getSparqlEndpointsAfterQueryDateByUrl(Date queryDate, String url) throws SparqlEndpointNotFoundException {
+    public SparqlEndpoint getSparqlEndpointsAfterQueryDateByUrl(LocalDateTime queryDate, String url) throws SparqlEndpointNotFoundException {
         Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByUrlAfterQueryDateStatus(queryDate, url));
         if (!se.isPresent()) {
             throw new SparqlEndpointNotFoundException(url);
@@ -113,7 +114,7 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
     }
 
     @Override
-    public Date findFirstQueryDate() {
+    public LocalDateTime findFirstQueryDate() {
         SparqlEndpointStatus s = sparqlEndpointStatusRepository.findTopByOrderByQueryDate();
         return s.getQueryDate();
     }
@@ -159,7 +160,7 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
     //get sparql endpoint after last week
 
     public List<SparqlEndpoint> getSparqlEndpointsAfterLastWeek() {
-        Date lastWeek = DateUtils.addDays(new Date(), -7);
+        LocalDateTime lastWeek = LocalDateTime.now().minusWeeks(1);
         return sparqlEndpointRepository.findAllAfterQueryDateStatus(lastWeek);
     }
 }

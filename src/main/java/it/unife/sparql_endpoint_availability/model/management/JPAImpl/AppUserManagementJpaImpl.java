@@ -3,8 +3,10 @@ package it.unife.sparql_endpoint_availability.model.management.JPAImpl;
 import it.unife.sparql_endpoint_availability.exception.UserAlreadyExistsException;
 import it.unife.sparql_endpoint_availability.jwt.JwtConfig;
 import it.unife.sparql_endpoint_availability.jwt.TokenManager;
+import it.unife.sparql_endpoint_availability.model.entity.AppGrantedAuthority;
 import it.unife.sparql_endpoint_availability.model.entity.AppUser;
 import it.unife.sparql_endpoint_availability.model.management.AppUserManagement;
+import it.unife.sparql_endpoint_availability.model.repository.AppGrantedAuthorityRepository;
 import it.unife.sparql_endpoint_availability.model.repository.AppUserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,7 @@ import static it.unife.sparql_endpoint_availability.security.ApplicationUserRole
 public class AppUserManagementJpaImpl implements AppUserManagement {
 
     private final AppUserRepository appUserRepository;
+    private final AppGrantedAuthorityRepository appGrantedAuthorityRepository;
     private final PasswordEncoder passwordEncoder;
 
     private final JwtConfig jwtConfig;
@@ -130,6 +133,22 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
         return appUserRepository.existsByUsername(username);
     }
 
+    /**
+     * @param role
+     */
+    @Override
+    public void saveAuthority(String role) {
+        AppGrantedAuthority auth = AppGrantedAuthority.builder()
+                .role(role)
+                .build();
+        appGrantedAuthorityRepository.save(auth);
+    }
+
+    @Override
+    public boolean existsAuthority(String role) {
+        return appGrantedAuthorityRepository.existsByRole(role);
+    }
+
 
     private AppUser setPasswordAndRole(AppUser user, String password, String role) {
         user.setPassword(passwordEncoder.encode(password));
@@ -144,6 +163,8 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
         user.getAuthorities().forEach(ga -> ga.getUsers().add(user));
         return user;
     }
+
+
 
 
 }

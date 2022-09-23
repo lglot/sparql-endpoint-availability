@@ -92,7 +92,7 @@ public class SparqlEndpointAvailabilityController {
 
         /* HTTP PARAMETERS */
         SortedMap<Long, SparqlEndpointStatusDTO> sparqlStatusMap = new TreeMap<>();
-        Date lastUpdate = null;
+        LocalDateTime lastUpdate = null;
         int numberActive = 0;
         LocalDateTime lastUpdateLocal = null;
         long weeksPassed;
@@ -121,7 +121,7 @@ public class SparqlEndpointAvailabilityController {
 
             numberActive = (int) sparqlStatusMap.values().stream().filter(s -> s.getStatus().equals(ACTIVE.getLabel())).count();
             lastUpdate = sparqlEndpointList.get(0).getLastCheckDate(true);
-            lastUpdateLocal = LocalDateTime.ofInstant(lastUpdate.toInstant(), ZoneId.of("Z"));
+            lastUpdateLocal = lastUpdate.atZone(ZoneId.systemDefault()).toLocalDateTime();
         }
         String lastUpdateLocalString = "No date";
         if (lastUpdateLocal != null) {

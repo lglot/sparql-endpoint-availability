@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 
+import static it.unife.sparql_endpoint_availability.security.ApplicationUserRole.ADMIN;
+import static it.unife.sparql_endpoint_availability.security.ApplicationUserRole.USER;
+
 @Component
 @Transactional
 public class ApplicationInitService {
@@ -33,6 +36,20 @@ public class ApplicationInitService {
 
     @PostConstruct
     public void init(){
+        //create Authorities
+//        ADMIN.getGrantedAuthorities().forEach(appGrantedAuthority -> {
+//            if(!appUserManagement.existsAuthority(appGrantedAuthority.getRole())){
+//                appUserManagement.saveAuthority(appGrantedAuthority.getRole());
+//            }
+//        });
+//        USER.getGrantedAuthorities().forEach(appGrantedAuthority -> {
+//            if(!appUserManagement.existsAuthority(appGrantedAuthority.getRole())){
+//                appUserManagement.saveAuthority(appGrantedAuthority.getRole());
+//            }
+//        });
+
+
+
         String adminUsername = appConfig.getAdminUsername();
         String adminPassword = appConfig.getAdminPassword();
         if(adminUsername == null || adminPassword == null || adminUsername.isEmpty() || adminPassword.isEmpty()){

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -79,7 +80,7 @@ public class SparqlEndpointsCheckThread extends Thread {
                 status.setActive(false);
             }
             // else status.setActive(true);
-            status.setQueryDate(new Timestamp(System.currentTimeMillis()));
+            status.setQueryDate(LocalDateTime.now());
             sparqlEndpointStatusList.add(status);
         }
 

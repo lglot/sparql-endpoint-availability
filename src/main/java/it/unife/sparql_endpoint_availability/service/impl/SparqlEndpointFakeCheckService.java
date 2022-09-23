@@ -5,6 +5,7 @@ import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import it.unife.sparql_endpoint_availability.service.SparqlEndpointCheckService;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,7 +23,7 @@ public class SparqlEndpointFakeCheckService implements SparqlEndpointCheckServic
             seStatus.setSparqlEndpoint(se);
             Random rd = new Random();
             seStatus.setActive(rd.nextBoolean());
-            seStatus.setQueryDate(new Timestamp(System.currentTimeMillis()));
+            seStatus.setQueryDate(LocalDateTime.now());
             sparqlEndpointStatusList.add(seStatus);
         }
 

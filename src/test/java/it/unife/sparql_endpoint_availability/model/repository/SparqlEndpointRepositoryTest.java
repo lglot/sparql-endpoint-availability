@@ -5,33 +5,37 @@ import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SparqlEndpointRepositoryTest {
 
     @Autowired
     private SparqlEndpointRepository sparqlEndpointRepository;
-    Date now;
-    Date twoDaysAgo;
-    Date oneWeekAgo;
+
+    LocalDateTime now;
+    LocalDateTime twoDaysAgo;
+    LocalDateTime oneWeekAgo;
 
     @BeforeAll
     public void init() {
-       this.now = new Date();
-       this.twoDaysAgo = new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000);
-       this.oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+       this.now = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+       this.twoDaysAgo = now.minusDays(2);
+       this.oneWeekAgo = now.minusWeeks(1);
     }
 
 
@@ -88,7 +92,7 @@ class SparqlEndpointRepositoryTest {
         for (SparqlEndpoint endpoint : seWithCurrentStatus) {
             assertNotNull(endpoint.getId());
             assertEquals(1, endpoint.getSparqlEndpointStatuses().size());
-            assertTrue(this.now.equals(endpoint.getSparqlEndpointStatuses().get(0).getQueryDate()));
+            assertTrue(endpoint.getSparqlEndpointStatuses().get(0).getQueryDate().equals(this.now));
         }
     }
 
@@ -99,12 +103,14 @@ class SparqlEndpointRepositoryTest {
         SparqlEndpoint sparqlEndpoint = sparqlEndpointOptional.get();
         assertEquals("url1", sparqlEndpoint.getUrl());
         assertEquals(sparqlEndpoint.getSparqlEndpointStatuses().size(), 1);
-        assertTrue(this.now.equals(sparqlEndpoint.getSparqlEndpointStatuses().get(0).getQueryDate()));
+        System.out.println(sparqlEndpoint.getSparqlEndpointStatuses().get(0).getQueryDate());
+        System.out.println(this.now);
+        assertTrue(sparqlEndpoint.getSparqlEndpointStatuses().get(0).getQueryDate().equals(this.now));
     }
 
     @Test
     void findAllAfterQueryDateStatus() {
-        Date sixDayAgo = new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000);
+        LocalDateTime sixDayAgo = now.minusDays(6);
         List<SparqlEndpoint> sparqlEndpoints = sparqlEndpointRepository.findAllAfterQueryDateStatus(sixDayAgo);
         assertEquals(5, sparqlEndpoints.size());
         for (SparqlEndpoint endpoint : sparqlEndpoints) {
@@ -117,7 +123,9 @@ class SparqlEndpointRepositoryTest {
 
     @Test
     void findByUrlAfterQueryDateStatus() {
-        Date sixDayAgo = new Date(System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 6);
+
+        LocalDateTime sixDayAgo = now.minusDays(6);
+
         Optional<SparqlEndpoint> sparqlEndpointOptional = Optional.ofNullable(sparqlEndpointRepository.findByUrlAfterQueryDateStatus(sixDayAgo, "url1"));
         assertTrue(sparqlEndpointOptional.isPresent());
         SparqlEndpoint sparqlEndpoint = sparqlEndpointOptional.get();
@@ -139,12 +147,12 @@ class SparqlEndpointRepositoryTest {
     @Test
     @Rollback(true)
     void findAfterLastWeekStatus_shouldNotReturnOlderStatus() {
-        Date aWeekAgo = new Date(System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 7);
+        LocalDateTime oneWeekAgo = now.minusWeeks(1);
         SparqlEndpoint sparqlEndpoint = SparqlEndpoint.builder().url("test_week").name("test_week")
                 .sparqlEndpointStatuses(new ArrayList<>())
                 .build();
         for (int i = 0; i < 200; i++) {
-            Date date = new Date(System.currentTimeMillis() - 1000L * 60 * 60 * i);
+            LocalDateTime date = now.minusHours(i);
             SparqlEndpointStatus status = SparqlEndpointStatus.builder()
                     .sparqlEndpoint(sparqlEndpoint)
                     .queryDate(date)
@@ -157,13 +165,13 @@ class SparqlEndpointRepositoryTest {
         assertTrue(id > 0);
 
 
-        List<SparqlEndpointStatus> statusesTruncated = sparqlEndpointRepository.findByUrlAfterQueryDateStatus(aWeekAgo, "test_week").getSparqlEndpointStatuses();
+        List<SparqlEndpointStatus> statusesTruncated = sparqlEndpointRepository.findByUrlAfterQueryDateStatus(oneWeekAgo, "test_week").getSparqlEndpointStatuses();
         SparqlEndpointStatus oldestStatus = statusesTruncated
                 .stream()
                 .min(Comparator.comparing(SparqlEndpointStatus::getQueryDate))
                 .get();
 
-        assertTrue(oldestStatus.getQueryDate().after(aWeekAgo));
+        assertTrue(oldestStatus.getQueryDate().isAfter(oneWeekAgo));
     }
 
 }

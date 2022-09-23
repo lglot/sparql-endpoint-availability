@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -50,7 +51,7 @@ public interface SparqlEndpointRepository extends JpaRepository<SparqlEndpoint, 
             "LEFT JOIN FETCH sparql.sparqlEndpointStatuses as status " +
             "where status.id is NULL OR status.queryDate > ?1 " +
             "order by sparql.id asc,status.queryDate desc")
-    List<SparqlEndpoint> findAllAfterQueryDateStatus(Date queryDate);
+    List<SparqlEndpoint> findAllAfterQueryDateStatus(LocalDateTime queryDate);
 
     @EntityGraph(value = "SparqlEndpoint.detail", type = EntityGraph.EntityGraphType.FETCH)
     @Query(" SELECT sparql " +
@@ -59,7 +60,7 @@ public interface SparqlEndpointRepository extends JpaRepository<SparqlEndpoint, 
             " where status.id is NULL OR status.queryDate > ?1 " +
             "and sparql.url=?2 " +
             "order by sparql.id asc,status.queryDate desc")
-    SparqlEndpoint findByUrlAfterQueryDateStatus(Date queryDate,String url);
+    SparqlEndpoint findByUrlAfterQueryDateStatus(LocalDateTime queryDate,String url);
 
 
     @Query("SELECT s " +

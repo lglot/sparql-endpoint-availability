@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
@@ -128,7 +129,7 @@ public class SparqlEndpointAvailabilityRestController {
     @GetMapping(path = "/status/{days}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public Iterable<SparqlEndpoint> getHistoryStatusSparqlEndpoints(@PathVariable @NotNull Integer days) {
-        Date daysAgo = Date.from(Instant.now().minus(days, ChronoUnit.DAYS));
+        LocalDateTime daysAgo = LocalDateTime.now().minusDays(days);
         return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDate(daysAgo);
     }
 
@@ -144,7 +145,7 @@ public class SparqlEndpointAvailabilityRestController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }
 
-        Date daysAgo = Date.from(Instant.now().minus(days, ChronoUnit.DAYS));
+        LocalDateTime daysAgo = LocalDateTime.now().minusDays(days);
         try{
             return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDateByUrl(daysAgo, url);
         } catch (SparqlEndpointNotFoundException e) {

@@ -22,4 +22,8 @@ public interface AppUserManagement extends UserDetailsService {
     boolean isEmpty();
     boolean exists(String username);
 
+    void saveAuthority(String role);
+
+    boolean existsAuthority(String role);
+
 }

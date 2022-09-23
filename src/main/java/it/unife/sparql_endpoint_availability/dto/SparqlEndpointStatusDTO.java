@@ -6,10 +6,13 @@ import org.apache.commons.lang3.time.DateUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 import static it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusLabel.*;
+import static java.lang.Math.max;
 import static java.lang.Math.round;
 
 //Classe DTO, serve per trasferire informazioni degli sparrql enpoint al client
@@ -49,6 +52,8 @@ public class SparqlEndpointStatusDTO {
         sparqlEndpointStatusDTO.setUrl(newestStatus.getSparqlEndpoint().getUrl());
         sparqlEndpointStatusDTO.setName(newestStatus.getSparqlEndpoint().getName());
 
+        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+        LocalDateTime lastWeek = LocalDateTime.now().minusDays(7);
 
         boolean labelFound = false;
         if(newestStatus.isActive()) {
@@ -56,7 +61,7 @@ public class SparqlEndpointStatusDTO {
             labelFound = true;
         }
         //se non è passata ancora un giorno, lo stato è generalmente inattivo
-        else if(sparqlEndpointStatuses.size() < 24) {
+        else if(oldestStatus.getQueryDate().isAfter(yesterday)) {
             sparqlEndpointStatusDTO.setStatus(GENERAL_INACTIVE.getLabel());
             labelFound = true;
         }
@@ -67,10 +72,12 @@ public class SparqlEndpointStatusDTO {
         double uptimeLast7d = 0;
 
         for (SparqlEndpointStatus status : sparqlEndpointStatuses) {
-            if (status.isActive()) {
+            if (status.getQueryDate().isAfter(lastWeek) && status.isActive()) {
                 uptimeLast7d += 1;
 
-                if (status.getQueryDate().getTime() > DateUtils.addDays(new Date(), -1).getTime()) {
+
+
+                if (status.getQueryDate().isAfter(yesterday)) {
                     uptimeLast24h += 1;
                     if(!labelFound || sparqlEndpointStatusDTO.getStatus().equals(INACTIVE_MOREDAY.getLabel())) {
                         sparqlEndpointStatusDTO.setStatus(INACTIVE_LESSDAY.getLabel());
@@ -90,26 +97,28 @@ public class SparqlEndpointStatusDTO {
         }
 
         //se non è passato almeno un giorno l'uptime delle ultime 24 ore viene settato a -1
-        if(sparqlEndpointStatuses.size() < 24) {
+        if(oldestStatus.getQueryDate().isAfter(yesterday)) {
             sparqlEndpointStatusDTO.setUptimeLast24h(-1);
         }
         else {
-            BigDecimal uptimeLast24hBD = new BigDecimal(uptimeLast24h);
-            BigDecimal d = new BigDecimal(24);
-            BigDecimal uptimeLast24hBDdivided = uptimeLast24hBD.divide(d, 2, RoundingMode.HALF_UP);
-            sparqlEndpointStatusDTO.setUptimeLast24h(uptimeLast24hBDdivided.doubleValue());
+            sparqlEndpointStatusDTO.setUptimeLast24h(calculateUptime(sparqlEndpointStatuses, yesterday, uptimeLast24h));
         }
-        //se non è passato almeno una settimana l'uptime delle ultime 7 giorni viene settato a -1
-        if(sparqlEndpointStatuses.size() < 168) {
+        //se non è passato almeno una settimana l'uptime delgli ultimi sette giorni viene settato a -1
+        if(oldestStatus.getQueryDate().isAfter(lastWeek)) {
             sparqlEndpointStatusDTO.setUptimelast7d(-1);
         }
         else {
-            BigDecimal uptimeLast7dBD = new BigDecimal(uptimeLast7d);
-            BigDecimal w = new BigDecimal(168);
-            BigDecimal uptimeLast7dBDdivided = uptimeLast7dBD.divide(w, 2, RoundingMode.HALF_UP);
-            sparqlEndpointStatusDTO.setUptimelast7d(uptimeLast7dBDdivided.doubleValue());
+            sparqlEndpointStatusDTO.setUptimelast7d(calculateUptime(sparqlEndpointStatuses, lastWeek, uptimeLast7d));
         }
 
         return sparqlEndpointStatusDTO;
+    }
+
+    private static double calculateUptime(List<SparqlEndpointStatus> sparqlEndpointStatuses, LocalDateTime interval, double activeCounted) {
+        long statusCountAfterInterval = sparqlEndpointStatuses.stream().filter(s -> s.getQueryDate().isAfter(interval)).count();
+        BigDecimal a = BigDecimal.valueOf(Math.min(activeCounted, statusCountAfterInterval));
+        BigDecimal b = new BigDecimal(statusCountAfterInterval);
+        BigDecimal uptime = a.divide(b, 2, RoundingMode.HALF_UP);
+        return uptime.doubleValue();
     }
 }

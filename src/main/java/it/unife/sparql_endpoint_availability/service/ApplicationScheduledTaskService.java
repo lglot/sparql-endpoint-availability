@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -67,13 +68,9 @@ class ApplicationScheduledTaskService {
         List<SparqlEndpointStatus> sparqlEndpointStatuses = sparqlEndpointCheckService.executeCheck(sparqlEndpointList);
 
         sparqlEndpointManagement.saveStatuses(sparqlEndpointStatuses);
-        // delete rows older than 1 year
-        // calculate date
-        Calendar cal = Calendar.getInstance();
-        Date today = cal.getTime();
-        cal.add(Calendar.YEAR, -1);
-        Date previousYear = cal.getTime();
-        sparqlEndpointStatusRepository.deleteSparqlEndpointStatusByQueryDateBefore(previousYear);
+        // delete rows older than 1 month
+        LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
+        sparqlEndpointStatusRepository.deleteSparqlEndpointStatusByQueryDateBefore(oneMonthAgo);
 
         logger.info("Executed Scheduled Check " + iterator + " terminated in date "
                 + new Timestamp(System.currentTimeMillis()));
