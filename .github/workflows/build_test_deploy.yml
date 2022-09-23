@@ -76,7 +76,7 @@ jobs:
 
       - name: Build image e push to DockerHub 
         run: |
-          mvn -B package
+          mvn -B package -DskipTests
           mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
           docker image build --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/sparql_endpoint_availability:v0.1 .
           docker push ${{ secrets.DOCKER_USERNAME }}/sparql_endpoint_availability:v0.1
