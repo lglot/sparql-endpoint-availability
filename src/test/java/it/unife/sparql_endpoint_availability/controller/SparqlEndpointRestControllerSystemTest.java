@@ -6,9 +6,12 @@ import it.unife.sparql_endpoint_availability.jwt.JwtConfig;
 import it.unife.sparql_endpoint_availability.jwt.JwtSecretKey;
 import it.unife.sparql_endpoint_availability.jwt.TokenManager;
 import it.unife.sparql_endpoint_availability.model.entity.AppGrantedAuthority;
+import it.unife.sparql_endpoint_availability.model.entity.AppUser;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
+import it.unife.sparql_endpoint_availability.model.management.AppUserManagement;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -37,6 +40,8 @@ public class SparqlEndpointRestControllerSystemTest {
 
     @Autowired
     private SparqlEndpointManagement sedm;
+    @Autowired
+    private AppUserManagement aum;
 
     @Autowired
     JwtSecretKey jwtSecretKey;
@@ -44,6 +49,8 @@ public class SparqlEndpointRestControllerSystemTest {
     JwtConfig jwtConfig;
 
     private List<SparqlEndpoint> sparqlEndpoints;
+    private AppUser test_user;
+    private AppUser test_admin;
     private final String BASE_URL_API = "/api/endpoints";
 
     @BeforeAll
@@ -70,17 +77,32 @@ public class SparqlEndpointRestControllerSystemTest {
             sparqlEndpoints.add(se);
             sedm.createSparqlEndpoint(se);
         }
+
+        // create test user
+        test_admin = aum.saveUser("test_admin", "test_admin", "admin");
+        test_user = aum.saveUser("test_user", "test_user", "user");
+
+    }
+
+    @AfterAll
+    void clean() {
+        sparqlEndpoints.forEach(se -> {
+            try {
+                sedm.deleteSparqlEndpointByUrl(se.getUrl());
+            } catch (SparqlEndpointNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
+        aum.deleteUser(test_admin.getUsername());
+        aum.deleteUser(test_user.getUsername());
     }
 
     @Test
     void getAllSparqlEndpoints() throws Exception {
 
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new AppGrantedAuthority("ROLE_USER"));
-
-        String token = TokenManager.createToken("user", authorities, 1, jwtSecretKey.secretKey());
-
+        String token = test_user.getJwtToken();
         assertNotNull(token);
+
         mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL_API)
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -91,10 +113,9 @@ public class SparqlEndpointRestControllerSystemTest {
 
     @Test
     void getSparqlEndpointByUrl() throws Exception {
+
         String url = sparqlEndpoints.get(0).getUrl();
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new AppGrantedAuthority("ROLE_USER"));
-        String token = TokenManager.createToken("user", authorities, 1, jwtSecretKey.secretKey());
+        String token = test_user.getJwtToken();
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL_API + "/url/?url=" + url)
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token))
@@ -106,11 +127,7 @@ public class SparqlEndpointRestControllerSystemTest {
     @Test
     void getSparqlEndpointByIdUnauthorized() throws Exception {
 
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new AppGrantedAuthority("ROLE_USER"));
-
-        String token = TokenManager.createToken("user", authorities, 1, jwtSecretKey.secretKey());
-
+        String token = test_user.getJwtToken();
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL_API + "/" + sparqlEndpoints.get(0).getId())
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token))
@@ -120,11 +137,7 @@ public class SparqlEndpointRestControllerSystemTest {
     @Test
     void createSparqlEndpoint() throws Exception {
 
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new AppGrantedAuthority("ROLE_ADMIN"));
-
-        String token = TokenManager.createToken("user", authorities, 1, jwtSecretKey.secretKey());
-
+        String token = test_admin.getJwtToken();
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL_API)
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token)
@@ -138,11 +151,7 @@ public class SparqlEndpointRestControllerSystemTest {
     @Test
     void createSparqlEndpointUnauthorized() throws Exception {
 
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new AppGrantedAuthority("ROLE_USER"));
-
-        String token = TokenManager.createToken("user", authorities, 1, jwtSecretKey.secretKey());
-
+        String token = test_user.getJwtToken();
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL_API)
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token)
@@ -154,14 +163,11 @@ public class SparqlEndpointRestControllerSystemTest {
     @Test
     void updateSparqlEndpoint() throws Exception {
 
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new AppGrantedAuthority("ROLE_ADMIN"));
 
         String new_url = "new_url";
         String new_name = "new_name";
 
-        String token = TokenManager.createToken("user", authorities, 1, jwtSecretKey.secretKey());
-
+        String token = test_admin.getJwtToken();
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL_API + "/url/?url=" + sparqlEndpoints.get(0).getUrl())
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token)
@@ -182,14 +188,11 @@ public class SparqlEndpointRestControllerSystemTest {
     @Test
     void updateSparqlEndpointNotFound() throws Exception {
 
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new AppGrantedAuthority("ROLE_ADMIN"));
 
         String new_url = "new_url";
         String new_name = "new_name";
 
-        String token = TokenManager.createToken("user", authorities, 1, jwtSecretKey.secretKey());
-
+        String token = test_admin.getJwtToken();
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL_API + "/url/?url=" + Long.MAX_VALUE)
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token)
@@ -201,14 +204,11 @@ public class SparqlEndpointRestControllerSystemTest {
     @Test
     void updateSparqlEndpointUnauthorized() throws Exception {
 
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new AppGrantedAuthority("ROLE_USER"));
 
         String new_url = "new_url";
         String new_name = "new_name";
 
-        String token = TokenManager.createToken("user", authorities, 1, jwtSecretKey.secretKey());
-
+        String token = test_user.getJwtToken();
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL_API + "/url/?url=" + sparqlEndpoints.get(0).getUrl())
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token)
@@ -220,11 +220,7 @@ public class SparqlEndpointRestControllerSystemTest {
     @Test
     void deleteSparqlEndpoint() throws Exception {
 
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new AppGrantedAuthority("ROLE_ADMIN"));
-
-        String token = TokenManager.createToken("user", authorities, 1, jwtSecretKey.secretKey());
-
+        String token = test_admin.getJwtToken();
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.delete(BASE_URL_API + "/url/?url=" + sparqlEndpoints.get(0).getUrl())
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token))

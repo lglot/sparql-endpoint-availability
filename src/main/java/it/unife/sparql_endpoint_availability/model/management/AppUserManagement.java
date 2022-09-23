@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AppUserManagement extends UserDetailsService {
 
-    void saveUser(String username, String password, String role) throws UserAlreadyExistsException;
+    AppUser saveUser(String username, String password, String role) throws UserAlreadyExistsException;
     AppUser getUser(String username);
     List<AppUser> getAllUsers();
     void deleteUser(String username) throws UsernameNotFoundException;
