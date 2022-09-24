@@ -13,7 +13,7 @@ drop table if exists users;
 
 create sequence hibernate_sequence;
 
-alter sequence hibernate_sequence owner to ${SPRING_DATASOURCE_USERNAME};
+alter sequence hibernate_sequence owner to sparql;
 
 create table authorities
 (
@@ -23,7 +23,7 @@ create table authorities
 );
 
 alter table authorities
-    owner to ${SPRING_DATASOURCE_USERNAME};
+    owner to sparql;
 
 create table sparql_endpoint
 (
@@ -36,7 +36,7 @@ create table sparql_endpoint
 );
 
 alter table sparql_endpoint
-    owner to ${SPRING_DATASOURCE_USERNAME};
+    owner to sparql;
 
 create table sparql_endpoint_status
 (
@@ -50,7 +50,7 @@ create table sparql_endpoint_status
 );
 
 alter table sparql_endpoint_status
-    owner to ${SPRING_DATASOURCE_USERNAME};
+    owner to sparql;
 
 create table users
 (
@@ -68,7 +68,7 @@ create table users
 );
 
 alter table users
-    owner to ${SPRING_DATASOURCE_USERNAME};
+    owner to sparql;
 
 create table users_authorities
 (
@@ -82,5 +82,5 @@ create table users_authorities
 );
 
 alter table users_authorities
-    owner to ${SPRING_DATASOURCE_USERNAME};
+    owner to sparql;
 
