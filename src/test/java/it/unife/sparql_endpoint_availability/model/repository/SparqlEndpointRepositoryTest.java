@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.sql.Date;
@@ -37,7 +38,6 @@ class SparqlEndpointRepositoryTest {
        this.twoDaysAgo = now.minusDays(2);
        this.oneWeekAgo = now.minusWeeks(1);
     }
-
 
     @BeforeEach
     void saveSparqlEndpoints() {
@@ -72,7 +72,6 @@ class SparqlEndpointRepositoryTest {
     }
 
     @Test
-    @Rollback(true)
     void should_save_sparql_endpoint() {
         SparqlEndpoint sparqlEndpoint = SparqlEndpoint.builder().url("url").name("name").build();
         sparqlEndpointRepository.save(sparqlEndpoint);
@@ -103,8 +102,6 @@ class SparqlEndpointRepositoryTest {
         SparqlEndpoint sparqlEndpoint = sparqlEndpointOptional.get();
         assertEquals("url1", sparqlEndpoint.getUrl());
         assertEquals(sparqlEndpoint.getSparqlEndpointStatuses().size(), 1);
-        System.out.println(sparqlEndpoint.getSparqlEndpointStatuses().get(0).getQueryDate());
-        System.out.println(this.now);
         assertTrue(sparqlEndpoint.getSparqlEndpointStatuses().get(0).getQueryDate().equals(this.now));
     }
 
@@ -145,7 +142,6 @@ class SparqlEndpointRepositoryTest {
     }
 
     @Test
-    @Rollback(true)
     void findAfterLastWeekStatus_shouldNotReturnOlderStatus() {
         LocalDateTime oneWeekAgo = now.minusWeeks(1);
         SparqlEndpoint sparqlEndpoint = SparqlEndpoint.builder().url("test_week").name("test_week")
