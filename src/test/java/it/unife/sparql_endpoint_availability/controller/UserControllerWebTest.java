@@ -80,7 +80,7 @@ class UserControllerWebTest {
         switch (browser) {
             case "chrome": {
                 ChromeOptions options = new ChromeOptions();
-                options.addArguments("--headless");
+                //options.addArguments("--headless");
                 driver = new ChromeDriver(options);
                 break;
             }
