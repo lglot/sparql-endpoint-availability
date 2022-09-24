@@ -17,7 +17,7 @@ services:
       - SPRING_SQL_INIT_PLATFORM=mysql
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/sparql_endpoint_availability
       # postresql
-#     - SPRING_SQL_INIT_PLATFORM=postresql
+#     - SPRING_SQL_INIT_PLATFORM=postgresql
 #     - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/sparql_endpoint_availability
 
 #     - SERVER_SERVLET_CONTEXT_PATH=/sparql  # required for reverse proxy

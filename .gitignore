@@ -39,3 +39,4 @@ data/
 logs/
 .env
 
+docker/docker-compose.yml
