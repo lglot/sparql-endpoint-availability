@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -15,6 +16,8 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -80,7 +83,7 @@ class UserControllerWebTest {
         switch (browser) {
             case "chrome": {
                 ChromeOptions options = new ChromeOptions();
-                //options.addArguments("--headless");
+                options.addArguments("--headless");
                 driver = new ChromeDriver(options);
                 break;
             }
@@ -110,13 +113,30 @@ class UserControllerWebTest {
             return;
         }
     }
+    void waitForLoad(WebDriver driver) {
+        ExpectedCondition<Boolean> pageLoadCondition = driver1 -> {
+            assert driver1 != null;
+            return ((JavascriptExecutor) driver1).executeScript("return document.readyState").equals("complete");
+        };
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(pageLoadCondition);
+    }
+
+    void getPage(String url) {
+        driver.get("http://"+url);
+        waitForLoad(driver);
+    }
+
+    void click(By by) {
+        driver.findElement(by).click();
+        waitForLoad(driver);
+    }
 
     @Test
     void login_and_logout() {
-        driver.get("localhost:" + randomServerPort + baseUrl + "/login");
+        getPage("localhost:" + randomServerPort + baseUrl + "/login");
         assertEquals("Login", driver.getTitle());
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
         driver.findElement(By.id("username")).sendKeys(adminUsername);
         driver.findElement(By.id("password")).sendKeys(adminPassword);
@@ -129,16 +149,15 @@ class UserControllerWebTest {
 
     @Test
     void signup() {
-        driver.get("localhost:" + randomServerPort + baseUrl + "/signup");
+        getPage("localhost:" + randomServerPort + baseUrl + "/signup");
         assertEquals("Sign up", driver.getTitle());
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
         driver.findElement(By.id("username")).sendKeys("test");
         driver.findElement(By.id("password")).sendKeys("test");
         driver.findElement(By.id("confirmPassword")).sendKeys("test");
 
-        driver.findElement(By.id("submit")).click();
+        click(By.id("submit"));
         assertEquals("Login", driver.getTitle());
         assertTrue(driver.findElement(By.id("success-message")).isDisplayed());
 
@@ -146,17 +165,15 @@ class UserControllerWebTest {
 
     @Test
     void signup_with_username_already_taken() {
-        driver.get("localhost:" + randomServerPort + baseUrl + "/signup");
+        getPage("localhost:" + randomServerPort + baseUrl + "/signup");
         assertEquals("Sign up", driver.getTitle());
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
         driver.findElement(By.id("username")).sendKeys(adminUsername);
         driver.findElement(By.id("password")).sendKeys(adminPassword);
         driver.findElement(By.id("confirmPassword")).sendKeys(adminPassword);
 
-        driver.findElement(By.id("submit")).click();
-
+        click(By.id("submit"));
         assertEquals("Sign up", driver.getTitle());
         assertTrue(driver.findElement(By.id("error-message")).isDisplayed());
 
@@ -166,17 +183,15 @@ class UserControllerWebTest {
 
     @Test
     void getUserView() {
-        driver.get("localhost:" + randomServerPort + baseUrl + "/login");
+        getPage("localhost:" + randomServerPort + baseUrl + "/login");
         assertEquals("Login", driver.getTitle());
-
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
         driver.findElement(By.id("username")).sendKeys(adminUsername);
         driver.findElement(By.id("password")).sendKeys(adminPassword);
         driver.findElement(By.id("submit")).click();
         assertEquals("Sparql Endpoint availability", driver.getTitle());
 
-        driver.get("localhost:" + randomServerPort + baseUrl + "/user");
+        getPage("localhost:" + randomServerPort + baseUrl + "/user");
         assertEquals("User info", driver.getTitle());
 
         //assert that info is shown
@@ -187,7 +202,7 @@ class UserControllerWebTest {
 
 
         //return to home
-        driver.findElement(By.id("home")).click();
+        click(By.id("home"));
         assertEquals("Sparql Endpoint availability", driver.getTitle());
     }
 
@@ -196,17 +211,16 @@ class UserControllerWebTest {
         appUserManagement.saveUser("test", "test", "USER");
 
 
-        driver.get("localhost:" + randomServerPort + baseUrl + "/login");
+        getPage("localhost:" + randomServerPort + baseUrl + "/login");
         assertEquals("Login", driver.getTitle());
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
 
         driver.findElement(By.id("username")).sendKeys(adminUsername);
         driver.findElement(By.id("password")).sendKeys(adminPassword);
         driver.findElement(By.id("submit")).click();
         assertEquals("Sparql Endpoint availability", driver.getTitle());
 
-        driver.findElement(By.id("user-management")).click();
+        click(By.id("user-management"));
         assertEquals("User management", driver.getTitle());
 
         //assert that user table is shown
@@ -233,7 +247,7 @@ class UserControllerWebTest {
 
 
         //return to home
-        driver.findElement(By.id("home")).click();
+        click(By.id("home"));
         assertEquals("Sparql Endpoint availability", driver.getTitle());
     }
 }
