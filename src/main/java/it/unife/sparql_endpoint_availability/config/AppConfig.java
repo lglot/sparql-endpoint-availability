@@ -25,14 +25,14 @@ public class AppConfig {
      * numero di query da eseuire per ogni thread creato per eseguire il controllo
      * dellla disponibilità
      */
-    private static final int QUERY_NUMBER_BY_THREAD = 4;
+    private int queryNumberByThread;
 
     public static final String LOCAL_TIMEZONE = "Europe/Rome";
 
     /* Iniettori delle dipendenze */
     @Bean
     public SparqlEndpointCheckService getSparqlEndpointCheckService() {
-        return new SparqlEndpointMultiThreadCheckService(QUERY_NUMBER_BY_THREAD);
+        return new SparqlEndpointMultiThreadCheckService(queryNumberByThread);
     }
 
     @Bean
@@ -55,6 +55,14 @@ public class AppConfig {
 
     public void setAdminUsername(String adminUsername) {
         this.adminUsername = adminUsername;
+    }
+
+    public int getQueryNumberByThread() {
+        return queryNumberByThread;
+    }
+
+    public void setQueryNumberByThread(int queryNumberByThread) {
+        this.queryNumberByThread = queryNumberByThread;
     }
 
 
