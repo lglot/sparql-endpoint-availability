@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.SortedMap;
@@ -121,7 +122,7 @@ public class SparqlEndpointAvailabilityController {
 
             numberActive = (int) sparqlStatusMap.values().stream().filter(s -> s.getStatus().equals(ACTIVE.getLabel())).count();
             lastUpdate = sparqlEndpointList.get(0).getLastCheckDate(true);
-            lastUpdateLocal = lastUpdate.atZone(ZoneId.systemDefault()).toLocalDateTime();
+            lastUpdateLocal = lastUpdate.atZone(ZoneId.systemDefault()).toLocalDateTime().truncatedTo(ChronoUnit.MINUTES);
         }
         String lastUpdateLocalString = "No date";
         if (lastUpdateLocal != null) {
