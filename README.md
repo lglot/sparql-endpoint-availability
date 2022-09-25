@@ -13,7 +13,7 @@ If the SPARQL endpoint gives a response then it is active, otherwise it's not.
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
 ## Demo
-- [Self-hosted](https://lgser.ddns.net) (complete list of endpoints)
+- [Self-hosted](https://lgser.ddns.net/sparql) (complete list of endpoints)
 - [Heroku](https://sparql-endpoint-availability.herokuapp.com) (limited list of endpoints) <br>
 Admin demo credentials: <br>
   - username: `admin` <br>
