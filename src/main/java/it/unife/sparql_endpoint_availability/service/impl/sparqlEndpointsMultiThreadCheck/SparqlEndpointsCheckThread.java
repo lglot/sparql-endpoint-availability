@@ -68,7 +68,7 @@ public class SparqlEndpointsCheckThread extends Thread {
             Future<Boolean> future = executor.submit(task);
             try {
                 logger.debug("Send query to: " + sparqlEndpoint.getUrl());
-                status.setActive(future.get(10, TimeUnit.SECONDS));
+                status.setActive(future.get(15, TimeUnit.SECONDS));
             } catch (TimeoutException ex) {
                 future.cancel(true);
                 status.setActive(false);

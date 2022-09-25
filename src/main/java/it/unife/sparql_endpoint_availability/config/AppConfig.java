@@ -20,7 +20,7 @@ public class AppConfig {
     private String adminUsername;
 
     /* Nome del file che contiene la lista degli sparql endpoint da controllare */
-    private static final String SPARQL_ENDPOINTS_LIST_FILENAME = "sparql_endpoints.json";
+    private String sparqlListFilename = "sparql_endpoints.json";
 
     /*
      * numero di query da eseuire per ogni thread creato per eseguire il controllo
@@ -44,7 +44,7 @@ public class AppConfig {
 
     @Bean
     public SparqlEndpointsFileService getSparqlFileReader() {
-        return new SparqlEndpointsFileServiceImpl(SPARQL_ENDPOINTS_LIST_FILENAME);
+        return new SparqlEndpointsFileServiceImpl(sparqlListFilename);
     }
 
 
@@ -78,6 +78,14 @@ public class AppConfig {
 
     public void setFakeCheck(boolean fakeCheck) {
         this.fakeCheck = fakeCheck;
+    }
+
+    public String getSparqlListFilename() {
+        return sparqlListFilename;
+    }
+
+    public void setSparqlListFilename(String sparqlListFilename) {
+        this.sparqlListFilename = sparqlListFilename;
     }
 
 }

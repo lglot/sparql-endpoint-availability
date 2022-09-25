@@ -1,0 +1,40 @@
+[
+  {
+    "url": "https://sparql.nextprot.org/",
+    "name": "neXtProt"
+  },
+  {
+    "url": "http://bio2rdf.org/sparql",
+    "name": "Bio2RDF"
+  },
+  {
+    "url": "http://data.ox.ac.uk/sparql/",
+    "name": "http://data.ox.ac.uk/sparql/ (6)"
+  },
+  {
+    "url": "http://www.rechercheisidore.fr/sparql",
+    "name": "Isidore"
+  },
+  {
+    "url": "http://linked.opendata.cz/sparql",
+    "name": "http://linked.opendata.cz/sparql (30)"
+  },
+  {
+    "url": "http://geo.linkeddata.es/sparql",
+    "name": "GeoLinkedData"
+  },
+  {
+    "url": "http://data.colinda.org/endpoint.php",
+    "name": "COLINDA - Conference Linked Data"
+  },
+  {
+    "url" : "http://biolit.rkbexplorer.com/sparql",
+    "name" : "A Short Biographical Dictionary of English Literature (RKBExplorer)"
+  }, {
+  "url" : "http://aemet.linkeddata.es/sparql",
+  "name" : "AEMET metereological dataset"
+}, {
+  "url" : "http://202.45.139.84:10035/catalogs/fao/repositories/agris",
+  "name" : "AGRIS"
+}
+]
