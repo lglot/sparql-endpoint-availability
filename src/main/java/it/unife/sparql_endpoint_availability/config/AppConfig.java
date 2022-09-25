@@ -27,19 +27,19 @@ public class AppConfig {
      * dellla disponibilità
      */
     private int queryNumberByThread;
-    private String checkServiceType;
+
+    private boolean fakeCheck = false;
 
     public static final String LOCAL_TIMEZONE = "Europe/Rome";
 
     /* Iniettori delle dipendenze */
     @Bean
     public SparqlEndpointCheckService getSparqlEndpointCheckService() {
-        if (checkServiceType.equals("multi-thread"))
-            return new SparqlEndpointMultiThreadCheckService(queryNumberByThread);
-        else if(checkServiceType.equals("fake"))
+        if (fakeCheck) {
             return new SparqlEndpointFakeCheckService();
-        else
-            return null;
+        } else {
+            return new SparqlEndpointMultiThreadCheckService(queryNumberByThread);
+        }
     }
 
     @Bean
@@ -72,14 +72,12 @@ public class AppConfig {
         this.queryNumberByThread = queryNumberByThread;
     }
 
-    public String getCheckServiceType() {
-        return checkServiceType;
+    public boolean isFakeCheck() {
+        return fakeCheck;
     }
 
-    public void setCheckServiceType(String checkServiceType) {
-        this.checkServiceType = checkServiceType;
+    public void setFakeCheck(boolean fakeCheck) {
+        this.fakeCheck = fakeCheck;
     }
-
-
 
 }

@@ -1,5 +1,12 @@
 version: "3"
 
+## to run this docker-compose.yml file, copy .env.dist to .env and fill in the values
+#  then run the following command:
+
+#   mvn -B package -DskipTests
+#   mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+#   docker-compose -f docker-compose.yml up -d --build
+
 networks:
   local:
     driver: bridge
@@ -18,12 +25,13 @@ services:
       - db
     env_file:
       - .env
+    restart: unless-stopped
     environment:
       - SPRING_SQL_INIT_PLATFORM=mysql
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/sparql_endpoint_availability
       - SPRING_DATASOURCE_USERNAME=${DATABASE_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${DATABASE_PASSWORD}
-      #- SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
       - JWT_TOKEN_SECRET=${JWT_TOKEN_SECRET}
       - APP_ADMIN_USERNAME=${APPLICATION_ADMIN_USERNAME}
       - APP_ADMIN_PASSWORD=${APPLICATION_ADMIN_PASSWORD}
@@ -38,10 +46,13 @@ services:
       - local
     environment:
       MYSQL_DATABASE: sparql_endpoint_availability
+      MYSQL_USER: ${DATABASE_USERNAME}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
     volumes:
       - db_volume:/var/lib/mysql
     restart: unless-stopped
+
 
 volumes:
   db_volume:

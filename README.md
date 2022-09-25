@@ -73,6 +73,8 @@ services:
       - "8080:8080"
     depends_on:
       - db
+    command: ["./wait-for-it.sh", "db:3306"]
+    # command: ["./wait-for-it.sh", "db:5432"] # for postgresql
     environment:
       - SPRING_SQL_INIT_PLATFORM=mysql        # or postgres or h2
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/sparql_endpoint_availability
