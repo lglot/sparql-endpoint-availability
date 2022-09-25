@@ -1,4 +1,4 @@
-FROM openjdk:11-alpine
+FROM openjdk:17-alpine
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
 ARG DEPENDENCY=target/dependency
