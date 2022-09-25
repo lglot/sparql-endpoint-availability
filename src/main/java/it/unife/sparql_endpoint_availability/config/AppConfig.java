@@ -2,6 +2,7 @@ package it.unife.sparql_endpoint_availability.config;
 
 import it.unife.sparql_endpoint_availability.service.SparqlEndpointCheckService;
 import it.unife.sparql_endpoint_availability.service.SparqlEndpointsFileService;
+import it.unife.sparql_endpoint_availability.service.impl.SparqlEndpointFakeCheckService;
 import it.unife.sparql_endpoint_availability.service.impl.SparqlEndpointsFileServiceImpl;
 import it.unife.sparql_endpoint_availability.service.impl.sparqlEndpointsMultiThreadCheck.SparqlEndpointMultiThreadCheckService;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -26,13 +27,19 @@ public class AppConfig {
      * dellla disponibilità
      */
     private int queryNumberByThread;
+    private String checkServiceType;
 
     public static final String LOCAL_TIMEZONE = "Europe/Rome";
 
     /* Iniettori delle dipendenze */
     @Bean
     public SparqlEndpointCheckService getSparqlEndpointCheckService() {
-        return new SparqlEndpointMultiThreadCheckService(queryNumberByThread);
+        if (checkServiceType.equals("multi-thread"))
+            return new SparqlEndpointMultiThreadCheckService(queryNumberByThread);
+        else if(checkServiceType.equals("fake"))
+            return new SparqlEndpointFakeCheckService();
+        else
+            return null;
     }
 
     @Bean
@@ -63,6 +70,14 @@ public class AppConfig {
 
     public void setQueryNumberByThread(int queryNumberByThread) {
         this.queryNumberByThread = queryNumberByThread;
+    }
+
+    public String getCheckServiceType() {
+        return checkServiceType;
+    }
+
+    public void setCheckServiceType(String checkServiceType) {
+        this.checkServiceType = checkServiceType;
     }
 
 

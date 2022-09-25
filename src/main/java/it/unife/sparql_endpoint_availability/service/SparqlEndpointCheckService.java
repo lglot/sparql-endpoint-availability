@@ -9,5 +9,4 @@ public interface SparqlEndpointCheckService {
 
     List<SparqlEndpointStatus> executeCheck(List<SparqlEndpoint> sparqlEndpoints);
 
-
 }
