@@ -1,0 +1,1 @@
+web: ./mvnw clean package -DskipTests && java -jar target/sparql_endpoint_availability-0.0.1-SNAPSHOT.jar

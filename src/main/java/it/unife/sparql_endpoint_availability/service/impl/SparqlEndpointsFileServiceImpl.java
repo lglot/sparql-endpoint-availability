@@ -10,17 +10,18 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Set;
 
 public class SparqlEndpointsFileServiceImpl implements SparqlEndpointsFileService {
 
-    private File file;
+    private InputStream sparqlFile;
 
     private static final Logger logger = LoggerFactory.getLogger(SparqlEndpointsFileServiceImpl.class);
 
     public SparqlEndpointsFileServiceImpl(String fileName) {
         try {
-            this.file = new ClassPathResource(fileName).getFile();
+            this.sparqlFile = new ClassPathResource(fileName).getInputStream();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,7 +33,7 @@ public class SparqlEndpointsFileServiceImpl implements SparqlEndpointsFileServic
         ObjectMapper mapper = new ObjectMapper();
         Set<SparqlEndpoint> endpoints;
         try {
-            endpoints = mapper.readValue(file, new TypeReference<Set<SparqlEndpoint>>() {
+            endpoints = mapper.readValue(sparqlFile, new TypeReference<Set<SparqlEndpoint>>() {
             });
         } catch (IOException e) {
             logger.error(e.getMessage());
