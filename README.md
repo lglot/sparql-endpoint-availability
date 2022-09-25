@@ -13,7 +13,8 @@ If the SPARQL endpoint gives a response then it is active, otherwise it's not.
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
 
-
+## Requirements
+- Java 11+ or Docker
 
 ## Running develop enviroment with Maven
 

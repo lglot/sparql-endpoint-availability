@@ -42,6 +42,7 @@ jobs:
            SPRING_DATASOURCE_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
            APP_ADMIN_PASSWORD: ${{secrets.APPLICATION_ADMIN_PASSWORD}}
            SPRING_PROFILES_ACTIVE: 'mysql'
+           SPRING_DATASOURCE_URL: 'jdbc:mysql://localhost:3306/sparql_endpoint_availability'
 
       # test result maven surefire report
       - name: Surefire Report
@@ -59,6 +60,7 @@ jobs:
         with:
           name: my-artifact
           path: .
+
   deploy:
     needs: [build-test]
     runs-on: ubuntu-latest
@@ -80,8 +82,6 @@ jobs:
           mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
           docker image build --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/sparql_endpoint_availability:v0.1 .
           docker push ${{ secrets.DOCKER_USERNAME }}/sparql_endpoint_availability:v0.1
-        env:
-           SPRING_DATASOURCE_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
 
 
       
