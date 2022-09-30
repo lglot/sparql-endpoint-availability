@@ -1,7 +1,6 @@
 # Sparql Enpdoint Availability
 ![Build Status](https://github.com/lglot/sparql-endpoint-availability/actions/workflows/build_test_deploy.yml/badge.svg)
 
-
 This service checks the availability of a list of public SPARQL endpoints. 
 
 For this purpose, using the <a href="https://jena.apache.org/">Jena library</a> this query is sent to each endpoint every hour: <br>
