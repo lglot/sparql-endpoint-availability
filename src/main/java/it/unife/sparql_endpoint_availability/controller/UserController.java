@@ -3,6 +3,7 @@ package it.unife.sparql_endpoint_availability.controller;
 import it.unife.sparql_endpoint_availability.dto.UserDto;
 import it.unife.sparql_endpoint_availability.exception.UserAlreadyExistsException;
 import it.unife.sparql_endpoint_availability.jwt.JwtConfig;
+import it.unife.sparql_endpoint_availability.jwt.TokenManager;
 import it.unife.sparql_endpoint_availability.model.entity.AppUser;
 import it.unife.sparql_endpoint_availability.model.management.AppUserManagement;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +27,11 @@ public class UserController {
     AppUserManagement appUserManagement;
     JwtConfig jwtConfig;
 
+
     @GetMapping("login")
     public String getLoginView(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
-                               @RequestParam(name = "error", required = false, defaultValue = "false") String error,
-                               Model model) {
+            @RequestParam(name = "error", required = false, defaultValue = "false") String error,
+            Model model) {
 
         if (error.equals("true")) {
             model.addAttribute("errorMessage", "Invalid username or password");
@@ -42,18 +45,18 @@ public class UserController {
     // Sign in page
     @GetMapping("signup")
     public String getSignupView(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
-                                Model model) {
+            Model model) {
         model.addAttribute("lang", lang);
         return "signup";
     }
 
     @PostMapping("signup")
     public String signup(@ModelAttribute("user") AppUser user,
-                         @RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
-                         Model model) {
+            @RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
+            Model model) {
 
         log.info("Signing up user: {}", user);
-        try{
+        try {
             appUserManagement.saveUser(user.getUsername(), user.getPassword(), "user");
         } catch (UserAlreadyExistsException e) {
             log.error("User already exists: {}", user);
@@ -68,11 +71,13 @@ public class UserController {
 
     @GetMapping("user")
     public String getUserView(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
-                              Model model,
-                              Authentication authentication) {
+            Model model,
+            Authentication authentication) {
 
         AppUser user = (AppUser) authentication.getPrincipal();
         UserDto userDto = UserDto.fromAppUser(user);
+        userDto.setJwtToken(TokenManager.decodeToken(userDto.getJwtToken(), jwtConfig.getSecret()));
+
         model.addAttribute("prefix_jwt", jwtConfig.getPrefix());
         model.addAttribute("user", userDto);
         model.addAttribute("lang", lang);
@@ -83,18 +88,17 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("user/management")
     public String manageUser(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
-                              @RequestParam(name = "action", required = false) String action,
-                              @RequestParam(name = "u", required = false) String username,
-                              Model model,
-                              Authentication authentication) {
+            @RequestParam(name = "action", required = false) String action,
+            @RequestParam(name = "u", required = false) String username,
+            Model model,
+            Authentication authentication) {
 
         if (action != null) {
-            try{
+            try {
                 AppUser loggedAdmin = (AppUser) authentication.getPrincipal();
                 if (loggedAdmin.getUsername().equals(username)) {
-                    model.addAttribute("errorMessage", "You cannot "+action+" yourself");
-                }
-                else{
+                    model.addAttribute("errorMessage", "You cannot " + action + " yourself");
+                } else {
                     switch (action) {
                         case "delete":
                             appUserManagement.deleteUser(username);
@@ -106,11 +110,11 @@ public class UserController {
                             appUserManagement.enableUser(username);
                             break;
                     }
-                    model.addAttribute("successMessage", "user.management."+action+".success");
+                    model.addAttribute("successMessage", "user.management." + action + ".success");
                 }
             } catch (Exception e) {
-                log.error("Error action "+action+" user: {}", username);
-                model.addAttribute("errorMessage", "user.management."+action+".error");
+                log.error("Error action " + action + " user: {}", username);
+                model.addAttribute("errorMessage", "user.management." + action + ".error");
             }
         }
         List<AppUser> allUsers = appUserManagement.getAllUsers();

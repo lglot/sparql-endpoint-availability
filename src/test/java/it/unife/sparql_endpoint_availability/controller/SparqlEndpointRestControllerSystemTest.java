@@ -85,6 +85,10 @@ public class SparqlEndpointRestControllerSystemTest {
 
     }
 
+    private static String getJwtToken(AppUser user, JwtConfig jwtConfig) {
+        return TokenManager.decodeToken(user.getJwtToken(), jwtConfig.getSecret());
+    }
+
     @AfterAll
     void clean() {
         sparqlEndpoints.forEach(se -> {
@@ -101,7 +105,7 @@ public class SparqlEndpointRestControllerSystemTest {
     @Test
     void getAllSparqlEndpoints() throws Exception {
 
-        String token = test_user.getJwtToken();
+        String token = getJwtToken(test_user, jwtConfig);
         assertNotNull(token);
 
         mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL_API)
@@ -116,7 +120,7 @@ public class SparqlEndpointRestControllerSystemTest {
     void getSparqlEndpointByUrl() throws Exception {
 
         String url = sparqlEndpoints.get(0).getUrl();
-        String token = test_user.getJwtToken();
+        String token = getJwtToken(test_user, jwtConfig);
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL_API + "/url/?url=" + url)
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token))
@@ -128,7 +132,7 @@ public class SparqlEndpointRestControllerSystemTest {
     @Test
     void getSparqlEndpointByIdUnauthorized() throws Exception {
 
-        String token = test_user.getJwtToken();
+        String token = getJwtToken(test_user, jwtConfig);
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL_API + "/" + sparqlEndpoints.get(0).getId())
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token))
@@ -138,7 +142,7 @@ public class SparqlEndpointRestControllerSystemTest {
     @Test
     void createSparqlEndpoint() throws Exception {
 
-        String token = test_admin.getJwtToken();
+        String token = getJwtToken(test_admin, jwtConfig);
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL_API)
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token)
@@ -152,7 +156,7 @@ public class SparqlEndpointRestControllerSystemTest {
     @Test
     void createSparqlEndpointUnauthorized() throws Exception {
 
-        String token = test_user.getJwtToken();
+        String token = getJwtToken(test_user, jwtConfig);
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL_API)
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token)
@@ -168,7 +172,7 @@ public class SparqlEndpointRestControllerSystemTest {
         String new_url = "new_url";
         String new_name = "new_name";
 
-        String token = test_admin.getJwtToken();
+        String token = getJwtToken(test_admin, jwtConfig);
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL_API + "/url/?url=" + sparqlEndpoints.get(0).getUrl())
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token)
@@ -193,7 +197,7 @@ public class SparqlEndpointRestControllerSystemTest {
         String new_url = "new_url";
         String new_name = "new_name";
 
-        String token = test_admin.getJwtToken();
+        String token = getJwtToken(test_admin, jwtConfig);
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL_API + "/url/?url=" + Long.MAX_VALUE)
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token)
@@ -209,7 +213,7 @@ public class SparqlEndpointRestControllerSystemTest {
         String new_url = "new_url";
         String new_name = "new_name";
 
-        String token = test_user.getJwtToken();
+        String token = getJwtToken(test_user, jwtConfig);
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.put(BASE_URL_API + "/url/?url=" + sparqlEndpoints.get(0).getUrl())
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token)
@@ -221,7 +225,7 @@ public class SparqlEndpointRestControllerSystemTest {
     @Test
     void deleteSparqlEndpoint() throws Exception {
 
-        String token = test_admin.getJwtToken();
+        String token = getJwtToken(test_admin, jwtConfig);
         assertNotNull(token);
         mockMvc.perform(MockMvcRequestBuilders.delete(BASE_URL_API + "/url/?url=" + sparqlEndpoints.get(0).getUrl())
                         .header(jwtConfig.getAuthorizationHeader(), jwtConfig.getPrefix() + token))

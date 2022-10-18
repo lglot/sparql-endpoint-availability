@@ -35,16 +35,15 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
 
-
     /**
      * @param username the username of the user to load
-     * @return  the user details object for the given username
+     * @return the user details object for the given username
      * @throws UsernameNotFoundException if the user is not found in the database
      */
     @Override
     public AppUser loadUserByUsername(String username) throws UsernameNotFoundException {
         return appUserRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username)) ;
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 
     @Override
@@ -63,8 +62,9 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
             throw new UserAlreadyExistsException(username);
         }
 
-        String token = TokenManager.createToken(username, user.getAuthorities(), jwtConfig.getExpirationTimeAfertDays(), secretKey);
-        user.setJwtToken(token);
+        String token = TokenManager.createToken(username, user.getAuthorities(), jwtConfig.getExpirationTimeAfertDays(),
+                secretKey);
+        user.setJwtToken(TokenManager.encodeToken(token, jwtConfig.getSecret()));
         log.info("Saving new user: {}", user);
         appUserRepository.save(user);
         return user;
@@ -74,7 +74,6 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
     public AppUser getUser(String username) {
         return loadUserByUsername(username);
     }
-
 
     @Override
     public List<AppUser> getAllUsers() {
@@ -102,7 +101,7 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
     }
 
     /**
-     * @param username 
+     * @param username
      * @return
      * @throws UsernameNotFoundException
      */
@@ -112,7 +111,6 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
         return user.isEnabled();
     }
 
-
     @Override
     public void updateUser(String username, String password, String role) {
         appUserRepository.findByUsername(username)
@@ -121,7 +119,6 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
                     appUserRepository.save(userRes);
                 });
     }
-
 
     @Override
     public boolean isEmpty() {
@@ -149,22 +146,17 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
         return appGrantedAuthorityRepository.existsByRole(role);
     }
 
-
     private AppUser setPasswordAndRole(AppUser user, String password, String role) {
         user.setPassword(passwordEncoder.encode(password));
         if (role.equalsIgnoreCase("admin")) {
             user.setAuthorities(ADMIN.getGrantedAuthorities());
         } else if (role.equalsIgnoreCase("user")) {
             user.setAuthorities(USER.getGrantedAuthorities());
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Invalid role: " + role);
         }
         user.getAuthorities().forEach(ga -> ga.getUsers().add(user));
         return user;
     }
-
-
-
 
 }
