@@ -40,3 +40,4 @@ logs/
 .env
 
 docker/docker-compose.yml
+*.bkp

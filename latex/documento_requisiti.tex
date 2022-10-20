@@ -1,7 +1,9 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{parskip}
-
+\usepackage{graphicx}
+% image path
+\graphicspath{{./images/}}
 
 
 \title{Documento di specifica software per il progetto di Ingegneria del Software Avanzata\par
@@ -31,7 +33,7 @@ Nasce quindi la necessità di avere un punto di riferimento dove poter visualizz
 quali servizi offrono basi di conoscenza con degli SPARQL endpoint, e quali di questi sono disponibili.
 
 
-\section{Requisiti funzionali}
+\section{Requisiti}
 \label{sec:requisiti}
 
 \subsection{Sparql Endpoint Management}
@@ -103,6 +105,29 @@ Le stesse funzionalità (con gli stessi permessi) devono essere offerte tramite 
 
 Dalla dashboard, un utente può visualizzare le informazioni relative al suo account, tra il cui token JWT utilizzabile per le API REST.
 
+\clearpage
+\section{Data flow diagram}
+\label{sec:data-flow-diagram}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{dfd_sparql.png}
+    \caption{Data flow diagram iniziale}
+\end{figure}
+
+%raffinameto di administration
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{dfd2.png}
+    \caption{raffinameto di Administration}
+\end{figure}
+
+%raffinameto di sparql endpoint status reporting
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{dfd3.png}
+    \caption{raffinameto di Sparql Endpoint Status Reporting}
+\end{figure}
 
 \end{document}
 
