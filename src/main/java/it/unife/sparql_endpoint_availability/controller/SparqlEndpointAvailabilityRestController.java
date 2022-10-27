@@ -1,5 +1,10 @@
 package it.unife.sparql_endpoint_availability.controller;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import it.unife.sparql_endpoint_availability.dto.SparqlEndpointDTO;
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointAlreadyExistsException;
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
@@ -27,6 +32,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/endpoints", produces = "application/json")
+@OpenAPIDefinition(info = @Info(title = "Sparql Endpoint Availability API", version = "0.1",
+        description = "This is the API documentation for the Sparql Endpoint Availability project"))
 public class SparqlEndpointAvailabilityRestController {
 
     private final SparqlEndpointManagement sparqlEndpointManagement;
@@ -38,6 +45,7 @@ public class SparqlEndpointAvailabilityRestController {
         this.sparqlEndpointManagement = sparqlEndpointManagement;
     }
 
+    @Operation(summary = "Get all the SPARQL endpoints")
     @GetMapping(path = "")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public Iterable<SparqlEndpointDTO> getAllSparqlEndpoints() {
@@ -45,6 +53,7 @@ public class SparqlEndpointAvailabilityRestController {
         return SparqlEndpointDTO.fromSparqlEndpointList(sparqlEndpointList);
     }
 
+    @Operation(summary = "Get a SPARQL endpoint by its ID - ONLY ADMIN")
     @GetMapping(path = "/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public SparqlEndpointDTO getSparqlEndpointById(@PathVariable @NotNull Long id)  {
@@ -56,6 +65,7 @@ public class SparqlEndpointAvailabilityRestController {
       }
     }
 
+    @Operation(summary = "Get a SPARQL endpoint by its URL")
     @GetMapping(path = "/url")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public SparqlEndpointDTO getSparqlEndpointByUrl(@RequestParam @NotNull String url) {
@@ -69,7 +79,7 @@ public class SparqlEndpointAvailabilityRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "SparqlEndpoint not found");
         }
     }
-
+    @Operation(summary = "Create a new SPARQL endpoint - ONLY ADMIN")
     @PostMapping(path = "")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<SparqlEndpointDTO> createSparqlEndpoint(@RequestBody @NotNull SparqlEndpoint sparqlEndpoint) {
@@ -81,6 +91,7 @@ public class SparqlEndpointAvailabilityRestController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "SparqlEndpoint already exists", e);
         }
     }
+    @Operation(summary = "Update a SPARQL endpoint - ONLY ADMIN")
     @PutMapping(path = "/url")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public SparqlEndpointDTO updateSparqlEndpointByUrl(@RequestParam @NotNull String url, @RequestBody @NotNull SparqlEndpoint sparqlEndpoint) {
@@ -97,6 +108,7 @@ public class SparqlEndpointAvailabilityRestController {
         }
     }
 
+    @Operation(summary = "Delete a SPARQL endpoint - ONLY ADMIN")
     @DeleteMapping(path = "/url")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteSparqlEndpointByUrl(@RequestParam @NotNull String url) {
@@ -112,20 +124,21 @@ public class SparqlEndpointAvailabilityRestController {
     }
 
 
-
+    @Operation(summary = "Get the current status of all SPARQL endpoints")
     @GetMapping(path = "/status/current")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public Iterable<SparqlEndpoint> getSparqlEndpointsWithCurrentStatus() {
         return sparqlEndpointManagement.getSparqlEndpointsWithCurrentStatus();
     }
 
+    @Operation(summary = "Get the current active SPARQL endpoints")
     @GetMapping(path = "/status/current/active")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public Iterable<SparqlEndpointDTO> getCurrentlyActiveSparqlEndpoints() {
         return SparqlEndpointDTO.fromSparqlEndpointList(sparqlEndpointManagement.getCurrentlyActiveSparqlEndpoints());
     }
 
-
+    @Operation(summary = "Get status of the specified previous days of all SPARQL endpoints")
     @GetMapping(path = "/status/{days}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public Iterable<SparqlEndpoint> getHistoryStatusSparqlEndpoints(@PathVariable @NotNull Integer days) {
@@ -133,6 +146,7 @@ public class SparqlEndpointAvailabilityRestController {
         return sparqlEndpointManagement.getSparqlEndpointsAfterQueryDate(daysAgo);
     }
 
+    @Operation(summary = "Get the status of the specified prevoius days of the SPARQL endpoints specified by its URL")
     @GetMapping(path = "/status/{days}/{url}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public SparqlEndpoint getHistoryStatusSparqlEndpointsByUrl(@PathVariable @NotNull Integer days, @PathVariable @NotNull String url) {

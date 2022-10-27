@@ -31,6 +31,14 @@
                 </div>
             </li>
 
+            <!-- API DOCS -->
+            <li class="nav-item">
+                <a id="api-docs" class="nav-link" th:href="${@environment.getProperty('server.servlet.context-path')}+'/api-docs'">
+                    <span class="fa fa-book"></span>
+                    <span class="text">API Docs</span>
+                </a>
+            </li>
+
             <li class="nav-item">
                 <a id="account" class="nav-link" th:href="${@environment.getProperty('server.servlet.context-path')}+'/user'">
                     <span class="fa fa-user"></span>
