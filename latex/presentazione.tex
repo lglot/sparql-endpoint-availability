@@ -1,0 +1,112 @@
+\documentclass[8pt]{beamer}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}
+\usepackage{setspace}
+
+
+\renewcommand{\baselinestretch}{1.5}
+\include{theme/theme}
+
+
+\title{Sparql Endpoint Availability}
+\subtitle{Presentazione del progetto di Ingegneria del Software Avanzata}
+\author{Luigi Lotito}
+\date{A.A. 2021/2022}
+
+\begin{document}
+
+
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}
+    \frametitle{Introduzione}
+    \begin{itemize}
+        \item \textbf{Sparql Endpoint Availability} è un'applicazione web
+              che permette di monitorare la disponibilità
+              degli SPARQL Endpoint, offrendo un'interfaccia web e un'API REST.
+        \item Gli SPARQL endpoint, elemento fondamentale in ambito web semantico, rappresentano un punto d'accesso alle basi di conoscenza (knowledge base).
+        \item I servizi che offrono SPARQL endpoint attualmente sono diverse centinaia, ma non sempre risultano attivi.
+        \item Nasce quindi la necessità di avere un punto di riferimento dove poter visualizzare quali servizi offrono basi di conoscenza con degli SPARQL endpoint, e quali di questi sono disponibili.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Requisiti}
+    Requisiti funzionali primari:
+    \begin{itemize}
+        \item Avere un'interfaccia web dove poter visualizzare la disponibilità attuale, giornaliera e settimanale degli endpoint.
+        \item Creare un'API REST per poter ottenere le informazioni sullo stato (disponibilità) degli endpoint.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Requisiti}
+    Requisiti funzioniali derivati:
+    \begin{itemize}
+        \item L'applicazione deve storicizzare gli endpoint, di cui si vuole monitorare la disponibilità.
+        \item Ogni ora, l'applicazione deve inviare una richiesta HTTP, contente una semplice query SPARQL, ad ogni SPARQL endpoint memorizzato nel sistema. Se l'endpoint risponde, allora si considera che sia disponibile.
+        \item Gli esiti delle richieste devono essere storicizzati, in modo da poter visualizzare la disponibilità degli endpoint attuale e nel tempo.
+    \end{itemize}
+    Security:
+    \begin{itemize}
+        \item I dati degli vanno protetti da accessi non autorizzati.
+        \item L'accesso all'interfaccia web deve essere protetto da autenticazione.
+        \item Per l'API REST, l'accesso deve essere protetto da autenticazione JWT.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Utenti e Amministratori}
+    Per poter utilizzare l'apllicazione, è necessario registrarsi come utente, o disporre
+    di un account di amministratore.
+    \begin{itemize}
+        \item Gli utenti possono visualizzare lo stato degli endpoint tramite interfaccia web ed API REST, ma non hanno i permessi di scrittura.
+        \item Gli utenti amministratori (oltre ad avere gli stessi permessi degli utenti) devono poter aggiungere, aggiungere o rimuovere degli endpoint dal sistema, tramite interfaccia web, o tramite API REST.
+        \item Gli utenti amministratori devono poter disabilitare o eliminare gli utenti tramite interfaccia web.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Tecnologie utilizzate}
+    \begin{itemize}
+        \item \textbf{Framework}: Spring
+        \item \textbf{Frontend}: Thymeleaf, Bootstrap
+        \item \textbf{Backend}: Java, Spring Boot, Spring Security, Spring Data JPA, Apache Jena
+        \item \textbf{Develop Tools}: \underline{Maven}, \underline{Git}
+        \item \textbf{Database}: PostgreSQL, MySQL, H2
+        \item \textbf{Testing}: \underline{JUnit}, \underline{Mockito}, \underline{Selenium}
+        \item \textbf{CI/CD}: \underline{GitHub Actions}
+        \item \textbf{Hosting}: \underline{Docker}, Docker Compose, \underline{Heroku}
+        \item \textbf{API DOC}: Swagger
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{Testing}
+    Sono state testate le seguenti funzionalità:
+    \begin{itemize}
+        \item Il corretto funzionamento delle API REST, in particolare è stato testato
+              che che ogni metodo REST ritorni il risultato atteso anche in funzione del ruolo dell'utente che effettua la richiesta.
+              Sono stati fatti sia test di unità del metodo Java che si occupa di gestire la richiesta, sia test di sistema.\\
+              Si possono visualizzare le API su \url{https://sparql-endpoint-availability.herokuapp.com/api-doc}.
+        \item Il corretto funzionamento dell'interfaccia web, tramite \textbf{Selenium}.\\
+              I browser supportati sono Chrome , Firefox ed Edge.
+              Le funzionalità testate sono:
+              \begin{itemize}
+                  \item Registrazione ,login e logout di un utente.
+                  \item Visualizzazione corretta delle informazioni del profilo utente.
+                  \item Visulizzazione pagina con la disponibilità degli endpoint.
+                  \item Visualizzazione degli utenti registrati da parte di un utente amministratore, e possibilità di disabilitare o eliminare un utente.
+              \end{itemize}
+        \item Auntenticazione JWT
+        \item La formattazione dei dati riguardanti la disponibilità degli endpoint
+        \item Alcuni metodi di interfacciamento con il database, in particolare quelli che si occupano di salvare e recuperare le informazioni riguardanti gli endpoint.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[]
+
+
+
+
+\end{document}
