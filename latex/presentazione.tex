@@ -51,9 +51,11 @@
     \end{itemize}
     Security:
     \begin{itemize}
-        \item I dati degli vanno protetti da accessi non autorizzati.
-        \item L'accesso all'interfaccia web deve essere protetto da autenticazione.
-        \item Per l'API REST, l'accesso deve essere protetto da autenticazione JWT.
+        \item Tutti i dati dell'applicazione vanno protetti da accessi non autorizzati:
+              \begin{itemize}
+                  \item L'accesso all'interfaccia web deve essere protetto da autenticazione.
+                  \item Per l'API REST, l'accesso deve essere protetto da autenticazione JWT.
+              \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -88,20 +90,33 @@
         \item Il corretto funzionamento delle API REST, in particolare è stato testato
               che che ogni metodo REST ritorni il risultato atteso anche in funzione del ruolo dell'utente che effettua la richiesta.
               Sono stati fatti sia test di unità del metodo Java che si occupa di gestire la richiesta, sia test di sistema.\\
-              Si possono visualizzare le API su \url{https://sparql-endpoint-availability.herokuapp.com/api-doc}.
+              Si possono visualizzare le API su \url{https://sparql-endpoint-availability.herokuapp.com/api-docs}.
         \item Il corretto funzionamento dell'interfaccia web, tramite \textbf{Selenium}.\\
               I browser supportati sono Chrome , Firefox ed Edge.
               Le funzionalità testate sono:
               \begin{itemize}
-                  \item Registrazione ,login e logout di un utente.
+                  \item Registrazione, login e logout di un utente.
                   \item Visualizzazione corretta delle informazioni del profilo utente.
-                  \item Visulizzazione pagina con la disponibilità degli endpoint.
+                  \item Visulizzazione della pagina con la disponibilità degli SPARQL endpoint.
                   \item Visualizzazione degli utenti registrati da parte di un utente amministratore, e possibilità di disabilitare o eliminare un utente.
               \end{itemize}
-        \item Auntenticazione JWT
-        \item La formattazione dei dati riguardanti la disponibilità degli endpoint
+        \item La formattazione dei dati riguardanti la disponibilità degli endpoint.   \\
+              In particolare viene testato che i dati grezzi (stato attivo/non attivo per ogni endopoint ogni ora) siano correttamente formattati in modo da poter essere visualizzati correttamente dall'interfaccia web.
+              (Si veda il punto 2.2 del documento di specifica)
         \item Alcuni metodi di interfacciamento con il database, in particolare quelli che si occupano di salvare e recuperare le informazioni riguardanti gli endpoint.
     \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{CI/CD}
+    L'applicazione utilizza le GitHub Actions per il CI/CD.
+    Il workflow è eseguito ogni volta che viene effettuato un push o un pull request sul branch main.
+    \begin{itemize}
+        \item \textbf{Build}: viene eseguito il build dell'applicazione tramite Maven.
+        \item \textbf{Test}: vengono eseguiti i test di unità e di sistema.
+        \item \textbf{Deploy}: viene buildata l'immagine Docker dell'applicazione e pubblicata su Docker Hub.
+    \end{itemize}
+    Inoltre, ogni volta che viene effettuato un push sul branch main, viene eseguito il deploy dell'applicazione su Heroku.
 \end{frame}
 
 

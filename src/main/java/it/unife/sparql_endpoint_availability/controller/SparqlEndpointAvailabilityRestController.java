@@ -2,9 +2,11 @@ package it.unife.sparql_endpoint_availability.controller;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import it.unife.sparql_endpoint_availability.dto.SparqlEndpointDTO;
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointAlreadyExistsException;
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
@@ -33,7 +35,23 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/endpoints", produces = "application/json")
 @OpenAPIDefinition(info = @Info(title = "Sparql Endpoint Availability API", version = "0.1",
-        description = "This is the API documentation for the Sparql Endpoint Availability project"))
+        description = "This is the API documentation for the Sparql Endpoint Availability project" +
+                " developed by the University of Ferrara." +
+                "\n\n"+
+                "__Authenthication__ \n\n" +
+                "To use this API you need to be authenticated. To do so, you can get the token by visiting the dashboard at /user" +
+                " and then use it in the Authorization header of your requests." +
+                "\n\n"+
+                "Alternatively, you need to send a POST request to the /api/login endpoint with the following body:" +
+                "\n\n"+
+                "```json\n" +
+                "{\n" +
+                "  \"username\": \"your_username\",\n" +
+                "  \"password\": \"your_password\"\n" +
+                "}\n" +
+                "```\n\n" +
+                "The response will be a JSON object containing the token that you need to use in the Authorization header of every request to the API."))
+@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
 public class SparqlEndpointAvailabilityRestController {
 
     private final SparqlEndpointManagement sparqlEndpointManagement;
