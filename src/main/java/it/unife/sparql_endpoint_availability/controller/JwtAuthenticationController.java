@@ -2,6 +2,7 @@ package it.unife.sparql_endpoint_availability.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
 import it.unife.sparql_endpoint_availability.jwt.JwtConfig;
 import it.unife.sparql_endpoint_availability.jwt.TokenManager;
 import it.unife.sparql_endpoint_availability.jwt.UsernamePasswordAuthenticationRequest;
@@ -10,12 +11,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.crypto.SecretKey;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
 @RestController
@@ -36,11 +39,12 @@ public class JwtAuthenticationController {
         this.secretKey = secretKey;
     }
 
+    @Operation(summary = "Authenticate a user and get a JWT token")
     @RequestMapping(method = RequestMethod.POST)
-    public String login(HttpServletRequest request) throws IOException {
+    public String login(@RequestBody @NotNull UsernamePasswordAuthenticationRequest authenticationRequest) throws IOException {
 
-            UsernamePasswordAuthenticationRequest authenticationRequest = new ObjectMapper()
-                    .readValue(request.getInputStream(), UsernamePasswordAuthenticationRequest.class);
+            // UsernamePasswordAuthenticationRequest authenticationRequest = new ObjectMapper()
+            //        .readValue(request.getInputStream(), UsernamePasswordAuthenticationRequest.class);
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     authenticationRequest.getUsername(),

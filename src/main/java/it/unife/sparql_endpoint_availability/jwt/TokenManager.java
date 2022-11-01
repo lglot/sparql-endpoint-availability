@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.LocalDate;
 import java.util.Base64;
@@ -56,7 +57,7 @@ public class TokenManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new String(decrypted);
+        return new String(decrypted, StandardCharsets.UTF_8);
     }
 
     private static String cutKeyTo16Bytes(String key) {
