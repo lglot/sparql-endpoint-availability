@@ -5,7 +5,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import it.unife.sparql_endpoint_availability.dto.SparqlEndpointDTO;
 import it.unife.sparql_endpoint_availability.dto.SparqlEndpointRequest;
@@ -40,7 +42,7 @@ import java.util.List;
                 " developed by the University of Ferrara." +
                 "\n\n"+
                 "__Authenthication__ \n\n" +
-                "To use this API you need to be authenticated. To do so, you can get the token by visiting the dashboard at /user" +
+                "To use this API you need to be authenticated. To do so, you can get the token by visiting the dashboard at */user*" +
                 " and then use it in the Authorization header of your requests." +
                 "\n\n"+
                 "Alternatively, you need to send a POST request to the /api/login endpoint with the following body:" +
@@ -52,7 +54,8 @@ import java.util.List;
                 "}\n" +
                 "```\n\n" +
                 "The response will be a JSON object containing the token that you need to use in the Authorization header of every request to the API."))
-@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
+@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT", description = "Bearer authentication")
+@SecurityRequirement(name = "bearerAuth")
 public class SparqlEndpointAvailabilityRestController {
 
     private final SparqlEndpointManagement sparqlEndpointManagement;
