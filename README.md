@@ -13,12 +13,12 @@ If the SPARQL endpoint gives a response then it is active, otherwise it's not.
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
 ## Documentation
-- [Demo](#Demo)
-- [REST-API](#REST-API)
-- [Running develop enviroment](#Running develop enviroment with Maven)
-- [Installation](#Installation with Docker)
-- [Building and testing](#Building and testing)
-- [CI/CD](#CI/CD)
+- [Demo](#demo)
+- [REST-API](#rest-api)
+- [Running develop enviroment](#running-develop-enviroment-with-maven)
+- [Installation](#installation-with-docker)
+- [Building and testing](#building-and-testing)
+- [CI/CD](#cicd)
 
 ## Demo
 - [Self-hosted](https://lgser.ddns.net/sparql) (complete list of endpoints)
