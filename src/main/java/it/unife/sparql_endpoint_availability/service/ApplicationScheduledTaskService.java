@@ -70,7 +70,7 @@ class ApplicationScheduledTaskService {
         sparqlEndpointManagement.saveStatuses(sparqlEndpointStatuses);
         // delete rows older than 1 month
         LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
-        sparqlEndpointStatusRepository.deleteSparqlEndpointStatusByQueryDateBefore(oneMonthAgo);
+        sparqlEndpointManagement.removeSparqlEndpointStatusesBefore(oneMonthAgo);
 
         logger.info("Executed Scheduled Check " + iterator + " terminated in date "
                 + new Timestamp(System.currentTimeMillis()));

@@ -58,7 +58,7 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
     @Override
     public SparqlEndpoint getSparqlEndpointById(Long id) throws SparqlEndpointNotFoundException {
         Optional<SparqlEndpoint> se = sparqlEndpointRepository.findById(id);
-        if (!se.isPresent()) {
+        if (se.isEmpty()) {
             throw new SparqlEndpointNotFoundException(id);
         }
         return se.get();
@@ -88,7 +88,7 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
     @Override
     public SparqlEndpoint getSparqlEndpointWithCurrentStatusByUrl(String url) throws SparqlEndpointNotFoundException {
         Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByUrlWithCurrentStatus(url));
-        if (!se.isPresent()) {
+        if (se.isEmpty()) {
             throw new SparqlEndpointNotFoundException(url);
         }
         return se.get();
@@ -102,7 +102,7 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
     @Override
     public SparqlEndpoint getSparqlEndpointsAfterQueryDateByUrl(LocalDateTime queryDate, String url) throws SparqlEndpointNotFoundException {
         Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByUrlAfterQueryDateStatus(queryDate, url));
-        if (!se.isPresent()) {
+        if (se.isEmpty()) {
             throw new SparqlEndpointNotFoundException(url);
         }
         return se.get();
@@ -136,7 +136,7 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
     @Override
     public SparqlEndpoint updateSparqlEndpointByUrl(String url, SparqlEndpoint sparqlEndpoint) throws SparqlEndpointNotFoundException {
         Optional<SparqlEndpoint> se = Optional.ofNullable(sparqlEndpointRepository.findByUrl(url));
-        if (!se.isPresent()) {
+        if (se.isEmpty()) {
             throw new SparqlEndpointNotFoundException(url);
         }
         sparqlEndpoint.setId(se.get().getId());
@@ -162,5 +162,13 @@ public class SparqlEndpointManagementJPAImpl implements SparqlEndpointManagement
     public List<SparqlEndpoint> getSparqlEndpointsAfterLastWeek() {
         LocalDateTime lastWeek = LocalDateTime.now().minusWeeks(1);
         return sparqlEndpointRepository.findAllAfterQueryDateStatus(lastWeek);
+    }
+
+    /**
+     * @param queryDate
+     */
+    @Override
+    public void removeSparqlEndpointStatusesBefore(LocalDateTime queryDate) {
+        sparqlEndpointStatusRepository.deleteSparqlEndpointStatusByQueryDateBefore(queryDate);
     }
 }

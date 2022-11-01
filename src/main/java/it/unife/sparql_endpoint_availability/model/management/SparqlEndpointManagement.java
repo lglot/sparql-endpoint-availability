@@ -80,5 +80,7 @@ public interface SparqlEndpointManagement {
 
     void deleteSparqlEndpointByUrl(String url) throws SparqlEndpointNotFoundException;
 
-    public List<SparqlEndpoint> getSparqlEndpointsAfterLastWeek();
+    List<SparqlEndpoint> getSparqlEndpointsAfterLastWeek();
+
+    void removeSparqlEndpointStatusesBefore(LocalDateTime queryDate);
 }
