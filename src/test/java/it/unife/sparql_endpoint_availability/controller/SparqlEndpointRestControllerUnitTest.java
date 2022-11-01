@@ -3,6 +3,7 @@ package it.unife.sparql_endpoint_availability.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.unife.sparql_endpoint_availability.dto.SparqlEndpointDTO;
+import it.unife.sparql_endpoint_availability.dto.SparqlEndpointRequest;
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
 import it.unife.sparql_endpoint_availability.jwt.JwtAuthenticationEntryPoint;
 import it.unife.sparql_endpoint_availability.jwt.JwtConfig;
@@ -32,7 +33,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +46,7 @@ import static org.mockito.ArgumentMatchers.*;
         JwtConfig.class,
         JwtAuthenticationEntryPoint.class,
         JwtSecretKey.class, PasswordConfiguration.class})
-class SparqlEndpointAvailabilityRestControllerUnitTest {
+class SparqlEndpointRestControllerUnitTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -64,7 +64,7 @@ class SparqlEndpointAvailabilityRestControllerUnitTest {
     @BeforeAll
     void init() {
         sparqlEndpoints = new ArrayList<>();
-        for(int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 5; i++) {
             SparqlEndpoint se = SparqlEndpoint.builder()
                     .id((long) i)
                     .url("url" + i)
@@ -73,13 +73,13 @@ class SparqlEndpointAvailabilityRestControllerUnitTest {
             SparqlEndpointStatus status = SparqlEndpointStatus.builder()
                     .sparqlEndpoint(se)
                     .queryDate(LocalDateTime.now())
-                    .active(i%2==0)
+                    .active(i % 2 == 0)
                     .build();
 
             SparqlEndpointStatus statusOld = SparqlEndpointStatus.builder()
                     .sparqlEndpoint(se)
                     .queryDate(LocalDateTime.now().minusWeeks(1))
-                    .active(i%2==0)
+                    .active(i % 2 == 0)
                     .build();
             se.setSparqlEndpointStatuses(Arrays.asList(status, statusOld));
             sparqlEndpoints.add(se);
@@ -162,10 +162,11 @@ class SparqlEndpointAvailabilityRestControllerUnitTest {
     @WithMockUser(roles = "ADMIN")
     void createSparqlEndpoint() throws Exception {
 
-        SparqlEndpoint se = SparqlEndpoint.builder()
+        SparqlEndpointRequest seRequest = SparqlEndpointRequest.builder()
                 .url("new_url")
                 .name("new_name")
                 .build();
+        SparqlEndpoint se = SparqlEndpointRequest.toSparqlEndpoint(seRequest);
 
         Mockito.when(sedm.createSparqlEndpoint(se)).thenAnswer(invocation -> {
             SparqlEndpoint se2 = invocation.getArgument(0);
@@ -176,7 +177,7 @@ class SparqlEndpointAvailabilityRestControllerUnitTest {
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post(BASE_URL_API)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(se));
+                .content(new ObjectMapper().writeValueAsString(seRequest));
 
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> {
@@ -207,7 +208,7 @@ class SparqlEndpointAvailabilityRestControllerUnitTest {
         });
 
         SparqlEndpoint se = sparqlEndpoints.get(0);
-        SparqlEndpoint newSe = SparqlEndpoint.builder()
+        SparqlEndpointRequest newSe = SparqlEndpointRequest.builder()
                 .url(se.getUrl())
                 .name("new name")
                 .build();
@@ -256,7 +257,7 @@ class SparqlEndpointAvailabilityRestControllerUnitTest {
     @WithMockUser(roles = "USER")
     void createSparqlEndpointNoPermission() throws Exception {
 
-        SparqlEndpoint se = SparqlEndpoint.builder()
+        SparqlEndpointRequest se = SparqlEndpointRequest.builder()
                 .url("new_url")
                 .name("new_name")
                 .build();
@@ -274,7 +275,7 @@ class SparqlEndpointAvailabilityRestControllerUnitTest {
     void updateSparqlEndpointByUrlNoPermission() throws Exception {
 
         SparqlEndpoint se = sparqlEndpoints.get(0);
-        SparqlEndpoint newSe = SparqlEndpoint.builder()
+        SparqlEndpointRequest newSe = SparqlEndpointRequest.builder()
                 .url(se.getUrl())
                 .name("new name")
                 .build();
@@ -295,5 +296,4 @@ class SparqlEndpointAvailabilityRestControllerUnitTest {
         mockMvc.perform(requestBuilder)
                 .andExpect(mvcResult -> assertEquals(403, mvcResult.getResponse().getStatus()));
     }
-
 }

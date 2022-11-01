@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import it.unife.sparql_endpoint_availability.dto.SparqlEndpointDTO;
+import it.unife.sparql_endpoint_availability.dto.SparqlEndpointRequest;
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointAlreadyExistsException;
 import it.unife.sparql_endpoint_availability.exception.SparqlEndpointNotFoundException;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
@@ -88,11 +89,9 @@ public class SparqlEndpointAvailabilityRestController {
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public SparqlEndpointDTO getSparqlEndpointByUrl(@RequestParam @NotNull String url) {
         try {
-            url = URLDecoder.decode(url, Charsets.UTF_8.name());
+            url = URLDecoder.decode(url, Charsets.UTF_8);
             SparqlEndpoint se = sparqlEndpointManagement.getSparqlEndpointByUrl(url);
             return SparqlEndpointDTO.fromSparqlEndpoint(se);
-        } catch (UnsupportedEncodingException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         } catch (SparqlEndpointNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "SparqlEndpoint not found");
         }
@@ -100,9 +99,10 @@ public class SparqlEndpointAvailabilityRestController {
     @Operation(summary = "Create a new SPARQL endpoint - ONLY ADMIN")
     @PostMapping(path = "")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<SparqlEndpointDTO> createSparqlEndpoint(@RequestBody @NotNull SparqlEndpoint sparqlEndpoint) {
+    public ResponseEntity<SparqlEndpointDTO> createSparqlEndpoint(@RequestBody @NotNull SparqlEndpointRequest sparqlEndpoint) {
         try{
-            SparqlEndpoint se = sparqlEndpointManagement.createSparqlEndpoint(sparqlEndpoint);
+            SparqlEndpoint se = SparqlEndpointRequest.toSparqlEndpoint(sparqlEndpoint);
+            sparqlEndpointManagement.createSparqlEndpoint(se);
             logger.info("SparqlEndpoint created: {}", se);
             return new ResponseEntity<>(SparqlEndpointDTO.fromSparqlEndpoint(se), HttpStatus.CREATED);
         } catch (SparqlEndpointAlreadyExistsException e) {
@@ -112,14 +112,13 @@ public class SparqlEndpointAvailabilityRestController {
     @Operation(summary = "Update a SPARQL endpoint - ONLY ADMIN")
     @PutMapping(path = "/url")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public SparqlEndpointDTO updateSparqlEndpointByUrl(@RequestParam @NotNull String url, @RequestBody @NotNull SparqlEndpoint sparqlEndpoint) {
+    public SparqlEndpointDTO updateSparqlEndpointByUrl(@RequestParam @NotNull String url, @RequestBody @NotNull SparqlEndpointRequest sparqlEndpoint) {
         try {
-            url = URLDecoder.decode(url, Charsets.UTF_8.name());
-            SparqlEndpoint result = sparqlEndpointManagement.updateSparqlEndpointByUrl(url, sparqlEndpoint);
+            url = URLDecoder.decode(url, Charsets.UTF_8);
+            SparqlEndpoint se = SparqlEndpointRequest.toSparqlEndpoint(sparqlEndpoint);
+            SparqlEndpoint result = sparqlEndpointManagement.updateSparqlEndpointByUrl(url, se);
             logger.info("SparqlEndpoint updated: {}", result);
             return SparqlEndpointDTO.fromSparqlEndpoint(result);
-        } catch (UnsupportedEncodingException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         } catch (SparqlEndpointNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "SparqlEndpoint not found");
 
@@ -131,11 +130,9 @@ public class SparqlEndpointAvailabilityRestController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteSparqlEndpointByUrl(@RequestParam @NotNull String url) {
         try {
-            url = URLDecoder.decode(url, Charsets.UTF_8.name());
+            url = URLDecoder.decode(url, Charsets.UTF_8);
             sparqlEndpointManagement.deleteSparqlEndpointByUrl(url);
             logger.info("SparqlEndpoint deleted: {}", url);
-        } catch (UnsupportedEncodingException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         } catch (SparqlEndpointNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "SparqlEndpoint not found");
         }
@@ -169,13 +166,9 @@ public class SparqlEndpointAvailabilityRestController {
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public SparqlEndpoint getHistoryStatusSparqlEndpointsByUrl(@PathVariable @NotNull Integer days, @PathVariable @NotNull String url) {
 
-        try {
-            url = URLDecoder.decode(url, Charsets.UTF_8.name());
-            sparqlEndpointManagement.deleteSparqlEndpointByUrl(url);
-            logger.info("SparqlEndpoint deleted: {}", url);
-        } catch (UnsupportedEncodingException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
-        }
+        url = URLDecoder.decode(url, Charsets.UTF_8);
+        sparqlEndpointManagement.deleteSparqlEndpointByUrl(url);
+        logger.info("SparqlEndpoint deleted: {}", url);
 
         LocalDateTime daysAgo = LocalDateTime.now().minusDays(days);
         try{
