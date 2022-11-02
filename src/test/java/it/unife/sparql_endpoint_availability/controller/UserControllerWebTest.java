@@ -197,7 +197,6 @@ class UserControllerWebTest {
         //assert that info is shown
         assertEquals(driver.findElement(By.id("username")).getAttribute("value"), adminUsername);
         assertEquals(driver.findElement(By.id("role")).getAttribute("value"), "ADMIN");
-        assertTrue(driver.findElement(By.id("jwtToken")).getAttribute("value").length() > 0);
 
 
 
