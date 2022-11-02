@@ -95,7 +95,6 @@ Per ogni utente, l'applicazione deve memorizzare:
     \item il \textbf{nome utente}
     \item la \textbf{password} (crittografata)
     \item il \textbf{ruolo} (utente o amministratore)
-    \item il \textbf{token} di autenticazione JWT (crittografato)
 \end{itemize}
 
 Un utente amministratore può aggiungere, modificare o rimuovere degli endpoint dal sistema.
@@ -103,7 +102,9 @@ Può inoltre visualizzare la lista degli utenti registrati, disabilitare o abili
 Un utente normale può solo visualizzare lo stato degli endpoint.
 Le stesse funzionalità (con gli stessi permessi) devono essere offerte tramite API REST.
 
-Dalla dashboard, un utente può visualizzare le informazioni relative al suo account, tra il cui token JWT utilizzabile per le API REST.
+Dalla dashboard, un utente può visualizzare le informazioni relative al suo account.
+Inoltre, può richiedere il JSON Web Token (JWT) per poter utilizzare le API REST.\\
+In alternativa, il JWT può essere richiesto tramite API REST.
 
 \clearpage
 \section{Data flow diagram}
