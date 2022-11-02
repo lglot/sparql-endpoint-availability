@@ -1,5 +1,6 @@
 FROM openjdk:17-alpine
 RUN addgroup -S spring && adduser -S spring -G spring
+RUN chown -R spring:spring /app
 USER spring:spring
 ARG DEPENDENCY=target/dependency
 COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib

@@ -32,9 +32,8 @@ public class SparqlEndpointStatusDTO {
     private double uptimeLast24h;
     private double uptimelast7d;
 
-
-
-    public static SparqlEndpointStatusDTO fromSparqlEndpointStatusList(List<SparqlEndpointStatus> sparqlEndpointStatuses, boolean firstIsNewest) {
+    public static SparqlEndpointStatusDTO fromSparqlEndpointStatusList(
+            List<SparqlEndpointStatus> sparqlEndpointStatuses, boolean firstIsNewest) {
 
         SparqlEndpointStatusDTO sparqlEndpointStatusDTO = new SparqlEndpointStatusDTO();
 
@@ -51,17 +50,15 @@ public class SparqlEndpointStatusDTO {
         LocalDateTime lastWeek = LocalDateTime.now().minusDays(7);
 
         boolean labelFound = false;
-        if(newestStatus.isActive()) {
+        if (newestStatus.isActive()) {
             sparqlEndpointStatusDTO.setStatus(ACTIVE.getLabel());
             labelFound = true;
         }
-        //se non è passata ancora un giorno, lo stato è generalmente inattivo
-        else if(oldestStatus.getQueryDate().isAfter(yesterday)) {
+        // se non è passata ancora un giorno, lo stato è generalmente inattivo
+        else if (oldestStatus.getQueryDate().isAfter(yesterday)) {
             sparqlEndpointStatusDTO.setStatus(GENERAL_INACTIVE.getLabel());
             labelFound = true;
         }
-
-
 
         double uptimeLast24h = 0;
         double uptimeLast7d = 0;
@@ -70,16 +67,13 @@ public class SparqlEndpointStatusDTO {
             if (status.getQueryDate().isAfter(lastWeek) && status.isActive()) {
                 uptimeLast7d += 1;
 
-
-
                 if (status.getQueryDate().isAfter(yesterday)) {
                     uptimeLast24h += 1;
-                    if(!labelFound || sparqlEndpointStatusDTO.getStatus().equals(INACTIVE_MOREDAY.getLabel())) {
+                    if (!labelFound || sparqlEndpointStatusDTO.getStatus().equals(INACTIVE_MOREDAY.getLabel())) {
                         sparqlEndpointStatusDTO.setStatus(INACTIVE_LESSDAY.getLabel());
                         labelFound = true;
                     }
-                }
-                else {
+                } else {
                     if (!labelFound) {
                         sparqlEndpointStatusDTO.setStatus(INACTIVE_MOREDAY.getLabel());
                         labelFound = true;
@@ -87,30 +81,32 @@ public class SparqlEndpointStatusDTO {
                 }
             }
         }
-        if(!labelFound) {
+        if (!labelFound) {
             sparqlEndpointStatusDTO.setStatus(INACTIVE_MOREWEEK.getLabel());
         }
 
-        //se non è passato almeno un giorno l'uptime delle ultime 24 ore viene settato a -1
-        if(oldestStatus.getQueryDate().isAfter(yesterday)) {
+        // se non è passato almeno un giorno l'uptime delle ultime 24 ore viene settato
+        // a -1
+        if (oldestStatus.getQueryDate().isAfter(yesterday)) {
             sparqlEndpointStatusDTO.setUptimeLast24h(-1);
-        }
-        else {
+        } else {
             sparqlEndpointStatusDTO.setUptimeLast24h(calculateUptime(sparqlEndpointStatuses, yesterday, uptimeLast24h));
         }
-        //se non è passato almeno una settimana l'uptime delgli ultimi sette giorni viene settato a -1
-        if(oldestStatus.getQueryDate().isAfter(lastWeek)) {
+        // se non è passato almeno una settimana l'uptime delgli ultimi sette giorni
+        // viene settato a -1
+        if (oldestStatus.getQueryDate().isAfter(lastWeek.minusHours(12))) {
             sparqlEndpointStatusDTO.setUptimelast7d(-1);
-        }
-        else {
+        } else {
             sparqlEndpointStatusDTO.setUptimelast7d(calculateUptime(sparqlEndpointStatuses, lastWeek, uptimeLast7d));
         }
 
         return sparqlEndpointStatusDTO;
     }
 
-    private static double calculateUptime(List<SparqlEndpointStatus> sparqlEndpointStatuses, LocalDateTime interval, double activeCounted) {
-        long statusCountAfterInterval = sparqlEndpointStatuses.stream().filter(s -> s.getQueryDate().isAfter(interval)).count();
+    private static double calculateUptime(List<SparqlEndpointStatus> sparqlEndpointStatuses, LocalDateTime interval,
+            double activeCounted) {
+        long statusCountAfterInterval = sparqlEndpointStatuses.stream().filter(s -> s.getQueryDate().isAfter(interval))
+                .count();
         BigDecimal a = BigDecimal.valueOf(Math.min(activeCounted, statusCountAfterInterval));
         BigDecimal b = new BigDecimal(statusCountAfterInterval);
         BigDecimal uptime = a.divide(b, 2, RoundingMode.HALF_UP);
