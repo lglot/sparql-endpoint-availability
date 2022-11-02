@@ -2,18 +2,13 @@ package it.unife.sparql_endpoint_availability.dto;
 
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import lombok.*;
-import org.apache.commons.lang3.time.DateUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import static it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatusLabel.*;
-import static java.lang.Math.max;
-import static java.lang.Math.round;
 
 //Classe DTO, serve per trasferire informazioni degli sparrql enpoint al client
 @ToString

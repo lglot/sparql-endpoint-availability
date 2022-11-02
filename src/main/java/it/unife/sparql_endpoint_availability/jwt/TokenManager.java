@@ -3,12 +3,8 @@ package it.unife.sparql_endpoint_availability.jwt;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.LocalDate;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 

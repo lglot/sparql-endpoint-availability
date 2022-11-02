@@ -1,8 +1,6 @@
 package it.unife.sparql_endpoint_availability.model.repository;
 
-import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -7,12 +7,14 @@ import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import it.unife.sparql_endpoint_availability.model.management.SparqlEndpointManagement;
 import it.unife.sparql_endpoint_availability.model.repository.SparqlEndpointRepository;
 import it.unife.sparql_endpoint_availability.model.repository.SparqlEndpointStatusRepository;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional

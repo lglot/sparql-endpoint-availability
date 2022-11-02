@@ -4,9 +4,6 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import it.unife.sparql_endpoint_availability.dto.SparqlEndpointDTO;
@@ -26,13 +23,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.constraints.NotNull;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @RestController

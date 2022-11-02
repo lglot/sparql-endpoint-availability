@@ -6,7 +6,6 @@ import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 

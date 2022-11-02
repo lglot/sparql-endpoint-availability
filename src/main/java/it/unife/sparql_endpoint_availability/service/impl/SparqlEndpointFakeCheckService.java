@@ -4,7 +4,6 @@ import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpoint;
 import it.unife.sparql_endpoint_availability.model.entity.SparqlEndpointStatus;
 import it.unife.sparql_endpoint_availability.service.SparqlEndpointCheckService;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

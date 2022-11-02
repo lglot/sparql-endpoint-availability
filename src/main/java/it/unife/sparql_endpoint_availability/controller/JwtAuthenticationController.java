@@ -1,7 +1,6 @@
 package it.unife.sparql_endpoint_availability.controller;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import it.unife.sparql_endpoint_availability.jwt.JwtConfig;
 import it.unife.sparql_endpoint_availability.jwt.TokenManager;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.crypto.SecretKey;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
