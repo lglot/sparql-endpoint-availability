@@ -71,17 +71,46 @@
                                     </div>
                                 </div>
 
+                                <!-- generate jwt token -->
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="jwtToken">JWT Token</label>
-                                            <input class="form-control" id="jwtToken" th:value="|${prefix_jwt}${user.jwtToken}|" disabled>
-                                            <br>
-                                            <div class="mytooltip">
-                                              <button onclick="copy()" onmouseout="outFunc()" class="btn btn-info">
-                                                  <span class="tooltiptext" id="myTooltip">Copy to Clipboard</span>
-                                                Copy
-                                              </button>
+                                        <a type="button" class="btn btn-primary"
+                                           th:href="@{/user/getToken}" th:text="#{user.getToken}">Get new JWT</a>
+                                    </div>
+                                </div>
+
+                                <br>
+
+                                <div th:if="${user.jwtToken != null}">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="prefix">JWT Prefix</label>
+                                                <input type="text" class="form-control" id="prefix" th:value="${prefix_jwt}" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="jwtToken">JWT Token</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="jwtToken" th:value="${user.jwtToken}" disabled>
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-secondary" type="button" onclick="copy()" onmouseout="outFunc()">
+                                                            <span class="fa fa-copy" id="myTooltip"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="expireDays" th:text="#{user.jwt.expire}">JWT Expire Days</label>
+                                                <input type="text" class="form-control" id="expireDays" th:value="${jwt_expiration_days}" disabled>
                                             </div>
                                         </div>
                                     </div>

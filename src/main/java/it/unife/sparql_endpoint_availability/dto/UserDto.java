@@ -31,7 +31,6 @@ public class UserDto implements Serializable {
                         .map(a -> a.getAuthority().substring(5))
                         .findFirst()
                         .orElse("USER"))
-                .jwtToken(appUser.getJwtToken())
                 .enabled(appUser.isEnabled())
                 .build();
     }

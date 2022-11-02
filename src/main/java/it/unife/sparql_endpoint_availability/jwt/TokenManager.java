@@ -25,47 +25,4 @@ public class TokenManager {
                 .signWith(secret) // sign with key
                 .compact();
     }
-
-    public static String encodeToken(String token, String key) {
-
-        byte[] encrypted = new byte[0];
-
-        try {
-            key = cutKeyTo16Bytes(key);
-            Cipher cipher = Cipher.getInstance("AES");
-            SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), "AES");
-            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
-            encrypted = cipher.doFinal(token.getBytes());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return Base64.getEncoder().encodeToString(encrypted);
-    }
-
-    public static String decodeToken(String token, String key) {
-
-        byte[] decrypted = new byte[0];
-
-        try {
-            key = cutKeyTo16Bytes(key);
-            Cipher cipher = Cipher.getInstance("AES");
-            SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), "AES");
-            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
-            decrypted = cipher.doFinal(Base64.getDecoder().decode(token));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new String(decrypted, StandardCharsets.UTF_8);
-    }
-
-    private static String cutKeyTo16Bytes(String key) {
-        if (key.length() > 16) {
-            return key.substring(0, 16);
-        } else if (key.length() < 16) {
-            return key + "0000000000000000".substring(0, 16 - key.length());
-        }
-        return key;
-    }
 }

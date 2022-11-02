@@ -30,9 +30,6 @@ public class AppUser implements UserDetails {
     private boolean credentialsNonExpired;
     private boolean accountNonLocked;
 
-    @Lob
-    private String jwtToken;
-
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<AppGrantedAuthority> authorities;

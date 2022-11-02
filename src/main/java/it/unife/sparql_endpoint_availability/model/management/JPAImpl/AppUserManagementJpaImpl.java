@@ -2,7 +2,6 @@ package it.unife.sparql_endpoint_availability.model.management.JPAImpl;
 
 import it.unife.sparql_endpoint_availability.exception.UserAlreadyExistsException;
 import it.unife.sparql_endpoint_availability.jwt.JwtConfig;
-import it.unife.sparql_endpoint_availability.jwt.TokenManager;
 import it.unife.sparql_endpoint_availability.model.entity.AppGrantedAuthority;
 import it.unife.sparql_endpoint_availability.model.entity.AppUser;
 import it.unife.sparql_endpoint_availability.model.management.AppUserManagement;
@@ -62,9 +61,6 @@ public class AppUserManagementJpaImpl implements AppUserManagement {
             throw new UserAlreadyExistsException(username);
         }
 
-        String token = TokenManager.createToken(username, user.getAuthorities(), jwtConfig.getExpirationTimeAfertDays(),
-                secretKey);
-        user.setJwtToken(TokenManager.encodeToken(token, jwtConfig.getSecret()));
         log.info("Saving new user: {}", user);
         appUserRepository.save(user);
         return user;

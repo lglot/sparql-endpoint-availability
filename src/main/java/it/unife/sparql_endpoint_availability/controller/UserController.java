@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.SecretKey;
 import java.util.List;
 
 @Controller
@@ -26,6 +27,7 @@ public class UserController {
 
     AppUserManagement appUserManagement;
     JwtConfig jwtConfig;
+    private final SecretKey secretKey;
 
 
     @GetMapping("login")
@@ -76,7 +78,7 @@ public class UserController {
 
         AppUser user = (AppUser) authentication.getPrincipal();
         UserDto userDto = UserDto.fromAppUser(user);
-        userDto.setJwtToken(TokenManager.decodeToken(userDto.getJwtToken(), jwtConfig.getSecret()));
+
 
         model.addAttribute("prefix_jwt", jwtConfig.getPrefix());
         model.addAttribute("user", userDto);
@@ -121,5 +123,31 @@ public class UserController {
         model.addAttribute("users", UserDto.fromAppUsers(allUsers));
         model.addAttribute("lang", lang);
         return "user_management";
+    }
+
+    // generate new JWT token
+    @GetMapping("user/getToken")
+    public String generateNewToken(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
+            Model model,
+            Authentication authentication) {
+
+        AppUser user = (AppUser) authentication.getPrincipal();
+        // generate new token
+        String token = TokenManager.createToken(
+                user.getUsername(),
+                user.getAuthorities(),
+                jwtConfig.getExpirationTimeAfertDays(),
+                secretKey);
+
+
+        UserDto userDto = UserDto.fromAppUser(user);
+        userDto.setJwtToken(token);
+
+        model.addAttribute("prefix_jwt", jwtConfig.getPrefix());
+        model.addAttribute("jwt_expiration_days", jwtConfig.getExpirationTimeAfertDays());
+        model.addAttribute("user", userDto);
+        model.addAttribute("lang", lang);
+
+        return "user_view";
     }
 }
