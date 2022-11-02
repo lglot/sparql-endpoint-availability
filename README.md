@@ -28,7 +28,8 @@ Admin demo credentials: <br>
   - password: `admin`
 
 ## REST-API
-- [Swagger](https://lgser.ddns.net/sparql/api-docs)
+- [Swagger Documentation](https://lgser.ddns.net/sparql/api-docs) <br>
+You can test the API using the Swagger UI.<br>
 
 ## Requirements
 - Java 11+ or Docker
