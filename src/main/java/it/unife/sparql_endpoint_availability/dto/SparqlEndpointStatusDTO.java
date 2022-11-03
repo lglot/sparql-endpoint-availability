@@ -82,7 +82,12 @@ public class SparqlEndpointStatusDTO {
             }
         }
         if (!labelFound) {
-            sparqlEndpointStatusDTO.setStatus(INACTIVE_MOREWEEK.getLabel());
+            if (oldestStatus.getQueryDate().isBefore(lastWeek)) {
+                sparqlEndpointStatusDTO.setStatus(INACTIVE_MOREWEEK.getLabel());
+            } else if (oldestStatus.getQueryDate().isBefore(yesterday)) {
+                sparqlEndpointStatusDTO.setStatus(INACTIVE_MOREDAY.getLabel());
+            } else
+                sparqlEndpointStatusDTO.setStatus(INACTIVE_LESSDAY.getLabel());
         }
 
         // se non è passato almeno un giorno l'uptime delle ultime 24 ore viene settato

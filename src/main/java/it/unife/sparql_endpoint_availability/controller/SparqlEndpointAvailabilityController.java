@@ -46,20 +46,19 @@ public class SparqlEndpointAvailabilityController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/management")
     public String manageSparqlEndpoint(@RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
-                                        @RequestParam(name = "action", required = false) String action,
-                                        @RequestParam(name = "url", required = false) String url,
-                                        Model model,
-                                        Authentication authentication) {
+            @RequestParam(name = "action", required = false) String action,
+            @RequestParam(name = "url", required = false) String url,
+            Model model,
+            Authentication authentication) {
         if (action != null) {
-            try{
+            try {
                 if (action.equals("delete")) {
                     sparqlEndpointManagement.deleteSparqlEndpointByUrl(url);
                 }
-                model.addAttribute("successMessage", "endpoint.management."+action+".success");
-            }
-            catch (Exception e) {
-                logger.error("Error action "+action+" endpoint: {}", url);
-                model.addAttribute("errorMessage", "endpoint.management."+action+".error");
+                model.addAttribute("successMessage", "endpoint.management." + action + ".success");
+            } catch (Exception e) {
+                logger.error("Error action " + action + " endpoint: {}", url);
+                model.addAttribute("errorMessage", "endpoint.management." + action + ".error");
             }
         }
         commonView(model);
@@ -67,19 +66,18 @@ public class SparqlEndpointAvailabilityController {
         return "view";
     }
 
-    //create a new endpoint
+    // create a new endpoint
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     public String createSparqlEndpoint(@ModelAttribute("sparqlEndpoint") SparqlEndpoint sparqlEndpoint,
-                                        @RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
-                                        @RequestParam(name = "url", required = false) String url,
-                                        Model model,
-                                        Authentication authentication) {
-        try{
+            @RequestParam(name = "lang", required = false, defaultValue = "en") String lang,
+            @RequestParam(name = "url", required = false) String url,
+            Model model,
+            Authentication authentication) {
+        try {
             sparqlEndpointManagement.createSparqlEndpoint(sparqlEndpoint);
             model.addAttribute("successMessage", "endpoint.management.create.success");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.error("Error action create endpoint: {}", url);
             model.addAttribute("errorMessage", "endpoint.management.create.error");
         }
@@ -88,7 +86,7 @@ public class SparqlEndpointAvailabilityController {
         return "view";
     }
 
-    private void commonView(Model model){
+    private void commonView(Model model) {
 
         /* HTTP PARAMETERS */
         SortedMap<Long, SparqlEndpointStatusDTO> sparqlStatusMap = new TreeMap<>();
@@ -99,29 +97,32 @@ public class SparqlEndpointAvailabilityController {
         long daysPassed = 0;
         String applicationMessage = null;
 
-
-        /* GET SPARQL ENDPOINTS AFTER LAST WEEK */
-        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement.getSparqlEndpointsAfterLastWeek();
+        /* GET SPARQL ENDPOINTS AFTER 8 DAYS */
+        List<SparqlEndpoint> sparqlEndpointList = sparqlEndpointManagement
+                .getSparqlEndpointsAfterQueryDate(LocalDateTime.now().minusDays(8));
 
         if (sparqlEndpointList.size() == 0 || sparqlEndpointList.get(0).getSparqlEndpointStatuses().size() == 0)
             applicationMessage = "No SPARQL endpoint DATA found";
         else {
             sparqlEndpointList.forEach(sparqlEndpoint -> {
                 sparqlStatusMap.put(sparqlEndpoint.getId(),
-                        sparqlEndpoint.getSparqlEndpointStatuses().size() > 0 ?
-                                SparqlEndpointStatusDTO.fromSparqlEndpointStatusList(sparqlEndpoint.getSparqlEndpointStatuses(), true)
-                        : SparqlEndpointStatusDTO.builder()
-                                .url(sparqlEndpoint.getUrl())
-                                .name(sparqlEndpoint.getName())
-                                .status(UNKNOWN.getLabel())
-                                .uptimelast7d(-1)
-                                .uptimeLast24h(-1)
-                                .build());
+                        sparqlEndpoint.getSparqlEndpointStatuses().size() > 0
+                                ? SparqlEndpointStatusDTO
+                                        .fromSparqlEndpointStatusList(sparqlEndpoint.getSparqlEndpointStatuses(), true)
+                                : SparqlEndpointStatusDTO.builder()
+                                        .url(sparqlEndpoint.getUrl())
+                                        .name(sparqlEndpoint.getName())
+                                        .status(UNKNOWN.getLabel())
+                                        .uptimelast7d(-1)
+                                        .uptimeLast24h(-1)
+                                        .build());
             });
 
-            numberActive = (int) sparqlStatusMap.values().stream().filter(s -> s.getStatus().equals(ACTIVE.getLabel())).count();
+            numberActive = (int) sparqlStatusMap.values().stream().filter(s -> s.getStatus().equals(ACTIVE.getLabel()))
+                    .count();
             lastUpdate = sparqlEndpointList.get(0).getLastCheckDate(true);
-            lastUpdateLocal = lastUpdate.atZone(ZoneId.systemDefault()).toLocalDateTime().truncatedTo(ChronoUnit.MINUTES);
+            lastUpdateLocal = lastUpdate.atZone(ZoneId.systemDefault()).toLocalDateTime()
+                    .truncatedTo(ChronoUnit.MINUTES);
         }
         String lastUpdateLocalString = "No date";
         if (lastUpdateLocal != null) {
