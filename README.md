@@ -21,7 +21,7 @@ If the SPARQL endpoint gives a response then it is active, otherwise it's not.
 - [CI/CD](#cicd)
 
 ## Demo
-- [Self-hosted]() (complete list of endpoints)
+- [Self-hosted](https://lgser.ddns.net/sparql/) (complete list of endpoints)
 - [Heroku](https://sparql-endpoint-availability.herokuapp.com) (limited list of endpoints) <br>
 Admin demo credentials: <br>
   - username: `admin` <br>
