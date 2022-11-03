@@ -1,7 +1,9 @@
 # Sparql Enpdoint Availability
+
 ![Build Status](https://github.com/lglot/sparql-endpoint-availability/actions/workflows/build_test_deploy.yml/badge.svg)
 
-This service checks the availability of a list of public SPARQL endpoints. 
+This service checks the availability of a list of public SPARQL endpoints.
+It offers a web interface to check the status of the endpoints and a REST API to retrieve the status of the endpoints.
 
 For this purpose, using the <a href="https://jena.apache.org/">Jena library</a> this query is sent to each endpoint every hour: <br>
 `ASK {?s ?p ?o}` <br>
@@ -13,6 +15,7 @@ If the SPARQL endpoint gives a response then it is active, otherwise it's not.
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
 ## Documentation
+
 - [Demo](#demo)
 - [REST-API](#rest-api)
 - [Running develop enviroment](#running-develop-enviroment-with-maven)
@@ -21,17 +24,20 @@ If the SPARQL endpoint gives a response then it is active, otherwise it's not.
 - [CI/CD](#cicd)
 
 ## Demo
-- [Self-hosted](https://lgser.ddns.net/sparql/) (complete list of endpoints)
+
+- [Self-hosted](https://lgser.ddns.net/sparql) (complete list of endpoints)
 - [Heroku](https://sparql-endpoint-availability.herokuapp.com) (limited list of endpoints) <br>
 Admin demo credentials: <br>
   - username: `admin` <br>
   - password: `admin`
 
 ## REST-API
-- [Swagger Documentation](https://sparql-endpoint-availability.herokuapp.com/api-docs) <br>
+
+- [Swagger Documentation](https://lgser.ddns.net/sparql/api-docs) <br>
 You can test the API using the Swagger UI.<br>
 
 ## Requirements
+
 - Java 11+ or Docker
 
 ## Running develop enviroment with Maven
@@ -44,12 +50,12 @@ Clone repo:
 git clone https://github.com/lglot/sparql-endpoint-availability.git
 cd sparql-endpoint-availability
 ```
+
 - Run the application: <br>
 
 ```console
 ./mvnw spring-boot:run 
 ```
-
 
 ### Viewing the running application
 
@@ -58,6 +64,7 @@ To view the running application, visit [http://localhost:8080](http://localhost:
 ### Accessing the application with admin privileges
 
 The application by default has a admin user with the following credentials: <br>
+
 - username: admin <br>
 - password: admin <br>
 
@@ -78,6 +85,7 @@ Run the following command to start the application:
 ```bash
 docker-compose -f docker/docker-compose.yml up -d
 ```
+
 Example of docker-compose file for MySQL database:
 
 ```yaml
@@ -122,9 +130,10 @@ volumes:
     external: false
 
 ```
+
 ### Recommended Variables
 
-| Variable                     | Default        | Value                         | Description                                                                                                                                                                                                                                                                         |                                                                                                                                                                                                                                                                      
+| Variable                     | Default        | Value                         | Description                                                                                                                                                                                                                                                                         |
 |------------------------------|----------------|-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `SPRING_SQL_INIT_PLATFORM`   | h2             | `<"mysql","postgresql","h2">` | Set database type                                                                                                                                                                                                                                                                   |
 | `SPRING_DATASOURCE_URL`      | jdbc:h2:mem:db | `jdbc:{dbms}:{database_url}`  | Set database URL, as: <br> `jdbc:mysql://localhost:3306/db` for MySQL database with hostname `localhost` and port `3306` and database name `db` <br> `jdbc:postgresql://db:5432/sparql_db` for PostgreSQL database with hostname `db` and port `5432` and database name `sparql_db` |
@@ -150,7 +159,6 @@ Browser support is limited to **Chrome, Firefox and Edge**. <br>
 
 Default configuration is for **Firefox** browser. <br>
 
-  
 ```console
  ./mvnw clean package -Dbrowser=your_browser    
 ```
@@ -165,4 +173,3 @@ The workflow includes the following steps:
 - Run the test suite
 - Build the docker image
 - Push the docker image to Docker Hub
-
